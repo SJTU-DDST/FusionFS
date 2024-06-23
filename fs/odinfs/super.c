@@ -45,6 +45,8 @@
 #include "pmfs_config.h"
 #include "ring.h"
 
+#include "cache.h"
+
 int measure_timing_pmfs = 0;
 int support_clwb_pmfs = 0;
 int support_pcommit_pmfs = 0;
@@ -1277,6 +1279,12 @@ static int __init init_pmfs_fs(void)
 	if(rc)
 		goto out3;
 
+#if PMFS_ADAPTIVE_FLUSH
+	rc = init_page_node_cache();
+	if (rc)
+		goto out5;
+#endif
+
 #ifdef GLOBAL_RGLOCK_BRAVO
 	pmfs_init_global_rglock_bravo(global_vr_table);
 #endif
@@ -1292,6 +1300,11 @@ static int __init init_pmfs_fs(void)
 
 	return 0;
 
+#if PMFS_ADAPTIVE_FLUSH
+out5:
+	pr_err("Failed to initialize page node cache\n");
+	destroy_page_node_cache();
+#endif
 out4:
 	destroy_rangelock_cache();
 out3:
@@ -1312,6 +1325,10 @@ static void __exit exit_pmfs_fs(void)
 	destroy_transaction_cache();
 	destroy_rangenode_cache();
 	destroy_rangelock_cache();
+#if PMFS_ADAPTIVE_FLUSH
+	pr_info("Destroying page node cache at exit\n");
+	destroy_page_node_cache();
+#endif
 #ifdef GLOBAL_RGLOCK_BRAVO
 	pmfs_free_global_rglock_bravo(global_vr_table);
 #endif

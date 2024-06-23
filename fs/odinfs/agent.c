@@ -8,6 +8,8 @@
 #include "pmfs_utils.h"
 #include "ring.h"
 
+#include "cache.h"
+
 /*
  * TODO: memcpy is likely the bottleneck, so that the address translation part
  * should probably be moved to the main thread
@@ -219,10 +221,14 @@ out:
  */
 static void do_write_request(struct mm_struct *mm, unsigned long kaddr,
 			     unsigned long uaddr, unsigned long bytes, int zero,
-			     int flush_cache, atomic_t *notify_cnt)
+			     int flush_cache, atomic_t *notify_cnt) // IMPORTANT: 处理写委托
 {
 	int i = 0, tasks_index = 0;
 	unsigned long orig_kaddr = kaddr;
+#if PMFS_ADAPTIVE_FLUSH
+	int hotness;
+	static int hotness_cnt[2] = {0, 0};
+#endif
 
 	struct pmfs_agent_tasks tasks[PMFS_AGENT_TASK_MAX_SIZE];
 
@@ -247,29 +253,43 @@ static void do_write_request(struct mm_struct *mm, unsigned long kaddr,
 	if (tasks_index <= 0)
 		goto out;
 
-	pmfs_dbg_delegation("kaddr: %lx, uaddr: %lx, bytes: %ld", kaddr, uaddr,
-			    bytes);
+	// pmfs_dbg("kaddr: %lx, uaddr: %lx, bytes: %ld, current cpu core: %d", kaddr, uaddr,
+	// 		    bytes, smp_processor_id());
 
 	PMFS_START_TIMING(agent_memcpy_w_t, memcpy_time);
 	for (i = 0; i < tasks_index; i++) {
-		pmfs_dbg_delegation("uaddr: %lx, size: %ld, kaddr: %lx\n",
-				    tasks[i].kuaddr, tasks[i].size, kaddr);
+		// pmfs_dbg("uaddr: %lx, size: %ld, kaddr: %lx\n",
+		// 		    tasks[i].kuaddr, tasks[i].size, kaddr);
+#if PMFS_ADAPTIVE_FLUSH
+		// #pragma message("为了测试暂时只用noflush")
+		hotness = pmfs_page_hotness(kaddr); // FIXME: wrong parameter, tasks[i].kuaddr->kaddr
+		hotness_cnt[hotness]++;
+		if (hotness_cnt[0] + hotness_cnt[1] >= 100000) {
+			pmfs_dbg("hotness 0: %d, hotness 1: %d\n", hotness_cnt[0], hotness_cnt[1]);
+			hotness_cnt[0] = 0;
+			hotness_cnt[1] = 0;
+		}
 
+		if (hotness == 0)
+			__copy_from_user_inatomic_nocache((void *)kaddr, (void *)tasks[i].kuaddr, tasks[i].size);
+		else 
+			__copy_from_user_inatomic((void *)kaddr, (void *)tasks[i].kuaddr, tasks[i].size);
+#else // no adaptive flush, always use nocache
 #if PMFS_NT_STORE
 		__copy_from_user_inatomic_nocache(
 			(void *)kaddr, (void *)tasks[i].kuaddr, tasks[i].size);
 #else
-		memcpy((void *)kaddr, (void *)tasks[i].kuaddr, tasks[i].size);
+		__copy_from_user_inatomic((void *)kaddr, (void *)tasks[i].kuaddr, tasks[i].size); // IMPORTANT: 将用户缓冲区的数据复制到内核缓冲区，去掉这行PM带宽消耗变小
 #endif
-
+#endif
 		kaddr += tasks[i].size;
 	}
 
-#if !PMFS_NT_STORE
+#if !PMFS_NT_STORE && !PMFS_ADAPTIVE_FLUSH
 	if (flush_cache)
 		pmfs_flush_buffer((void *)orig_kaddr, bytes, 0);
 #endif
-
+	// pmfs_flush_buffer((void *)orig_kaddr, bytes, 0);
 	PMFS_END_TIMING(agent_memcpy_w_t, memcpy_time);
 
 out:
@@ -322,6 +342,8 @@ static int agent_func(void *arg)
 			err = pmfs_recv_request(ring, &request);
 			if (err == -EAGAIN)
 				goto spin_and_wait;
+			// print core id recv kaddr from ring addr
+			// pmfs_dbg("core id: %d, recv kaddr from ring addr: %p\n", smp_processor_id(), ring);
 		}
 #else
 
@@ -427,7 +449,7 @@ int pmfs_init_agents(int cpus, int sockets)
 				target_cpu);
 
 			task = kthread_create(agent_func,
-					      &pmfs_agent_args[index], name);
+					      &pmfs_agent_args[index], name); // IMPORTANT: kthread_create
 
 			if (IS_ERR(task)) {
 				ret = PTR_ERR(task);
@@ -441,6 +463,27 @@ int pmfs_init_agents(int cpus, int sockets)
 			kthread_bind_mask(pmfs_agent_tasks[index], numa_cpumask);
 #else
 			kthread_bind(pmfs_agent_tasks[index], target_cpu);
+
+			// print i, j, index, target_cpu
+			pmfs_dbg("kthread_bind: pid: %d, i: %d, j: %d, index: %d, target_cpu: %d\n", pmfs_agent_tasks[index]->pid, i, j, index, target_cpu);
+
+			struct file *fp = (struct file *) NULL;
+			char *tasks_COS1_file = "/sys/fs/resctrl/c1/tasks";
+			char pid_str[10];
+			fp = filp_open(tasks_COS1_file, O_WRONLY|O_CREAT|O_TRUNC, 0666);
+			if (IS_ERR(fp)) {
+				printk("%s, %s open failed\n", __func__, tasks_COS1_file);
+				// return PTR_ERR(fp);
+			} else {
+				printk("%s, %s open success\n", __func__, tasks_COS1_file);
+				sprintf(pid_str, "%d", pmfs_agent_tasks[index]->pid);
+				ret = kernel_write(fp, pid_str, strlen(pid_str), 0);
+				if (ret < 0) {
+					printk("%s, %s write failed\n", __func__, tasks_COS1_file);
+					// return ret;
+				} else printk("%s, %s write success\n", __func__, tasks_COS1_file);
+			}
+			filp_close(fp, NULL);
 #endif
 			wake_up_process(pmfs_agent_tasks[index]);
 		}

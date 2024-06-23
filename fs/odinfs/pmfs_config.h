@@ -9,6 +9,15 @@
 #define __PMFS_CONFIG_H_
 
 #define PMFS_DELEGATION_ENABLE 1
+#define RANDOM_DELEGATION 0
+#if RANDOM_DELEGATION
+#pragma message "轮流选择委托和不委托"
+#endif
+
+#define PMFS_ADAPTIVE_FLUSH 1
+#if PMFS_ADAPTIVE_FLUSH
+#pragma message "自适应刷新"
+#endif
 
 #define PMFS_MAX_SOCKET 8
 #define PMFS_MAX_AGENT_PER_SOCKET 28
@@ -57,8 +66,9 @@
 
 #define PMFS_SOLROS_RING_BUFFER 1
 
-/* write delegation limits: 256 */
+/* write delegation limits: 256 */ // IMPORTANT: This is the limit for the number of writes that can be delegated to the agents
 #define PMFS_WRITE_DELEGATION_LIMIT 256
+// #pragma message "NO DELEGATION"
 
 /* read delegation limits: 32K */
 #define PMFS_READ_DELEGATION_LIMIT (32 * 1024)
@@ -67,7 +77,7 @@
 #define PMFS_DEF_DELE_THREADS_PER_SOCKET 1
 
 /* When set, use nt store to write to memory */
-#define PMFS_NT_STORE 0
+#define PMFS_NT_STORE 1 // We now use non-temporal stores to write to memory in delegation threads to avoid cache pollution
 
 /* 2MB */
 #define PMFS_RING_SIZE (2 * 1024 * 1024)

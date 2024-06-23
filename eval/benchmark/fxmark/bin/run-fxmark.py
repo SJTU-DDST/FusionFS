@@ -425,7 +425,7 @@ class Runner(object):
         ncores = []
         for socket in range(1, cpupol.PHYSICAL_CHIPS + 1):
             if socket == 1:
-                cpu_remain = cpupol.CORE_PER_CHIP - delegation_threads
+                cpu_remain = cpupol.CORE_PER_CHIP - delegation_threads # IMPORTANT: 这些cpu专门用于delegate
                 n = 0
                 while (2 ** n) < cpu_remain:
                     ncores.append((2 ** n, socket))
@@ -441,7 +441,7 @@ class Runner(object):
         return ncores
 
     def exec_cmd(self, cmd, out=None):
-        print(cmd)
+        # print(cmd)
         p = subprocess.Popen(cmd, shell=True, stdout=out, stderr=out)
         p.wait()
         return p
@@ -491,6 +491,7 @@ class Runner(object):
 
         self.drop_caches()
         self.exec_cmd("sync", self.dev_null)
+        print('TEST', ncore, ','.join(map(lambda c: str(c), cpupol.seq_cores[0:ncore])))
         # self.set_cpus(ncore)
 
     def pre_work(self):
@@ -720,6 +721,8 @@ class Runner(object):
 
     def gen_config(self):
         for ncore in sorted(self.ncores, key=lambda x: x[0], reverse=True):
+            if ncore[0] != 1: # FIXME: only run single core for now
+                continue
             for bench in self.BENCH_TYPES:
                 for media in self.MEDIA_TYPES:
                     for dio in self.DIRECTIOS:
@@ -988,7 +991,7 @@ if __name__ == "__main__":
 
     if cpupol.SMT_LEVEL != 1:
         print("Please disable hyperthreading in the BIOS")
-        exit(1)
+        # exit(1)
 
 
     # config parameters

@@ -1,0 +1,20 @@
+{
+    "files.associations": {
+        "array": "c",
+        "string_view": "c",
+        "initializer_list": "c",
+        "ranges": "c",
+        "span": "c",
+        "utility": "c",
+        "format": "c",
+        "bitset": "c",
+        "vector": "c",
+        "memory": "c",
+        "optional": "c",
+        "string": "c",
+        "system_error": "c",
+        "thread": "c",
+        "variant": "c",
+        "cstdint": "c"
+    }
+}

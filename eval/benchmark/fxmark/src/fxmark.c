@@ -329,7 +329,7 @@ int main(int argc, char *argv[])
 		usage(stderr);
 		exit(1);
 	}
-	if (opt.delegate) {
+	if (opt.delegate) { // IMPORTANT: 专用delegate
 		/* change ncore and seq_cores to adapt odinfs */
 		if (opt.delegation_threads > 0) {
 
@@ -340,6 +340,13 @@ int main(int argc, char *argv[])
 					tot_core --;
 				}
 			}
+			// print tot_core and seq_cores
+			// printf("tot_core: %d\n", tot_core);
+			// for (int i = 0; i < tot_core; ++i) {
+			// 	printf("%d,", seq_cores[i]);
+			// }
+			// printf("\n");
+			
 		}
 	}
 	/* create, initialize, and run a bench */ 

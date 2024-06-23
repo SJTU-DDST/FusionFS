@@ -1,0 +1,1 @@
+sudo rmmod my_module;

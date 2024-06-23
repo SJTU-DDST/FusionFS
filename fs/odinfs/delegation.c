@@ -98,9 +98,13 @@ unsigned int pmfs_do_read_delegation(struct pmfs_sb_info *sbi,
 
 	PMFS_START_TIMING(send_request_r_t, send_request_time);
 	do {
-		thread = pmfs_choose_rings();
+		// thread = pmfs_choose_rings();
+		thread = (kaddr>>12) % pmfs_num_of_rings_per_socket; // IMPORTANT: 比随机选择更好利用CPU缓存
+		// thread = 0;
 		ret = pmfs_send_request(pmfs_ring_buffer[socket][thread],
 					&request);
+		// print send kaddr to which ring(socket, thread, addr)
+		// pmfs_dbg("send kaddr to ring: %d, %d, %lx\n", socket, thread, kaddr);
 	} while (ret == -EAGAIN);
 
 	wake_up_interruptible(&delegation_queue[socket][thread]);
@@ -128,6 +132,8 @@ unsigned int pmfs_do_write_delegation(struct pmfs_sb_info *sbi,
 	unsigned long i = 0, uaddr_end = 0;
 	int block;
 	int thread;
+
+	// static int counter = 0;
 
 	PMFS_DEFINE_TIMING_VAR(prefault_time);
 	PMFS_DEFINE_TIMING_VAR(send_request_time);
@@ -161,7 +167,7 @@ unsigned int pmfs_do_write_delegation(struct pmfs_sb_info *sbi,
 				uaddr, bytes, target_addr);
 
 			ret = copy_from_user(&pmfs_no_optimize,
-					     (void *)target_addr, 1);
+					     (void *)target_addr, 1); // 首先让应用线程预失 误并将用户缓冲区的页面钉在内核中。然后，它将用户 缓冲区和它的根页表信息（mm->pgd）一起传递给委托 线程。
 
 			if (ret != 0) {
 				PMFS_END_TIMING(pre_fault_w_t, prefault_time);
@@ -197,9 +203,12 @@ unsigned int pmfs_do_write_delegation(struct pmfs_sb_info *sbi,
 
 	PMFS_START_TIMING(send_request_w_t, send_request_time);
 	do {
-		thread = pmfs_choose_rings();
-		ret = pmfs_send_request(pmfs_ring_buffer[socket][thread],
+		// thread = pmfs_choose_rings();
+		thread = (kaddr>>12) % pmfs_num_of_rings_per_socket; // IMPORTANT: 比随机选择更好利用CPU缓存
+		// thread = 0;
+		ret = pmfs_send_request(pmfs_ring_buffer[socket][thread], // 发送到循环缓冲区
 					&request);
+		// pmfs_dbg("send kaddr to ring: %d, %d, %lx, counter: %d\n", socket, thread, kaddr, counter++);
 	} while (ret == -EAGAIN);
 
 	wake_up_interruptible(&delegation_queue[socket][thread]);

@@ -25,6 +25,9 @@
 #include "range_lock.h"
 #include "rwsem.h"
 
+#if RANDOM_DELEGATION
+#include <linux/random.h>
+#endif
 
 static ssize_t do_xip_mapping_read(struct address_space *mapping,
 				   struct file_ra_state *_ra, struct file *filp,
@@ -265,7 +268,10 @@ static inline size_t memcpy_to_nvmm(char *kmem, loff_t offset,
 				    const char __user *buf, size_t bytes)
 {
 	size_t copied;
-
+#if PMFS_NT_STORE
+	copied = bytes - __copy_from_user_inatomic_nocache(
+					kmem + offset, buf, bytes);
+#else
 	if (support_clwb_pmfs) {
 		copied = bytes - __copy_from_user(kmem + offset, buf, bytes);
 		pmfs_flush_buffer(kmem + offset, copied, 0);
@@ -273,7 +279,7 @@ static inline size_t memcpy_to_nvmm(char *kmem, loff_t offset,
 		copied = bytes - __copy_from_user_inatomic_nocache(
 					 kmem + offset, buf, bytes);
 	}
-
+#endif
 	return copied;
 }
 
@@ -295,6 +301,9 @@ static ssize_t __pmfs_xip_file_write(struct address_space *mapping,
 
 #if PMFS_DELEGATION_ENABLE
 	int cond_cnt = 0;
+	#if RANDOM_DELEGATION
+	static int mycount = 0;
+	#endif
 #endif
 
 	PMFS_DEFINE_TIMING_VAR(write_time);
@@ -341,7 +350,13 @@ static ssize_t __pmfs_xip_file_write(struct address_space *mapping,
 #if PMFS_DELEGATION_ENABLE
 
 		/* do not delegate if bytes is less than PMFS_WRITE_DELEGATION_LIMIT */
+#if RANDOM_DELEGATION
+		int delegate = 1;//prandom_u32(); // 1, delegate for slow
+		pmfs_dbg("slow write delegation: %d\n", delegate);
+		if (!delegate) { //(mycount++) % 2 == 1) {
+#else
 		if (bytes < PMFS_WRITE_DELEGATION_LIMIT) {
+#endif
 			PMFS_START_TIMING(memcpy_w_t, memcpy_time);
 
 			pmfs_xip_mem_protect(sb, xmem + page_offset, bytes, 1);
@@ -450,6 +465,9 @@ static ssize_t pmfs_file_write_fast(struct super_block *sb, struct inode *inode,
 #if PMFS_DELEGATION_ENABLE
 	unsigned int left;
 	PMFS_DEFINE_TIMING_VAR(do_delegation_time);
+	#if RANDOM_DELEGATION
+	static int mycount = 0;
+	#endif
 #endif
 
 	PMFS_DEFINE_TIMING_VAR(memcpy_time);
@@ -459,7 +477,14 @@ static ssize_t pmfs_file_write_fast(struct super_block *sb, struct inode *inode,
 #if PMFS_DELEGATION_ENABLE
 
 	/* do not delegate if the size is less than PMFS_WRITE_DELEGATION_LIMIT */
+#if RANDOM_DELEGATION
+	int delegate = 0; // 0, no delegate for fast
+	// prandom_u32();
+	// pmfs_dbg("fast path delegation: %d\n", random_value & 1);
+	if (!delegate) { //(mycount++) % 2 == 1) {
+#else
 	if (count < PMFS_WRITE_DELEGATION_LIMIT) {
+#endif
 		PMFS_START_TIMING(memcpy_w_t, memcpy_time);
 
 		pmfs_xip_mem_protect(sb, xmem + offset, count, 1);
@@ -559,7 +584,15 @@ static inline void pmfs_clear_edge_blk(struct super_block *sb,
 			} else
 				count = blk_off + (8 - (blk_off % 8));
 #if PMFS_DELEGATION_ENABLE
+#if RANDOM_DELEGATION
+int delegate = 1; // 1, delegate for slow
+	// prandom_u32();
+	pmfs_dbg("clear edge block delegation: %d\n", delegate);
+
+			if (delegate) { // IMPORTANT: 注意这里是＞，是相反的
+#else
 			if (count > PMFS_WRITE_DELEGATION_LIMIT) {
+#endif
 				PMFS_START_TIMING(do_delegation_w_t,
 						  do_delegation_time);
 				pmfs_do_write_delegation(

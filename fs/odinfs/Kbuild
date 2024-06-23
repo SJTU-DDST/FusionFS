@@ -8,7 +8,7 @@ odinfs-objs := $(addprefix $(SRC_ROOT)/solros_lib/, \
 odinfs-objs += bbuild.o balloc.o dir.o file.o inode.o namei.o super.o \
 	symlink.o ioctl.o pmfs_stats.o journal.o xip.o wprotect.o \
 	pmem_ar_block.o agent.o delegation.o ring.o simple_ring.o \
-	range_lock.o metalog.o pcpu_rwsem.o
+	range_lock.o metalog.o pcpu_rwsem.o cache.o
 
 
 ccflags-y += -I$(src)/solros_include

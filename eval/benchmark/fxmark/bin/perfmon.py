@@ -7,6 +7,7 @@ import operator
 import pdb
 from os.path import join
 from functools import reduce
+import pickle
 
 CUR_DIR     = os.path.abspath(os.path.dirname(__file__))
 
@@ -110,6 +111,25 @@ class PerfMon(object):
         with open(self.cpu_stat, "w") as fd:
             print(cpu_stat_str, file=fd)
             fd.flush()
+        # ipmctl
+        pickle_out = os.path.normpath(
+            os.path.join(self.DIR, "%s.ipmctl.pickle" % self.FILE))
+        p = self._exec_cmd("sudo ipmctl show -dimm -performance", subprocess.PIPE)
+        lines = []
+        data = {}
+        # while True:
+        for l in p.stdout.readlines():
+            lines.append(l.decode('utf-8'))
+            # if not p.poll():
+            #     break
+        for line in lines:
+            if "DimmID" not in line:
+                field, value = line.strip().split('=')
+                data[field] = data.get(field, 0) - int(value, 16)
+        # print(data)
+
+        with open(pickle_out, "wb") as fd:
+            pickle.dump(data, fd)
 
     def _cpu_stat_stop(self):
         (ncpu, stat_stop) = self._get_cpu_stat()
@@ -127,10 +147,35 @@ class PerfMon(object):
         name = list( map(lambda x: "%s.sec" % x, PerfMon.CPU_STAT))
         name.extend( list( map(lambda x: "%s.util" % x, PerfMon.CPU_STAT[1:])))
 
+        pickle_in = os.path.normpath(
+            os.path.join(self.DIR, "%s.ipmctl.pickle" % self.FILE))
+        p = self._exec_cmd("sudo ipmctl show -dimm -performance", subprocess.PIPE)
+        lines = []
+        data = None
+        with open(pickle_in, "rb") as fd:
+            data = pickle.load(fd)
+        os.remove(pickle_in)
+        prev_data = data.copy()
+        # while True:
+        for l in p.stdout.readlines():
+            lines.append(l.decode('utf-8'))
+            # if not p.poll():
+            #     break
+        for line in lines:
+            if "DimmID" not in line:
+                field, value = line.strip().split('=')
+                # print(data.get(field, 0))
+                data[field] = data.get(field, 0) + int(value, 16)
+        for key, value in data.items():
+            if 'Reads' in key or 'Writes' in key:
+                data[key] = value * 64 / 1024 / 1024 # MiB
+
         # write to file
         with open(self.cpu_stat, "w") as fd:
-            print( " ".join(name), file=fd)
-            print( " ".join( map(lambda x: "%g" % x, delta)), file=fd)
+            print( " ".join(name), file=fd, end=" ")
+            print(' '.join(data.keys()), file=fd)
+            print( " ".join( list(map(lambda x: "%g" % x, delta))), file=fd, end=" ")
+            print(' '.join(map(str, data.values())), file=fd)
             fd.flush()
 
     def _get_cpu_stat(self):
