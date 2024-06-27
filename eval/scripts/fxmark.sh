@@ -2,10 +2,19 @@
 
 source common.sh
 
+cd ../../fs/odinfs
+sudo rmmod odinfs; sudo make && sudo insmod build/odinfs.ko
+cd ../../eval/scripts
+
+cd ../benchmark/fxmark
+make
+cd ../../scripts
+
+echo "挂载resctrl文件系统"
 sudo mount -t resctrl resctrl /sys/fs/resctrl # TODO: do this in kernel
 sudo mkdir /sys/fs/resctrl/c1
 sudo bash -c 'echo "L3:0=03f;1=03f">/sys/fs/resctrl/c1/schemata'
-sudo bash -c 'echo "L3:0=3c0;1=3c0">/sys/fs/resctrl/schemata'
+sudo bash -c 'echo "L3:0=fc0;1=fc0">/sys/fs/resctrl/schemata'
 
 # $FXMARK_BIN_PATH/run-fxmark.py --media='pmem-local' \
 #     --fs='^ext4$|^pmfs$|^nova$|^winefs$' \
@@ -28,7 +37,7 @@ sudo bash -c 'echo "L3:0=3c0;1=3c0">/sys/fs/resctrl/schemata'
 
 $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
     --workload='^DWOL$' \
-    --ncore='*' --iotype='bufferedio' --dthread='1' --dsocket='1' \
+    --ncore='*' --iotype='bufferedio' --dthread='12' --dsocket='1' \
     --rcore='False' --delegate='True' --confirm='True' \
     --directory_name="fxmark" --log_name="odinfs-write.log" --duration=1
 
@@ -44,4 +53,5 @@ do
 done
 echo ""
 
+echo "卸载resctrl文件系统"
 sudo umount /sys/fs/resctrl/

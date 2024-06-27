@@ -441,7 +441,7 @@ class Runner(object):
         return ncores
 
     def exec_cmd(self, cmd, out=None):
-        # print(cmd)
+        print(cmd)
         p = subprocess.Popen(cmd, shell=True, stdout=out, stderr=out)
         p.wait()
         return p

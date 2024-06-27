@@ -226,8 +226,8 @@ static void do_write_request(struct mm_struct *mm, unsigned long kaddr,
 	int i = 0, tasks_index = 0;
 	unsigned long orig_kaddr = kaddr;
 #if PMFS_ADAPTIVE_FLUSH
-	int hotness;
-	static int hotness_cnt[2] = {0, 0};
+	int hotness, counter = 0;
+	static int hotness_cnt[5] = {0, 0, 0, 0, 0};
 #endif
 
 	struct pmfs_agent_tasks tasks[PMFS_AGENT_TASK_MAX_SIZE];
@@ -253,27 +253,41 @@ static void do_write_request(struct mm_struct *mm, unsigned long kaddr,
 	if (tasks_index <= 0)
 		goto out;
 
+	// counter++;
+	// if (counter % 10000 == 0)
 	// pmfs_dbg("kaddr: %lx, uaddr: %lx, bytes: %ld, current cpu core: %d", kaddr, uaddr,
 	// 		    bytes, smp_processor_id());
 
 	PMFS_START_TIMING(agent_memcpy_w_t, memcpy_time);
 	for (i = 0; i < tasks_index; i++) {
+		// if (counter % 10000 == 0)
 		// pmfs_dbg("uaddr: %lx, size: %ld, kaddr: %lx\n",
 		// 		    tasks[i].kuaddr, tasks[i].size, kaddr);
+		// also print physical address of kaddr
+		// pmfs_dbg("uaddr: %lx, size: %ld, kaddr: %lx, physical address of kaddr: %lx\n",
+		// 		    tasks[i].kuaddr, tasks[i].size, kaddr, virt_to_phys((void *)kaddr));
+		// pmfs_dbg("phys=%lx cpu=%d\n", virt_to_phys((void *)kaddr), smp_processor_id()); // TODO: 连续物理地址
 #if PMFS_ADAPTIVE_FLUSH
-		// #pragma message("为了测试暂时只用noflush")
-		hotness = pmfs_page_hotness(kaddr); // FIXME: wrong parameter, tasks[i].kuaddr->kaddr
-		hotness_cnt[hotness]++;
-		if (hotness_cnt[0] + hotness_cnt[1] >= 100000) {
-			pmfs_dbg("hotness 0: %d, hotness 1: %d\n", hotness_cnt[0], hotness_cnt[1]);
-			hotness_cnt[0] = 0;
-			hotness_cnt[1] = 0;
-		}
+		#pragma message("为了测试暂时只用noflush")
+		// hotness = pmfs_page_hotness(kaddr); // FIXME: wrong parameter, tasks[i].kuaddr->kaddr
+		
+		// hotness_cnt[hotness]++;
+		// if (hotness_cnt[0] + hotness_cnt[1] + hotness_cnt[2] + hotness_cnt[3] + hotness_cnt[4] >= 100000) {
+		// 	// pmfs_dbg("hotness 0: %d, hotness 1: %d, hotness 2: %d, hotness 3: %d, hotness 4: %d\n", hotness_cnt[0], hotness_cnt[1], hotness_cnt[2], hotness_cnt[3], hotness_cnt[4]);
+		// 	pmfs_dbg("enter a1out: %d, a1out->am no evict: %d, a1out->am evict: %d, am->am no evict: %d, am->am evict: %d\n", hotness_cnt[0], hotness_cnt[1], hotness_cnt[2], hotness_cnt[3], hotness_cnt[4]);
+		// 	hotness_cnt[0] = 0;
+		// 	hotness_cnt[1] = 0;
+		// 	hotness_cnt[2] = 0;
+		// 	hotness_cnt[3] = 0;
+		// 	hotness_cnt[4] = 0;
+		// }
 
-		if (hotness == 0)
-			__copy_from_user_inatomic_nocache((void *)kaddr, (void *)tasks[i].kuaddr, tasks[i].size);
-		else 
+		// if (hotness == 0)
+		// 	__copy_from_user_inatomic_nocache((void *)kaddr, (void *)tasks[i].kuaddr, tasks[i].size);
+		// else 
 			__copy_from_user_inatomic((void *)kaddr, (void *)tasks[i].kuaddr, tasks[i].size);
+
+		// pmfs_flush_buffer((void *)tasks[i].kuaddr, tasks[i].size, 0); 没用
 #else // no adaptive flush, always use nocache
 #if PMFS_NT_STORE
 		__copy_from_user_inatomic_nocache(
@@ -435,6 +449,7 @@ int pmfs_init_agents(int cpus, int sockets)
 		for (j = 0; j < pmfs_dele_thrds; j++) {
 			/* Use the first few cpus of each socket */
 			int target_cpu = i * cpus_per_socket + j;
+			// int target_cpu = j * (sockets + 1) + i; // THIS IS OK, BUT 3 THREADS COLLAPSE
 			int index = i * pmfs_dele_thrds + j;
 			struct task_struct *task;
 
@@ -464,7 +479,9 @@ int pmfs_init_agents(int cpus, int sockets)
 #else
 			kthread_bind(pmfs_agent_tasks[index], target_cpu);
 
+			// IMPORTANT: resctrl is mounted in fxmark.sh
 			// print i, j, index, target_cpu
+#if PMFS_CAT
 			pmfs_dbg("kthread_bind: pid: %d, i: %d, j: %d, index: %d, target_cpu: %d\n", pmfs_agent_tasks[index]->pid, i, j, index, target_cpu);
 
 			struct file *fp = (struct file *) NULL;
@@ -484,6 +501,7 @@ int pmfs_init_agents(int cpus, int sockets)
 				} else printk("%s, %s write success\n", __func__, tasks_COS1_file);
 			}
 			filp_close(fp, NULL);
+#endif
 #endif
 			wake_up_process(pmfs_agent_tasks[index]);
 		}

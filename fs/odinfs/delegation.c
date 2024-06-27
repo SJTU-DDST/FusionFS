@@ -98,8 +98,11 @@ unsigned int pmfs_do_read_delegation(struct pmfs_sb_info *sbi,
 
 	PMFS_START_TIMING(send_request_r_t, send_request_time);
 	do {
-		// thread = pmfs_choose_rings();
+#if PMFS_HASH_RING
 		thread = (kaddr>>12) % pmfs_num_of_rings_per_socket; // IMPORTANT: 比随机选择更好利用CPU缓存
+#else
+		thread = pmfs_choose_rings();
+#endif
 		// thread = 0;
 		ret = pmfs_send_request(pmfs_ring_buffer[socket][thread],
 					&request);
@@ -203,9 +206,16 @@ unsigned int pmfs_do_write_delegation(struct pmfs_sb_info *sbi,
 
 	PMFS_START_TIMING(send_request_w_t, send_request_time);
 	do {
-		// thread = pmfs_choose_rings();
+#if PMFS_HASH_RING
 		thread = (kaddr>>12) % pmfs_num_of_rings_per_socket; // IMPORTANT: 比随机选择更好利用CPU缓存
-		// thread = 0;
+#else
+		thread = pmfs_choose_rings();
+#endif
+		#pragma message "只使用NUMA0的委托线程"
+		if (thread % 2 == 1) {
+			thread = thread - 1;
+		}
+		// thread = 4;
 		ret = pmfs_send_request(pmfs_ring_buffer[socket][thread], // 发送到循环缓冲区
 					&request);
 		// pmfs_dbg("send kaddr to ring: %d, %d, %lx, counter: %d\n", socket, thread, kaddr, counter++);

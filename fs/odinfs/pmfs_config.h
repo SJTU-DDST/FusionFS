@@ -19,6 +19,21 @@
 #pragma message "自适应刷新"
 #endif
 
+#define PMFS_DELEGATE_HOT 1
+#if PMFS_DELEGATE_HOT
+#pragma message "只委托热数据"
+#endif
+
+#define PMFS_CAT 1
+#if PMFS_CAT
+#pragma message "启用CAT"
+#endif
+
+#define PMFS_HASH_RING 1
+#if PMFS_HASH_RING
+#pragma message "根据哈希选择委托线程"
+#endif
+
 #define PMFS_MAX_SOCKET 8
 #define PMFS_MAX_AGENT_PER_SOCKET 28
 #define PMFS_MAX_AGENT (PMFS_MAX_SOCKET * PMFS_MAX_AGENT_PER_SOCKET)

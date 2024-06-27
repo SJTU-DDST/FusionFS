@@ -210,7 +210,8 @@ static int main_work(struct worker *worker)
 	fd = (int)worker->private[0];
 	for (iter = 0; !bench->stop; ++iter) {
 	#if LARGE_WSS // 3.5MB=896, 7MB=1792, 10.5MB=2688, 14MB=3584, 17.5MB=4480, 21MB=5376, 24.5MB=6272, 28MB=7168, 31.5MB=8064, 35MB=8960
-		if (pwrite(fd, page, PAGE_SIZE, (rand() % (int)(14*256)) * PAGE_SIZE) != PAGE_SIZE) // 7MB here; 64*56*4kb=14MB=3584 pages
+		if (pwrite(fd, page, PAGE_SIZE, (rand() % (int)(5*3.5*256)) * PAGE_SIZE) != PAGE_SIZE)
+		// if (pwrite(fd, page, 256, (rand() % (int)(4*3.5*256)) * PAGE_SIZE) != 256)
 	#else
      	if (pwrite(fd, page, PAGE_SIZE, 0) != PAGE_SIZE)
 	#endif

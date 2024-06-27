@@ -15,6 +15,9 @@
         "system_error": "c",
         "thread": "c",
         "variant": "c",
-        "cstdint": "c"
+        "cstdint": "c",
+        "pmfs.h": "c",
+        "chrono": "c",
+        "algorithm": "c"
     }
 }
