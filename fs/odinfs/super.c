@@ -1279,7 +1279,7 @@ static int __init init_pmfs_fs(void)
 	if(rc)
 		goto out3;
 
-#if PMFS_ADAPTIVE_FLUSH
+#if PMFS_DELEGATE_HOT
 	rc = init_page_node_cache();
 	if (rc)
 		goto out5;
@@ -1300,7 +1300,7 @@ static int __init init_pmfs_fs(void)
 
 	return 0;
 
-#if PMFS_ADAPTIVE_FLUSH
+#if PMFS_DELEGATE_HOT
 out5:
 	pr_err("Failed to initialize page node cache\n");
 	destroy_page_node_cache();
@@ -1325,7 +1325,7 @@ static void __exit exit_pmfs_fs(void)
 	destroy_transaction_cache();
 	destroy_rangenode_cache();
 	destroy_rangelock_cache();
-#if PMFS_ADAPTIVE_FLUSH
+#if PMFS_DELEGATE_HOT
 	pr_info("Destroying page node cache at exit\n");
 	destroy_page_node_cache();
 #endif

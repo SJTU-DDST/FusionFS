@@ -1,6 +1,6 @@
 call "common.gnuplot" "3.3in, 2.8in"
 
-set terminal postscript color
+set terminal postscript portrait color
 set output "fig7.eps"
 
 

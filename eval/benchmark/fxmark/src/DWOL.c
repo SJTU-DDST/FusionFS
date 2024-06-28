@@ -17,7 +17,7 @@
 
 #include <stdbool.h>
 
-#define LARGE_WSS 1
+#define LARGE_WSS 0
 #define WRITER_BOMB 0
 
 #if WRITER_BOMB

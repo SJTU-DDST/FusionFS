@@ -9,29 +9,47 @@
 #define __PMFS_CONFIG_H_
 
 #define PMFS_DELEGATION_ENABLE 1
+
+// FusionFS
+#define PMFS_DELEGATE_HOT 1
+#define PMFS_DELEGATE_NO_FLUSH 1
+#define PMFS_CAT 1
+#define PMFS_HASH_RING 1
+// TODO: 冷数据用不在CAT里的线程委托写入？但有额外CPU占用。
+
+// OdinFS
+// #define PMFS_DELEGATE_HOT 0
+// #define PMFS_DELEGATE_NO_FLUSH 0
+// #define PMFS_CAT 0
+// #define PMFS_HASH_RING 0
+
+#if PMFS_DELEGATE_HOT
+#pragma message "只委托热数据"
+#else
+#pragma message "委托所有满足阈值数据"
+#endif
+
+#if PMFS_DELEGATE_NO_FLUSH
+#pragma message "委托线程不刷新"
+#else
+#pragma message "委托线程刷新/ntstore"
+#endif
+
+#if PMFS_CAT
+#pragma message "启用CAT"
+#else
+#pragma message "不启用CAT"
+#endif
+
+#if PMFS_HASH_RING
+#pragma message "根据哈希选择委托线程"
+#else
+#pragma message "随机选择委托线程"
+#endif
+
 #define RANDOM_DELEGATION 0
 #if RANDOM_DELEGATION
 #pragma message "轮流选择委托和不委托"
-#endif
-
-#define PMFS_ADAPTIVE_FLUSH 1
-#if PMFS_ADAPTIVE_FLUSH
-#pragma message "自适应刷新"
-#endif
-
-#define PMFS_DELEGATE_HOT 1
-#if PMFS_DELEGATE_HOT
-#pragma message "只委托热数据"
-#endif
-
-#define PMFS_CAT 1
-#if PMFS_CAT
-#pragma message "启用CAT"
-#endif
-
-#define PMFS_HASH_RING 1
-#if PMFS_HASH_RING
-#pragma message "根据哈希选择委托线程"
 #endif
 
 #define PMFS_MAX_SOCKET 8
@@ -92,7 +110,7 @@
 #define PMFS_DEF_DELE_THREADS_PER_SOCKET 1
 
 /* When set, use nt store to write to memory */
-#define PMFS_NT_STORE 1 // We now use non-temporal stores to write to memory in delegation threads to avoid cache pollution
+#define PMFS_NT_STORE 0 // TODO: We now use non-temporal stores to write to memory in delegation threads to avoid cache pollution
 
 /* 2MB */
 #define PMFS_RING_SIZE (2 * 1024 * 1024)

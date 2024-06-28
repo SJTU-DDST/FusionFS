@@ -225,10 +225,10 @@ static void do_write_request(struct mm_struct *mm, unsigned long kaddr,
 {
 	int i = 0, tasks_index = 0;
 	unsigned long orig_kaddr = kaddr;
-#if PMFS_ADAPTIVE_FLUSH
-	int hotness, counter = 0;
-	static int hotness_cnt[5] = {0, 0, 0, 0, 0};
-#endif
+// #if PMFS_ADAPTIVE_FLUSH
+// 	int hotness, counter = 0;
+// 	static int hotness_cnt[5] = {0, 0, 0, 0, 0};
+// #endif
 
 	struct pmfs_agent_tasks tasks[PMFS_AGENT_TASK_MAX_SIZE];
 
@@ -267,8 +267,8 @@ static void do_write_request(struct mm_struct *mm, unsigned long kaddr,
 		// pmfs_dbg("uaddr: %lx, size: %ld, kaddr: %lx, physical address of kaddr: %lx\n",
 		// 		    tasks[i].kuaddr, tasks[i].size, kaddr, virt_to_phys((void *)kaddr));
 		// pmfs_dbg("phys=%lx cpu=%d\n", virt_to_phys((void *)kaddr), smp_processor_id()); // TODO: 连续物理地址
-#if PMFS_ADAPTIVE_FLUSH
-		#pragma message("为了测试暂时只用noflush")
+// #if PMFS_ADAPTIVE_FLUSH
+		// #pragma message("为了测试暂时只用noflush")
 		// hotness = pmfs_page_hotness(kaddr); // FIXME: wrong parameter, tasks[i].kuaddr->kaddr
 		
 		// hotness_cnt[hotness]++;
@@ -285,13 +285,14 @@ static void do_write_request(struct mm_struct *mm, unsigned long kaddr,
 		// if (hotness == 0)
 		// 	__copy_from_user_inatomic_nocache((void *)kaddr, (void *)tasks[i].kuaddr, tasks[i].size);
 		// else 
+#if PMFS_DELEGATE_NO_FLUSH
 			__copy_from_user_inatomic((void *)kaddr, (void *)tasks[i].kuaddr, tasks[i].size);
-
-		// pmfs_flush_buffer((void *)tasks[i].kuaddr, tasks[i].size, 0); 没用
-#else // no adaptive flush, always use nocache
+#else
+// 			__copy_from_user_inatomic_nocache((void *)kaddr, (void *)tasks[i].kuaddr, tasks[i].size);
+// #endif
+// #else // no adaptive flush, always use nocache
 #if PMFS_NT_STORE
-		__copy_from_user_inatomic_nocache(
-			(void *)kaddr, (void *)tasks[i].kuaddr, tasks[i].size);
+		__copy_from_user_inatomic_nocache((void *)kaddr, (void *)tasks[i].kuaddr, tasks[i].size);
 #else
 		__copy_from_user_inatomic((void *)kaddr, (void *)tasks[i].kuaddr, tasks[i].size); // IMPORTANT: 将用户缓冲区的数据复制到内核缓冲区，去掉这行PM带宽消耗变小
 #endif
@@ -299,7 +300,7 @@ static void do_write_request(struct mm_struct *mm, unsigned long kaddr,
 		kaddr += tasks[i].size;
 	}
 
-#if !PMFS_NT_STORE && !PMFS_ADAPTIVE_FLUSH
+#if !PMFS_NT_STORE && !PMFS_DELEGATE_NO_FLUSH
 	if (flush_cache)
 		pmfs_flush_buffer((void *)orig_kaddr, bytes, 0);
 #endif

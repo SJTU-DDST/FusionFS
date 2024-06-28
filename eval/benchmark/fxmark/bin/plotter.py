@@ -7,6 +7,15 @@ import optparse
 import math
 import pdb
 from parser import Parser
+import scienceplots
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+plt.style.use(['science','ieee'])#,'no-latex']) # apt install cm-super dvipng
+old_fontsize = plt.rcParams['font.size']
+plt.rcParams['font.size'] = old_fontsize * 1.5
+
 
 CUR_DIR     = os.path.abspath(os.path.dirname(__file__))
 
@@ -18,7 +27,11 @@ CUR_DIR     = os.path.abspath(os.path.dirname(__file__))
 """
 
 class Plotter(object):
-    def __init__(self, log_file):
+    def __init__(self): # , log_file
+        (opts, args) = parser.parse_args()
+        gen_dat = "gen" in opts.ty
+        plot = "plotter" in opts.ty
+
         # config
         self.UNIT_WIDTH  = 2.3
         self.UNIT_HEIGHT = 2.3
@@ -31,13 +44,15 @@ class Plotter(object):
         self.UNIT = 1000000.0
 
         # init.
-        self.log_file = log_file
+        # self.log_file = log_file
         self.parser = Parser()
-        self.parser.parse(self.log_file)
-        self.config = self._get_config()
-        self.ncore = int(self.parser.get_config("PHYSICAL_CHIPS")) * \
-                     int(self.parser.get_config("CORE_PER_CHIP"))
-        self.out_dir  = ""
+        # self.parser.parse(self.log_file)
+        # self.config = self._get_config()
+        # self.ncore = int(self.parser.get_config("PHYSICAL_CHIPS")) * \
+        #              int(self.parser.get_config("CORE_PER_CHIP"))
+
+        self.dat_dir  = "../../data/fxmark"
+        self.out_dir  = "../../fig"
         self.out_file = ""
         self.out = 0
 
@@ -70,18 +85,51 @@ class Plotter(object):
             pdf_name = '.'.join(outs[0:-1]) + ".pdf"
         pdf_name = os.path.basename(pdf_name)
         return pdf_name
+    
+    fs_key = {
+        "EXT4-dax": 0,
+        "ext4": 0,
+        "pmfs": 1,
+        "NOVA": 2,
+        "nova": 2,
+        "winefs": 3,
+        "EulerFS": 3,
+        "SoupFS-InPlace": 4,
+        "BorschFS-clwb": 5,
+        "BorschFS-ntstore": 6,
+        "EulerFS-S": 7,
+    }
 
     def _get_fs_list(self, media, bench, iomode):
-        data = self.parser.search_data([media, "*", bench, "*", iomode])
-        fs_set = set()
-        for kd in data:
-            fs = kd[0][1]
-            if fs not in self.EXCLUDED_FS:
-                fs_set.add(fs)
-        #remove tmpfs - to see more acurate comparision between storage fses
-#        fs_set.remove("tmpfs");
-        return sorted(list(fs_set))
-
+        # get args
+        (opts, args) = parser.parse_args()
+        gen_dat = "gen" in opts.ty
+        plot = "plotter" in opts.ty
+        
+        if plot:
+            # check all the files ../out/{media:fs:bench:iomode}.dat to get fs_set
+            fs_set = set()
+            for f in os.listdir("../../data/fxmark/"):
+                if f.endswith(".dat"):
+                    key = f.split(".")[0].split(":")
+                    # print(key)
+                    # if key[0] != "nvme":
+                    #     key[1] = key[1] + "-" + key[0]
+                    #     key[0] = "nvme"
+                    if key[2] == bench and key[3] == iomode: # key[0] == media and 
+                        fs_set.add(key[1])
+            return sorted(list(fs_set), key=lambda x: self.fs_key.get(x, 6))
+        else:
+            data = self.parser.search_data([media, "*", bench, "*", iomode])
+            fs_set = set()
+            for kd in data:
+                fs = kd[0][1]
+                if fs not in self.EXCLUDED_FS:
+                    fs_set.add(fs)
+            #remove tmpfs - to see more acurate comparision between storage fses
+    #        fs_set.remove("tmpfs");
+            return sorted(list(fs_set), key=lambda x: self.fs_key.get(x, 6))
+        
     def _gen_pdf(self, gp_file):
         subprocess.call("cd %s; gnuplot %s" %
                         (self.out_dir, os.path.basename(gp_file)),
@@ -149,6 +197,259 @@ class Plotter(object):
                   end="", file=self.out)
         print("", file=self.out)
 
+    def _plot_sc_data_matplotlib(self, media, benches, iomode, gen_dat, plot):
+        def _get_sc_style(fs):
+            return "with lp ps 0.5"
+
+        def _get_data_file(fs):
+            new_media = media
+            if "pm-array" in fs:
+                return "pm-array:%s:%s:%s.dat" % (fs.replace("-pm-array", ""), bench, iomode)
+            if fs == "odinfs":
+                new_media = "pm-array"
+            # if fs == "ext4":
+            #     new_media = "dm-stripe"
+            return "%s:%s:%s:%s.dat" % (new_media, fs, bench, iomode)
+
+        def label_fs(fs):
+            if fs == "EulerFS-S" or fs == "odinfs":
+                return "FusionFS"
+            elif fs == "EulerFS":
+                return "SoupFS"
+            elif fs == "pmfs":
+                return "PMFS"
+            elif fs == "EXT4-dax":
+                return "EXT4-DAX"
+            elif fs == "nova":
+                return "NOVA"
+            elif fs == "winefs":
+                return "WineFS"
+            else:
+                return fs
+        
+        fs_list = []
+
+        if gen_dat:
+            for bench in benches:
+                # check if there are data
+                fs_list = self._get_fs_list(media, bench, iomode)
+                if fs_list == []:
+                    return
+                # gen sc data files
+                for fs in fs_list:
+                    data = self.parser.search_data([media, fs, bench, "*", iomode])
+                    if data == []:
+                        continue
+                    data_file = os.path.join(self.out_dir, _get_data_file(fs))
+
+                    with open(data_file, "w") as out:
+                        duration = 1.0
+                        for d_kv in data:
+                            d_kv = d_kv[1]
+                            duration = float(d_kv["secs"])
+                            # print(duration)
+                        print("# %s:%s:%s:%s:*:%f" % (media, fs, bench, iomode, duration), file=out) # add duration
+                        for d_kv in data:
+                            d_kv = d_kv[1]
+                            ncpu = float(d_kv["ncpu"])
+                            if ncpu.is_integer():
+                                ncpu = int(ncpu)
+                            if ncpu > self.ncore:
+                                break
+                            if "fio" in bench:
+                                print("%s %s" %
+                                    (d_kv["ncpu"], float(d_kv["works/sec"])/self.FIO_UNIT),
+                                    file=out)
+                            elif "silversearcher" in bench:
+                                print("%s %s" %
+                                    (d_kv["ncpu"], float(d_kv["works/sec"])/self.SILVERSEARCHER_UNIT),
+                                    file=out)
+                            else:
+                                print("%s %s" %
+                                    (d_kv["ncpu"], float(d_kv["works/sec"])/self.UNIT),
+                                    file=out)
+                                
+        if plot:
+            for bench in benches:
+                # check if there are data
+                fs_list = self._get_fs_list(media, bench, iomode) # TODO: 不用media/iomode作为参数，直接查找文件
+                if fs_list == []:
+                    # print(media, bench, iomode)
+                    print("No data for %s" % bench)
+                    return
+            # color
+            c = np.array([[102, 194, 165], [252, 141, 98], [141, 160, 203], 
+                    [231, 138, 195], [166,216,84], [255, 217, 47],
+                    [229, 196, 148], [179, 179, 179]])
+            c  = c/255
+            markers = ['H', '^', '>', 'D', 'o', 's', 'p', 'x']
+            hat = ['|//','-\\\\','|\\\\','-//',"--","\\\\",'//',"xx"]
+            
+            # gen gp file
+            # if len(benches) == 4:
+            #     # plt.rcParams.update({'font.size': 12})
+            #     fig, axs = plt.subplots(2, 2, figsize=(8, 6))
+            # elif "filebench_varmail-1k" in benches:
+            #     fig, axs = plt.subplots(1, len(benches), figsize=(3 * len(benches), 3))
+            # elif "YCSB" in benches and "TPC-C" in benches:
+            #     fig, axs = plt.subplots(1, len(benches), figsize=(4 * len(benches), 3), gridspec_kw={'width_ratios': [1, 0.2]})
+            # elif "YCSB" in benches:
+            #     fig, axs = plt.subplots(1, len(benches), figsize=(8 * len(benches), 3))
+            # # elif "TPC-C" in benches:
+            # #     fig, axs = plt.subplots(1, len(benches), figsize=(3 * len(benches), 3))
+            # else:  
+                # plt.rcParams.update({'font.size': 12})
+            fig, axs = plt.subplots(1, len(benches), figsize=(2.5 * len(benches), 2), layout='constrained')
+            for i, bench in enumerate(benches):
+                fs_list = self._get_fs_list(media, bench, iomode)
+                if fs_list == []:
+                    print("No data for %s" % bench)
+                    return
+
+                if len(benches) == 1:
+                    ax = axs
+                # elif len(benches) == 4: 
+                #     ax = axs[i//2][i%2]
+                else:
+                    ax = axs[i]
+                
+                fs = fs_list[0]
+
+                dat = np.loadtxt(os.path.join(self.dat_dir, _get_data_file(fs)), unpack=True)
+                barplot = False
+                
+                # if dat[0] is not an array, set size to 1
+                if not isinstance(dat[0], np.ndarray):
+                    size = 1
+                else:
+                    size = len(dat[0])
+
+                # barplot
+                x = np.arange(size)
+                if bench == "YCSB":
+                    total_width = 0.8 # 0.9
+                elif "fio" in bench:
+                    total_width = 0.6
+                elif bench == "TPC-C":
+                    total_width = 0.4
+                else:
+                    total_width = 0.9            
+                n = len(fs_list)
+                width = total_width / n
+                x = x - (total_width - width) / 2
+
+                padding = 0.0
+                if bench != "YCSB":
+                    padding = 0.2
+
+                if np.any(dat[0] % 1 != 0): # skewed, bar plot
+                    barplot = True
+                    # print("Benchmark: %s, width: %f" % (bench, width))
+                    # with np.printoptions(precision=3, suppress=True):
+                    #     print(bench, fs, dat)
+
+                divider = 1000000
+                if divider != 1:
+                    print("Divider: %d for %s" % (divider, bench))
+
+                if barplot:
+                    ax.bar(x, dat[1], width=width, edgecolor='black', lw=1.2, color=c[0], hatch=hat[0], label=label_fs(fs))
+                else:
+                    x, y = np.loadtxt(os.path.join(self.dat_dir, _get_data_file(fs)), unpack=True)
+                    y = y / divider
+                    ax.plot(x, y, label=label_fs(fs), color=c[0], marker=markers[0], lw=3, mec='black', markersize=8, alpha=1)
+
+                for j, fs in enumerate(fs_list[1:]):
+                    # if np.any(dat[0] % 1 != 0): # skewed, bar plot
+                    #     with np.printoptions(precision=3, suppress=True):
+                    #         print(bench, fs, dat)
+
+                    if barplot:
+                        ax.bar(x + width * (j+1), np.loadtxt(os.path.join(self.dat_dir, _get_data_file(fs)), unpack=True)[1], width=width, edgecolor='black', lw=1.2, color=c[j+1], hatch=hat[j+1], label=label_fs(fs))
+                    else:
+                        x, y = np.loadtxt(os.path.join(self.dat_dir, _get_data_file(fs)), unpack=True)
+                        y = y / divider
+                        ax.plot(x, y, label=label_fs(fs), color=c[j+1], marker=markers[j+1], lw=3, mec='black', markersize=8, alpha=1)
+                
+                title = bench.replace("_", " ")
+                if title == "fio zipf sync":
+                    title = "Fio System Calls"
+                elif title == "fio zipf mmap":
+                    title = "Fio Memory Map"
+                title = title.replace("filebench", "Filebench")
+                title = title.replace("fileserver-1k", "Fileserver")
+                title = title.replace("varmail-1k", "Varmail")
+                title = title.replace("oltp", "OLTP")
+                # add (a) (b) (c) (d) before title according to i
+                if len(benches) > 1:
+                    title = "(" + chr(ord('a') + i) + ") " + title
+
+                ax.set_title(title)
+                ax.grid(axis='y', linestyle='-.')
+
+                if np.any(dat[0] % 1 != 0):
+                    print("float xticks found for %s" % bench)
+                    if barplot:
+                        names = dat[0].astype(str)
+                        # fio
+                        names = np.where(names == "0.1", "uniform", names) # 1.2 means zipf, 0.1 means random, just a symbol, not for zipf parameter
+                        names = np.where(names == "1.2", "skewed", names)
+                        # YCSB Load A  ,Run A  ,Run B   ,Run C   ,Run D   ,Load E  ,Run E  ,Run F
+                        names = np.where(names == "5.1", "LoadA", names)
+                        names = np.where(names == "5.2", "RunA", names)
+                        names = np.where(names == "5.3", "RunB", names)
+                        names = np.where(names == "5.4", "RunC", names)
+                        names = np.where(names == "5.5", "RunD", names)
+                        names = np.where(names == "5.6", "LoadE", names)
+                        names = np.where(names == "5.7", "RunE", names)
+                        names = np.where(names == "5.8", "RunF", names)
+                        # TPC-C
+                        names = np.where(names == "6.1", "TPC-C", names)
+
+                        ax.set_xticks(range(size))
+                        if size != 1:
+                            ax.set_xticklabels(names)
+                        else:
+                            ax.set_xticklabels([names])
+                    else: # disabled
+                        ax.set_xticks(dat[0].astype(float))
+                        ax.set_xlabel("Zipf parameter")
+                else:
+                    # try: 
+                    # ax.set_xticks(dat[0].astype(int))
+                    # except:
+                    #     print("Error: %s" % bench)
+                    #     print(dat)
+                    ax.set_xticks([i for i in dat[0].astype(int) if i % 4 == 0 or i == 1])
+                    ax.set_xlabel("\# Threads")
+                if "fio" in bench:
+                    ax.set_ylabel("MiB/sec")
+                elif "silversearcher" in bench or bench == "YCSB":
+                    ax.set_ylabel("K ops/sec")
+                elif bench == "TPC-C":
+                    ax.set_ylabel("Transactions/sec")
+                else:
+                    ax.set_ylabel("M ops/sec")
+                if barplot:
+                    # # print xrange of ax
+                    # print(bench, ax.get_xlim())
+                    # add padding to x axis
+                    ax.set_xlim([ax.get_xlim()[0] - padding, ax.get_xlim()[1] + padding])
+                handles, labels = ax.get_legend_handles_labels()
+
+            fig.legend(handles, labels, loc=9, bbox_to_anchor=(0.5, 1.15), ncol=len(fs_list), frameon=False)
+            # fig.tight_layout()
+            # if len(benches) == 4:
+            #     fig.subplots_adjust(top=0.9)
+            # else:
+            #     fig.subplots_adjust(top=0.8)
+
+            save_name = "_".join(benches)
+            plt.savefig(os.path.join(self.out_dir, "%s.png" % save_name), bbox_inches='tight')
+            # plt.savefig(os.path.join(self.out_dir, "%s.svg" % save_name))
+            plt.savefig(os.path.join(self.out_dir, "%s.pdf" % save_name), bbox_inches='tight')
+            plt.close()
+
     def _plot_util_data(self, media, ncore, bench, iomode):
         print("", file=self.out)
         print("set grid y", file=self.out)
@@ -211,12 +512,50 @@ class Plotter(object):
         self.out.close()
         self._gen_pdf(self.out_file)
 
+    def plot_sc_matplotlib(self, out_dir, gen_dat=True, plot=True):
+        bench_groups = [["DRBL", "DRBM", "DRBH", "DWOL", "DWOM"], 
+                       ["DWAL", "DWSL"], 
+                       ["fio_zipf_sync", "fio_zipf_mmap"], 
+                    #    ["MRDL", "MRDM"], 
+                       ["MWCL", "MWCM"], 
+                    #    ["MWRL", "MWRM"],
+                       ["DWOL", "DWOM", "MWCL", "MWCM"],
+                       ["filebench_varmail", "filebench_fileserver", "filebench_webproxy", "filebench_fileserver-1k"],
+                       ["filebench_oltp", "filebench_varmail-1k", "filebench_fileserver-1k"],
+                       ["YCSB", "TPC-C"]]
+        
+        self.out_dir  = out_dir
+        subprocess.call("mkdir -p %s" % self.out_dir, shell=True)
+        # self.out_file = os.path.join(self.out_dir, "sc.gp")
+        # self.out = open(self.out_file, "w")
+        # self._gen_log_info()
+        # self._plot_header()
+        # for media in self.config["media"]:
+        #     for bench in self.config["bench"]:
+        #         for iomode in self.config["iomode"]:
+        #             self._plot_sc_data_matplotlib(media, [bench], iomode, gen_dat, plot)
+
+        # plot group
+        # for media in self.config["media"]:
+        #     for group in bench_groups:
+        #         for iomode in self.config["iomode"]:
+        #             filtered = [bench for bench in group if bench in self.config["bench"]]
+        #             if len(filtered) > 0:
+                        # self._plot_sc_data_matplotlib(media, filtered, iomode, gen_dat, plot)
+
+        for benches in bench_groups:
+            self._plot_sc_data_matplotlib("pmem-local", benches, "bufferedio", gen_dat, plot)
+
+        # self._plot_footer()
+        # self.out.close()
+        # self._gen_pdf(self.out_file)
+
     def plot_util(self, ncore, out_dir):
         self.out_dir  = out_dir
         subprocess.call("mkdir -p %s" % self.out_dir, shell=True)
         self.out_file = os.path.join(self.out_dir, ("util.%s.gp" % ncore))
         self.out = open(self.out_file, "w")
-        self._gen_log_info()
+        # self._gen_log_info()
         self._plot_header()
         for media in self.config["media"]:
             for bench in self.config["bench"]:
@@ -285,9 +624,9 @@ def __print_usage():
 
 if __name__ == "__main__":
     parser = optparse.OptionParser()
-    parser.add_option("--log",   help="Log file")
+    # parser.add_option("--log",   help="Log file")
     parser.add_option("--ty",    help="{sc | util | cmpdev }")
-    parser.add_option("--out",   help="output directory")
+    parser.add_option("--out",   help="output directory", default="../../fig")
     parser.add_option("--ncore", help="# core (only for utilization and cmpdev)", default="1")
     (opts, args) = parser.parse_args()
 
@@ -299,9 +638,17 @@ if __name__ == "__main__":
             parser.print_help()
             exit(1)
     # run
-    plotter = Plotter(opts.log)
+    plotter = Plotter() # opts.log
     if opts.ty == "sc":
         plotter.plot_sc(opts.out)
+    elif "sc-matplotlib" in opts.ty:
+        gen_dat = "gen" in opts.ty
+        plot = "plotter" in opts.ty
+        if not gen_dat and not plot: # legacy
+            gen_dat = True
+            plot = True
+        print("gen_dat:" + str(gen_dat) + ", plot:" + str(plot))
+        plotter.plot_sc_matplotlib(opts.out, gen_dat, plot)
     elif opts.ty == "util":
         plotter.plot_util(int(opts.ncore), opts.out)
     elif opts.ty == "cmpdev":

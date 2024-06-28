@@ -441,7 +441,7 @@ class Runner(object):
         return ncores
 
     def exec_cmd(self, cmd, out=None):
-        print(cmd)
+        # print(cmd)
         p = subprocess.Popen(cmd, shell=True, stdout=out, stderr=out)
         p.wait()
         return p
@@ -491,7 +491,7 @@ class Runner(object):
 
         self.drop_caches()
         self.exec_cmd("sync", self.dev_null)
-        print('TEST', ncore, ','.join(map(lambda c: str(c), cpupol.seq_cores[0:ncore])))
+        # print('TEST', ncore, ','.join(map(lambda c: str(c), cpupol.seq_cores[0:ncore])))
         # self.set_cpus(ncore)
 
     def pre_work(self):
@@ -721,8 +721,8 @@ class Runner(object):
 
     def gen_config(self):
         for ncore in sorted(self.ncores, key=lambda x: x[0], reverse=True):
-            if ncore[0] != 1: # FIXME: only run single core for now
-                continue
+            # if ncore[0] != 1: # FIXME: only run single core for now
+            #     continue
             for bench in self.BENCH_TYPES:
                 for media in self.MEDIA_TYPES:
                     for dio in self.DIRECTIOS:
