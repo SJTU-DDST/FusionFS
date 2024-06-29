@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Remember run ./compile.sh after reboot"
+
 source common.sh
 
 cd ../../fs/odinfs
@@ -9,6 +11,8 @@ cd ../../eval/scripts
 cd ../benchmark/fxmark
 make
 cd ../../scripts
+
+# TODO: set duration to 30
 
 $FXMARK_BIN_PATH/run-fxmark.py --media='pmem-local' \
     --fs='^ext4$|^pmfs$|^nova$|^winefs$' \

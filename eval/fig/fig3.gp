@@ -1,6 +1,6 @@
 call "common.gnuplot" "3.3in, 1.5in"
 
-set terminal postscript portrait color
+set terminal postscript color
 set output "fig3.eps"
 
 # set multiplot layout 1,2
