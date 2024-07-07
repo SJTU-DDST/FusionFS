@@ -8,8 +8,8 @@
 #include "pmfs.h"
 #include "pmfs_config.h"
 
-#define AM_LIMIT (5 * 896) // TODO: 写请求可能包含多页
-#define A1OUT_LIMIT (5 * 896) // 这个调小可以减少抖动？TODO: 驱逐时flush
+#define FREQUENT_LIMIT (5 * 896) // TODO: 写请求可能包含多页
+#define RECENT_LIMIT (5 * 896) // 这个调小可以减少抖动？TODO: 驱逐时flush
 
 struct page_node {
     u64 xmem;
@@ -26,7 +26,7 @@ struct queue {
 };
 
 // struct kmem_cache *page_node_cache;
-// struct queue *am, *a1out;
+// struct queue *frequent, *recent;
 
 int init_page_node_cache(void);
 int destroy_page_node_cache(void);

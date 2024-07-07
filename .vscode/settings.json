@@ -18,6 +18,12 @@
         "cstdint": "c",
         "pmfs.h": "c",
         "chrono": "c",
-        "algorithm": "c"
+        "algorithm": "c",
+        "cache.h": "c",
+        "list.h": "c",
+        "typeinfo": "cpp",
+        "pmem_ar.h": "c",
+        "list": "c",
+        "rwsem.h": "c"
     }
 }
