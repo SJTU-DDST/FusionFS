@@ -1,7 +1,7 @@
 call "common.gnuplot" "3.3in, 1.5in"
 
 set terminal postscript color
-set output "fig1.pdf"
+set output "fig1.eps"
 
 
 mp_startx=0.10

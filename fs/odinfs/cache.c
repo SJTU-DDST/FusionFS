@@ -12,9 +12,14 @@
 // #pragma message "Iterating over pages, add them as separate page_node"
 // #endif
 
-#define DEBUG 0
 static struct kmem_cache *page_node_cache;
 static struct queue *frequent, *recent;
+
+#if BATCHING
+    DEFINE_PER_CPU(u64 *, cpu_xmem_array_ptr);
+    DEFINE_PER_CPU(size_t *, cpu_count_array_ptr);
+    DEFINE_PER_CPU(size_t, cpu_batch_size);
+#endif
 
 // static struct spinlock queue_lock;
 static DECLARE_RWSEM(my_rwsem);
@@ -32,6 +37,21 @@ static struct queue *create_queue(int limit) {
 
 
 int init_page_node_cache(void) {
+#if BATCHING
+    int cpu;
+    for_each_possible_cpu(cpu) {
+        per_cpu(cpu_xmem_array_ptr, cpu) = kmalloc(MAX_BATCH_SIZE * sizeof(u64), GFP_KERNEL);
+        if (!per_cpu(cpu_xmem_array_ptr, cpu)) {
+            pr_err("Failed to allocate memory for cpu_xmem_array_ptr\n");
+            return -ENOMEM;
+        }
+        per_cpu(cpu_count_array_ptr, cpu) = kmalloc(MAX_BATCH_SIZE * sizeof(size_t), GFP_KERNEL);
+        if (!per_cpu(cpu_count_array_ptr, cpu)) {
+            pr_err("Failed to allocate memory for cpu_count_array_ptr\n");
+            return -ENOMEM;
+        }
+    }
+#endif
     page_node_cache = kmem_cache_create("page_node_cache", sizeof(struct page_node), 0, (SLAB_RECLAIM_ACCOUNT | SLAB_MEM_SPREAD), NULL);
     if (page_node_cache == NULL)
         return -ENOMEM;
@@ -50,6 +70,26 @@ int init_page_node_cache(void) {
 }
 
 int destroy_page_node_cache(void) {
+#if BATCHING
+    int cpu;
+    for_each_possible_cpu(cpu) {
+        kfree(per_cpu(cpu_xmem_array_ptr, cpu));
+        kfree(per_cpu(cpu_count_array_ptr, cpu));
+    }
+#endif
+    // free all page nodes with list_for_each_entry_safe
+    struct page_node *node, *tmp;
+    list_for_each_entry_safe(node, tmp, &frequent->head, list) {
+        hash_del(&node->hash);
+        list_del(&node->list);
+        kmem_cache_free(page_node_cache, node);
+    }
+    list_for_each_entry_safe(node, tmp, &recent->head, list) {
+        hash_del(&node->hash);
+        list_del(&node->list);
+        kmem_cache_free(page_node_cache, node);
+    }
+
     kmem_cache_destroy(page_node_cache);
     kfree(frequent);
     kfree(recent);
@@ -58,113 +98,13 @@ int destroy_page_node_cache(void) {
     return 0;
 }
 
-// static int enqueue(struct queue *q, u64 xmem, size_t count) {
-//     int evicted = 0;
-
-//     if (q->size >= q->limit) {
-// #if !NO_EVICT
-//         struct page_node *old_node = list_first_entry(&q->head, struct page_node, list);
-//         hash_del(&old_node->hash);
-//         list_del(&old_node->list);
-//         pmfs_flush_buffer(old_node->xmem, old_node->count, false);
-//         kmem_cache_free(page_node_cache, old_node);
-//         q->size--;
-// #endif
-//         evicted = 1;
-//         // pr_info("Queue=%p is full, remove the oldest xmem=%llu\n", q, old_node->inode_number, old_node->file_index);
-//     }
-// #if NO_EVICT
-//     if (evicted) return evicted;
-// #endif
-
-//     struct page_node *new_node = kmem_cache_alloc(page_node_cache, GFP_KERNEL);
-//     if (!new_node) {
-//         pr_err("Failed to allocate memory for new_node\n");
-//         return -ENOMEM;
-//     }
-//     new_node->xmem = xmem;
-//     new_node->count = count;
-//     // xmem = ((u64)inode_number << 32) | file_index;
-//     hash_add(q->hash_table, &new_node->hash, xmem);
-//     list_add_tail(&new_node->list, &q->head);
-//     q->size++;
-//     // pr_info("Insert xmem=%llu into queue=%p, size=%d\n", xmem, q, q->size);
-
-//     return evicted;
-// }
-
-// static int dequeue(struct queue *q, u64 xmem) { // TODO: make it thread-safe
-//     struct page_node *node;
-//     struct hlist_node *tmp;
-//     // u64 xmem = ((u64)inode_number << 32) | file_index; // 注意必须能编译通过才能parradm
-//     hash_for_each_possible_safe(q->hash_table, node, tmp, hash, xmem) { // TODO: hash_for_each_possible_safe, 需要修改参数
-//         if (node->xmem == xmem) { // TODO: 使用list_move_tail
-//             hash_del(&node->hash); // 可能不需要hash？hash可以快速找到xmem对应的page_node，或者说不需要list？我们需要list来找到最老的node // TODO: 这几句删掉就可以了
-//             list_del(&node->list);
-//             kmem_cache_free(page_node_cache, node); // FIXME: crash, 可能需要上锁，或者直接移动到另一队列
-//             q->size--;
-//             // pr_info("xmem=%llu found in queue=%p, removing\n", xmem, q);
-//             return 1;
-//         }
-//     }
-//     // pr_info("xmem=%llu not found in queue=%p\n", xmem, q);
-//     return 0;
-// }
-
-// 0, enter recent, no evict
-// 1, enter recent, evict
-// 2, recent->frequent, no evict
-// 3, recent->frequent, evict
-// 4, frequent->frequent, no evict
-
-// int pmfs_page_hotness(u64 xmem, size_t count) {
-//     // TODO: 现在的不支持多线程读写的区间重叠，拆分为每个页面
-//     // TODO: 写入可能跨冷热
-
-//     static int hotness_cnt[5] = {0, 0, 0, 0, 0};
-//     int evicted = 0, ret = 0;
-//     // u64 i = xmem;
-//     // while (i < xmem + count) {
-//     //     u64 page_start = i & PAGE_MASK;       
-//     // }
-
-//     down_write(&my_rwsem);
-
-//     if (dequeue(frequent, xmem)) {
-//         evicted = enqueue(frequent, xmem, count);
-//         ret = evicted ? 4 : 3;
-//     } else if (dequeue(recent, xmem)) {
-//         evicted = enqueue(frequent, xmem, count);
-//         ret = evicted ? 2 : 1;
-// #if NO_EVICT
-//         if (ret == 2) ret = 0;
-// #endif
-//     } else {
-//         evicted = enqueue(recent, xmem, count);
-//         // pr_info("First access xmem=%llu, insert into recent\n", xmem);
-//         ret = 0;
-//     }
-
-//     // hotness_cnt[ret]++;
-//     // if (hotness_cnt[0] + hotness_cnt[1] + hotness_cnt[2] + hotness_cnt[3] + hotness_cnt[4] >= 100000) {
-//     //     // pmfs_dbg("hotness 0: %d, hotness 1: %d, hotness 2: %d, hotness 3: %d, hotness 4: %d\n", hotness_cnt[0], hotness_cnt[1], hotness_cnt[2], hotness_cnt[3], hotness_cnt[4]);
-//     //     pmfs_dbg("enter recent: %d, recent->frequent no evict: %d, recent->frequent evict: %d, frequent->frequent no evict: %d, frequent->frequent evict: %d\n", hotness_cnt[0], hotness_cnt[1], hotness_cnt[2], hotness_cnt[3], hotness_cnt[4]);
-//     //     hotness_cnt[0] = 0;
-//     //     hotness_cnt[1] = 0;
-//     //     hotness_cnt[2] = 0;
-//     //     hotness_cnt[3] = 0;
-//     //     hotness_cnt[4] = 0;
-//     // }
-//     up_write(&my_rwsem);
-//     return ret;
-// }
-
-int pmfs_page_hotness(u64 xmem, size_t count) { // TODO: iterover over pages, add them as separate page_node, but how can we return hotness?
+int pmfs_get_hotness_single(u64 xmem, size_t count) { // TODO: iterover over pages, add them as separate page_node, but how can we return hotness?
     struct page_node *node;
     struct hlist_node *tmp;
     int result = 0;
 #if DEBUG
     static int hotness_cnt[5] = {0, 0, 0, 0, 0};
+    int cold_recent_evict = 0;
 #endif
 // #if ITER_OVER_PAGES
 //     u64 xmem_bak = xmem;
@@ -174,11 +114,28 @@ int pmfs_page_hotness(u64 xmem, size_t count) { // TODO: iterover over pages, ad
 
 //     while (xmem < xmem_bak + count_bak) {
 // #endif
+    // if (count == 28672) return 0;
 
+#if PEEK
+    static int counter = 0;
+    counter++;
+    if (counter >= RESET_THRESHOLD)
+        counter = 0;
+    if (counter >= PEEK_THRESHOLD) {
+        result = pmfs_peek_hotness(xmem, count);
+        goto ret_peek;
+    }
+#endif
+
+#if !BATCHING
     down_write(&my_rwsem);
+#endif
     hash_for_each_possible_safe(frequent->hash_table, node, tmp, hash, xmem) {
         if (node->xmem == xmem) {
             list_move(&node->list, &frequent->head);
+#if DEBUG
+            node->access_count++;
+#endif
             result = 4; // frequent->frequent
             goto ret;
         }
@@ -186,21 +143,25 @@ int pmfs_page_hotness(u64 xmem, size_t count) { // TODO: iterover over pages, ad
     hash_for_each_possible_safe(recent->hash_table, node, tmp, hash, xmem) {
         if (node->xmem == xmem) {
             list_move(&node->list, &frequent->head);
-            recent->size--;
+            recent->size -= count;
             hash_del(&node->hash);
-            frequent->size++;
+            frequent->size += count;
             hash_add(frequent->hash_table, &node->hash, xmem);
+#if DEBUG
+            node->access_count++;
+#endif
 
-            if (frequent->size > frequent->limit) {
+            while (frequent->size > frequent->limit) {
                 struct page_node *old_node = list_last_entry(&frequent->head, struct page_node, list);
                 hash_del(&old_node->hash);
                 list_del(&old_node->list);
                 pmfs_flush_buffer(old_node->xmem, old_node->count, false);
+                frequent->size -= old_node->count;
                 kmem_cache_free(page_node_cache, old_node);
-                frequent->size--;
                 result = 3; // recent->frequent evict
-                goto ret;
+                // goto ret;
             }
+            if (result == 3) goto ret;
             result = 2; // recent->frequent no evict
             goto ret;
         }
@@ -213,24 +174,43 @@ int pmfs_page_hotness(u64 xmem, size_t count) { // TODO: iterover over pages, ad
     }
     new_node->xmem = xmem;
     new_node->count = count;
+#if DEBUG
+    new_node->access_count = 1;
+#endif
     hash_add(recent->hash_table, &new_node->hash, xmem);
     list_add(&new_node->list, &recent->head);
-    recent->size++;
-    if (recent->size > recent->limit) {
+    recent->size += count;
+    while (recent->size > recent->limit) {
         struct page_node *old_node = list_last_entry(&recent->head, struct page_node, list);
         hash_del(&old_node->hash);
         list_del(&old_node->list);
+        recent->size -= old_node->count;
         kmem_cache_free(page_node_cache, old_node);
-        recent->size--;
-        result = 0; // 1; FIXME: now it's counted as enter recent no evict but actually it's evicted. This is because we regard hotness=0 as cold data.
+        // result = 0; // 1; FIXME: now it's counted as enter recent no evict but actually it's evicted. This is because we regard hotness=0 as cold data.
+#if DEBUG
+        cold_recent_evict = 1;
+#endif
     }
 ret:
+#if !BATCHING
     up_write(&my_rwsem);
+#endif
+ret_peek:
 #if DEBUG
-    hotness_cnt[result]++;
-    if (hotness_cnt[0] + hotness_cnt[1] + hotness_cnt[2] + hotness_cnt[3] + hotness_cnt[4] >= 100000) {
-        // pmfs_dbg("hotness 0: %d, hotness 1: %d, hotness 2: %d, hotness 3: %d, hotness 4: %d\n", hotness_cnt[0], hotness_cnt[1], hotness_cnt[2], hotness_cnt[3], hotness_cnt[4]);
-        pmfs_dbg("enter recent no evict: %d, enter recent evict: %d, recent->frequent no evict: %d, recent->frequent evict: %d, frequent->frequent: %d\n", hotness_cnt[0], hotness_cnt[1], hotness_cnt[2], hotness_cnt[3], hotness_cnt[4]);
+    hotness_cnt[cold_recent_evict ? 1 : result]++;
+    if (hotness_cnt[0] + hotness_cnt[1] + hotness_cnt[2] + hotness_cnt[3] + hotness_cnt[4] >= 1000000) {
+        struct page_node *node;
+
+        pmfs_dbg("cold->recent: %d, cold->recent evict: %d, recent->frequent: %d, recent->frequent evict: %d, frequent->frequent: %d\n", hotness_cnt[0], hotness_cnt[1], hotness_cnt[2], hotness_cnt[3], hotness_cnt[4]);
+        // print the size of frequent and recent and their limits
+        pmfs_dbg("frequent size: %d, limit: %d, recent size: %d, limit: %d\n", frequent->size, frequent->limit, recent->size, recent->limit);
+        // print the items in frequent and recent lists
+        list_for_each_entry(node, &frequent->head, list) {
+            pmfs_dbg("frequent: xmem=%llu, count=%lu, access_count=%lu\n", node->xmem, node->count, node->access_count);
+        }
+        list_for_each_entry(node, &recent->head, list) {
+            pmfs_dbg("recent: xmem=%llu, count=%lu, access_count=%lu\n", node->xmem, node->count, node->access_count);
+        }
         hotness_cnt[0] = 0;
         hotness_cnt[1] = 0;
         hotness_cnt[2] = 0;
@@ -241,4 +221,51 @@ ret:
     return result;
 }
 
+int pmfs_peek_hotness(u64 xmem, size_t count) {
+    struct page_node *node;
+    struct hlist_node *tmp;
+    int result = 0;
+    down_read(&my_rwsem);
+    hash_for_each_possible_safe(frequent->hash_table, node, tmp, hash, xmem) {
+        if (node->xmem == xmem) {
+            result = 4; // frequent
+            goto ret;
+        }
+    }
+    hash_for_each_possible_safe(recent->hash_table, node, tmp, hash, xmem) {
+        if (node->xmem == xmem) {
+            result = 2; // recent
+            goto ret;
+        }
+    }
 
+ret:
+    up_read(&my_rwsem);
+    return result;
+}
+
+int pmfs_get_hotness(u64 xmem, size_t count) {
+#if BATCHING
+    int batch_size = this_cpu_read(cpu_batch_size);
+    if (count > FREQUENT_LIMIT || count > RECENT_LIMIT) return 0; // too large, ignore
+    
+    if (batch_size >= MAX_BATCH_SIZE) {
+        int i;
+        down_write(&my_rwsem);
+        for (i = 0; i < batch_size; i++)
+            pmfs_get_hotness_single(this_cpu_read(cpu_xmem_array_ptr)[i], this_cpu_read(cpu_count_array_ptr)[i]);
+        up_write(&my_rwsem);
+        this_cpu_write(cpu_batch_size, 0);
+        batch_size = 0;
+    }
+
+    this_cpu_read(cpu_xmem_array_ptr)[batch_size] = xmem;
+    this_cpu_read(cpu_count_array_ptr)[batch_size] = count;
+    this_cpu_inc(cpu_batch_size);
+
+    return pmfs_peek_hotness(xmem, count);
+#else
+    if (count > FREQUENT_LIMIT || count > RECENT_LIMIT) return 0; // too large, ignore
+    return pmfs_get_hotness_single(xmem, count);
+#endif
+}

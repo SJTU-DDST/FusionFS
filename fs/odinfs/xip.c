@@ -358,7 +358,7 @@ static ssize_t __pmfs_xip_file_write(struct address_space *mapping,
 
 		/* do not delegate if bytes is less than PMFS_WRITE_DELEGATION_LIMIT */
 #if PMFS_DELEGATE_HOT
-		delegate = delegate ? pmfs_page_hotness((u64)xmem + page_offset, bytes) : 0;
+		delegate = delegate ? pmfs_get_hotness((u64)xmem + page_offset, bytes) : 0;
 #endif
 #if RANDOM_DELEGATION
 		delegate = prandom_u32(); // 1, delegate for slow
@@ -487,7 +487,7 @@ static ssize_t pmfs_file_write_fast(struct super_block *sb, struct inode *inode,
 
 	/* do not delegate if the size is less than PMFS_WRITE_DELEGATION_LIMIT */
 #if PMFS_DELEGATE_HOT
-	delegate = delegate ? pmfs_page_hotness((u64)xmem + offset, count) : 0;
+	delegate = delegate ? pmfs_get_hotness((u64)xmem + offset, count) : 0;
 #endif
 #if RANDOM_DELEGATION
 	delegate = prandom_u32(); // 0, no delegate for fast
@@ -596,7 +596,7 @@ static inline void pmfs_clear_edge_blk(struct super_block *sb,
 #if PMFS_DELEGATION_ENABLE
 			delegate = count >= PMFS_WRITE_DELEGATION_LIMIT; // IMPORTANT: 注意这里是＞，是相反的
 #if PMFS_DELEGATE_HOT
-			delegate = delegate ? pmfs_page_hotness((u64)ptr, count) : 0;
+			delegate = delegate ? pmfs_get_hotness((u64)ptr, count) : 0;
 #endif
 #if RANDOM_DELEGATION
 			delegate = prandom_u32();; // 1, delegate for slow

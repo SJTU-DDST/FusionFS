@@ -4,9 +4,9 @@ echo "Remember run ./compile.sh after reboot"
 
 source common.sh
 
-cd ../../fs/odinfs
-sudo rmmod odinfs; sudo make && sudo insmod build/odinfs.ko
-cd ../../eval/scripts
+cd ../../fs
+./compile.sh
+cd ../eval/scripts 
 
 cd ../benchmark/fxmark
 make

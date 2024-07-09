@@ -23,30 +23,31 @@
 // #define PMFS_CAT 0
 // #define PMFS_HASH_RING 0
 
-#if PMFS_DELEGATE_HOT
-#pragma message "只委托热数据"
-#else
-#pragma message "委托所有满足阈值数据"
-#endif
+// #if PMFS_DELEGATE_HOT
+// #pragma message "只委托热数据"
+// #else
+// #pragma message "委托所有满足阈值数据"
+// #endif
 
-#if PMFS_DELEGATE_NO_FLUSH
-#pragma message "委托线程不刷新"
-#else
-#pragma message "委托线程刷新/ntstore"
-#endif
+// #if PMFS_DELEGATE_NO_FLUSH
+// #pragma message "委托线程不刷新"
+// #else
+// #pragma message "委托线程刷新/ntstore"
+// #endif
 
-#if PMFS_CAT
-#pragma message "启用CAT"
-#else
-#pragma message "不启用CAT"
-#endif
+// #if PMFS_CAT
+// #pragma message "启用CAT"
+// #else
+// #pragma message "不启用CAT"
+// #endif
 
-#if PMFS_HASH_RING
-#pragma message "根据哈希选择委托线程"
-#else
-#pragma message "随机选择委托线程"
-#endif
+// #if PMFS_HASH_RING
+// #pragma message "根据哈希选择委托线程"
+// #else
+// #pragma message "随机选择委托线程"
+// #endif
 
+#define PMFS_ENCODE_ADDRESS 0
 #define RANDOM_DELEGATION 0
 #if RANDOM_DELEGATION
 #pragma message "轮流选择委托和不委托"

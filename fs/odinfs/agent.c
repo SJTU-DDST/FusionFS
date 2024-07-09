@@ -269,7 +269,7 @@ static void do_write_request(struct mm_struct *mm, unsigned long kaddr,
 		// pmfs_dbg("phys=%lx cpu=%d\n", virt_to_phys((void *)kaddr), smp_processor_id()); // TODO: 连续物理地址
 // #if PMFS_ADAPTIVE_FLUSH
 		// #pragma message("为了测试暂时只用noflush")
-		// hotness = pmfs_page_hotness(kaddr); // FIXME: wrong parameter, tasks[i].kuaddr->kaddr
+		// hotness = pmfs_get_hotness(kaddr); // FIXME: wrong parameter, tasks[i].kuaddr->kaddr
 		
 		// hotness_cnt[hotness]++;
 		// if (hotness_cnt[0] + hotness_cnt[1] + hotness_cnt[2] + hotness_cnt[3] + hotness_cnt[4] >= 100000) {

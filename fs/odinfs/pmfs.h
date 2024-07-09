@@ -372,6 +372,30 @@ static inline struct pmfs_inode *pmfs_get_inode_table(struct super_block *sb)
 				     le64_to_cpu(ps->s_inode_table_offset));
 }
 
+#if PMFS_ENCODE_ADDRESS
+#define PMFS_CLEAR_SEQCOUNT_MASK ((1UL << 57) - 1)
+#define PMFS_SEQCOUNT_MASK (0b1111111)
+#define PMFS_OFFSET_BITS (57)
+
+static inline u64 pmfs_encode_seqcount(u64 offset, char seqcount) {
+	return (offset & PMFS_CLEAR_SEQCOUNT_MASK) | (((u64) seqcount & PMFS_SEQCOUNT_MASK) << PMFS_OFFSET_BITS);
+}
+
+static inline char pmfs_decode_seqcount(u64 offset) {
+	return (offset >> PMFS_OFFSET_BITS); // & PMFS_SEQCOUNT_MASK;
+}
+
+static inline bool pmfs_inc_seqcount(u64 *offset) { // return true if overflow
+	char seqcount = pmfs_decode_seqcount(*offset);
+	if (seqcount == PMFS_SEQCOUNT_MASK) {
+		*offset = pmfs_encode_seqcount(*offset, 0);
+		return true;
+	}
+	*offset = pmfs_encode_seqcount(*offset, seqcount + 1);
+	return false;
+}
+#endif
+
 /*
  * After so many people working on this code, this function is still called
  * *_get_block?
@@ -380,7 +404,9 @@ static inline void *pmfs_get_virt_addr_from_offset(struct super_block *sb,
 						   u64 offset)
 {
 	struct pmfs_super_block *ps = pmfs_get_super(sb);
-
+#if PMFS_ENCODE_ADDRESS
+	offset &= PMFS_CLEAR_SEQCOUNT_MASK;
+#endif
 	return offset ? ((void *)ps + offset) : NULL;
 }
 

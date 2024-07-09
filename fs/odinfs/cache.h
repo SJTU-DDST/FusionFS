@@ -8,12 +8,27 @@
 #include "pmfs.h"
 #include "pmfs_config.h"
 
-#define FREQUENT_LIMIT (5 * 896) // TODO: 写请求可能包含多页
-#define RECENT_LIMIT (5 * 896) // 这个调小可以减少抖动？TODO: 驱逐时flush
+#define FREQUENT_LIMIT (5 * 896 * 4096) // TODO: 写请求可能包含多页
+#define RECENT_LIMIT (5 * 896 * 4096) // 这个调小可以减少抖动？TODO: 驱逐时flush
+
+#define DEBUG 0
+#define PEEK 0
+#if PEEK
+#define PEEK_THRESHOLD  (100000000)
+#define RESET_THRESHOLD (10000000000)
+#endif
+
+#define BATCHING 1
+#if BATCHING
+#define MAX_BATCH_SIZE 128
+#endif
 
 struct page_node {
     u64 xmem;
     size_t count;
+#if DEBUG
+    size_t access_count;
+#endif
     struct hlist_node hash;
     struct list_head list;
 };
@@ -33,6 +48,8 @@ int destroy_page_node_cache(void);
 // struct queue *create_queue(int limit);
 // void enqueue(struct queue *q, int inode_number, int file_index);
 // int dequeue(struct queue *q, int inode_number, int file_index);
-int pmfs_page_hotness(u64 xmem, size_t count);
+int pmfs_get_hotness_single(u64 xmem, size_t count);
+int pmfs_peek_hotness(u64 xmem, size_t count);
+int pmfs_get_hotness(u64 xmem, size_t count);
 
 #endif /* __CACHE_H_ */
