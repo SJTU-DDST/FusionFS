@@ -131,11 +131,11 @@ class Fio(object):
                 for delegation_thread in range(self.delegation_threads):
                     self.seq_cores.remove(socket * cpupol.CORE_PER_CHIP + delegation_thread)
 
-        # create files for fio
-        cmd = "sudo %s %s/%s %s %s %s %s" % (Fio.CREATE_FILE, Fio.MOUNT_DIR,
-                self.benchmark_config[0], self.file_size, self.ncore,
-                self.delegation_threads, self.delegation_sockets)
-        self.exec_cmd(cmd)
+        # create files for fio FIXME: enable this? It is too large!
+        # cmd = "sudo %s %s/%s %s %s %s %s" % (Fio.CREATE_FILE, Fio.MOUNT_DIR,
+        #         self.benchmark_config[0], self.file_size, self.ncore,
+        #         self.delegation_threads, self.delegation_sockets)
+        # self.exec_cmd(cmd)
 
     def __del__(self):
         # clean up
@@ -163,21 +163,21 @@ class Fio(object):
         with tempfile.NamedTemporaryFile(delete=False) as self.bench_out:
             cmd = "sudo fio %s %s" % (self.config.name, self.CMD_OPTIONS)
 
-            #WARM UP: read 10 times, write 1 time
-            if "read" in self.bench:
-                self.exec_cmd(cmd, subprocess.PIPE)
-                self.exec_cmd(cmd, subprocess.PIPE)
-                self.exec_cmd(cmd, subprocess.PIPE)
-                self.exec_cmd(cmd, subprocess.PIPE)
-                self.exec_cmd(cmd, subprocess.PIPE)
-                self.exec_cmd(cmd, subprocess.PIPE)
-                self.exec_cmd(cmd, subprocess.PIPE)
-                self.exec_cmd(cmd, subprocess.PIPE)
-                self.exec_cmd(cmd, subprocess.PIPE)
-                self.exec_cmd(cmd, subprocess.PIPE)
-            else:
-                self.exec_cmd(cmd, subprocess.PIPE)
-
+            # WARM UP: read 10 times, write 1 time FIXME: enable this? This is slow!
+            # if "read" in self.bench:
+            #     self.exec_cmd(cmd, subprocess.PIPE)
+            #     self.exec_cmd(cmd, subprocess.PIPE)
+            #     self.exec_cmd(cmd, subprocess.PIPE)
+            #     self.exec_cmd(cmd, subprocess.PIPE)
+            #     self.exec_cmd(cmd, subprocess.PIPE)
+            #     self.exec_cmd(cmd, subprocess.PIPE)
+            #     self.exec_cmd(cmd, subprocess.PIPE)
+            #     self.exec_cmd(cmd, subprocess.PIPE)
+            #     self.exec_cmd(cmd, subprocess.PIPE)
+            #     self.exec_cmd(cmd, subprocess.PIPE)
+            # else:
+            #     self.exec_cmd(cmd, subprocess.PIPE)
+            # print(cmd)
             p = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             for line in iter(p.stdout.readline, ''):
                 if line is b'':
@@ -207,18 +207,29 @@ class Fio(object):
 
             jobname = fio_dict["jobname"]
 
+            profile_name = ""
+            profile_data = ""
+            try:
+                with open(self.proflog, "r") as fpl:
+                    l = fpl.readlines()
+                    if len(l) >= 2:
+                        profile_name = l[0]
+                        profile_data = l[1]
+            except:
+                pass
+
             print("## %s:%s:%s:%s:%s" %
                   (self.media, self.fs, jobname, self.nfg, self.dio))
             print("# ncpu secs read_iops write_iops "
                   "read_bandwidth write_bandwidth "
                   "read_50_latency read_99_latency "
-                  "write_50_latency write_99_latency")
+                  "write_50_latency write_99_latency %s" % profile_name) # also print ipmctl profile
 
-            print("%s %s %s %s %s %s %s %s %s %s" %
+            print("%s %s %s %s %s %s %s %s %s %s %s" %
                   (self.ncore, self.duration, read_iops, write_iops,
                       read_bandwidth, write_bandwidth,
                       read_50_latency, read_99_latency,
-                      write_50_latency, write_99_latency))
+                      write_50_latency, write_99_latency, profile_data))
 
     def generate_config(self):
         def chunks(lst, n):

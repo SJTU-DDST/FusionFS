@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source common.sh
+source ../scripts/common.sh
 
 if [ $# -ne "2" ];
 then

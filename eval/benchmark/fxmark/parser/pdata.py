@@ -70,13 +70,13 @@ class Plotter(object):
     def _print_data(self, d_kv, out_file, bench, type):
         if (type == "filebench"):
             if bench == "filebench_videoserver":
-                print("%s %s %s" %
+                print("%s %s %s %s %s" %
                       (d_kv["ncpu"], float(d_kv["read_bw"]),
-                       float(d_kv["write_bw"])),
+                       float(d_kv["write_bw"]), d_kv["MediaReads"], d_kv["MediaWrites"]),
                       file=out_file)
             else:
-                print("%s %s" %
-                      (d_kv["ncpu"], float(d_kv["works/sec"])),
+                print("%s %s %s %s" %
+                      (d_kv["ncpu"], float(d_kv["works/sec"]), d_kv["MediaReads"], d_kv["MediaWrites"]),
                       file=out_file)
 
         elif (type == "fio"):
@@ -87,9 +87,9 @@ class Plotter(object):
 
                 read_99_lat = self._parse_latency(d_kv["read_99_latency"],
                                                         "99.000000%")
-                print("%s %s %s %s" %
+                print("%s %s %s %s %s %s" %
                       (d_kv["ncpu"], float(d_kv["read_bandwidth"]),
-                       read_50_lat,  read_99_lat), file=out_file)
+                       read_50_lat,  read_99_lat, d_kv["MediaReads"], d_kv["MediaWrites"]), file=out_file)
 
             else:
                 write_50_lat = self._parse_latency(d_kv["write_50_latency"],
@@ -97,12 +97,12 @@ class Plotter(object):
 
                 write_99_lat = self._parse_latency(d_kv["write_99_latency"],
                                                         '99.000000%')
-                print("%s %s %s %s" %
+                print("%s %s %s %s %s %s" %
                       (d_kv["ncpu"], float(d_kv["write_bandwidth"]),
-                       write_50_lat,  write_99_lat), file=out_file)
+                       write_50_lat,  write_99_lat, d_kv["MediaReads"], d_kv["MediaWrites"]), file=out_file)
         else:
-                print("%s %s" %
-                       (d_kv["ncpu"], float(d_kv["works/sec"])),
+                print("%s %s %s %s" %
+                       (d_kv["ncpu"], float(d_kv["works/sec"]), d_kv["MediaReads"], d_kv["MediaWrites"]),
                       file=out_file)
 
 

@@ -1,0 +1,7 @@
+[seq-write-4K-zipf]
+new_group
+rw=randwrite
+size=64m
+bs=4k
+random_distribution=zipf:2.0
+runtime=1

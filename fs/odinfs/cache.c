@@ -133,7 +133,7 @@ int pmfs_get_hotness_single(u64 xmem, size_t count) { // TODO: iterover over pag
     hash_for_each_possible_safe(frequent->hash_table, node, tmp, hash, xmem) {
         if (node->xmem == xmem) {
             list_move(&node->list, &frequent->head);
-#if DEBUG
+#if ACCESS_COUNT
             node->access_count++;
 #endif
             result = 4; // frequent->frequent
@@ -142,28 +142,35 @@ int pmfs_get_hotness_single(u64 xmem, size_t count) { // TODO: iterover over pag
     }
     hash_for_each_possible_safe(recent->hash_table, node, tmp, hash, xmem) {
         if (node->xmem == xmem) {
-            list_move(&node->list, &frequent->head);
-            recent->size -= count;
-            hash_del(&node->hash);
-            frequent->size += count;
-            hash_add(frequent->hash_table, &node->hash, xmem);
-#if DEBUG
+#if ACCESS_COUNT
             node->access_count++;
+            if (node->access_count >= PROMOTE_THRESHOLD) {
 #endif
+                list_move(&node->list, &frequent->head);
+                recent->size -= count;
+                hash_del(&node->hash);
+                frequent->size += count;
+                hash_add(frequent->hash_table, &node->hash, xmem);
 
-            while (frequent->size > frequent->limit) {
-                struct page_node *old_node = list_last_entry(&frequent->head, struct page_node, list);
-                hash_del(&old_node->hash);
-                list_del(&old_node->list);
-                pmfs_flush_buffer(old_node->xmem, old_node->count, false);
-                frequent->size -= old_node->count;
-                kmem_cache_free(page_node_cache, old_node);
-                result = 3; // recent->frequent evict
-                // goto ret;
+                while (frequent->size > frequent->limit) {
+                    struct page_node *old_node = list_last_entry(&frequent->head, struct page_node, list);
+                    hash_del(&old_node->hash);
+                    list_del(&old_node->list);
+                    pmfs_flush_buffer(old_node->xmem, old_node->count, false);
+                    frequent->size -= old_node->count;
+                    kmem_cache_free(page_node_cache, old_node);
+                    result = 3; // recent->frequent evict
+                    // goto ret;
+                }
+                if (result == 3) goto ret;
+                result = 2; // recent->frequent no evict
+                goto ret;
+#if ACCESS_COUNT
+            } else {
+                result = 0; // recent->frequent no evict
+                goto ret;
             }
-            if (result == 3) goto ret;
-            result = 2; // recent->frequent no evict
-            goto ret;
+#endif
         }
     }
     struct page_node *new_node = kmem_cache_alloc(page_node_cache, GFP_KERNEL);
@@ -174,7 +181,7 @@ int pmfs_get_hotness_single(u64 xmem, size_t count) { // TODO: iterover over pag
     }
     new_node->xmem = xmem;
     new_node->count = count;
-#if DEBUG
+#if ACCESS_COUNT
     new_node->access_count = 1;
 #endif
     hash_add(recent->hash_table, &new_node->hash, xmem);
@@ -206,7 +213,7 @@ ret_peek:
         pmfs_dbg("frequent size: %d, limit: %d, recent size: %d, limit: %d\n", frequent->size, frequent->limit, recent->size, recent->limit);
         // print the items in frequent and recent lists
         list_for_each_entry(node, &frequent->head, list) {
-            pmfs_dbg("frequent: xmem=%llu, count=%lu, access_count=%lu\n", node->xmem, node->count, node->access_count);
+            pmfs_dbg("frequent: xmem=%llx, count=%lu, access_count=%lu\n", node->xmem, node->count, node->access_count);
         }
         list_for_each_entry(node, &recent->head, list) {
             pmfs_dbg("recent: xmem=%llu, count=%lu, access_count=%lu\n", node->xmem, node->count, node->access_count);

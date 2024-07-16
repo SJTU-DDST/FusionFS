@@ -166,6 +166,7 @@ class Runner(object):
             "fio_global_seq-read-1G",
             # "fio_global_seq-read-4K-2M",
             "fio_global_seq-write-4K",
+            "fio_global_seq-write-4K-zipf",
             "fio_global_seq-write-8K",
             "fio_global_seq-write-16K",
             "fio_global_seq-write-32K",
@@ -417,7 +418,7 @@ class Runner(object):
             hint_core = int(hint)
             if hint_core <= 0 or hint_core > self.npcpu:
                 print("Invalid ncore hint", file=sys.stderr)
-            return [hint_core]
+            return [(hint_core, 1)]
 
         delegation_threads = self.DELEGATION_THREADS if self.rcore else 0
         delegation_sockets = self.DELEGATION_SOCKETS if self.rcore else 0

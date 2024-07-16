@@ -7,11 +7,20 @@
 
 #include "pmfs.h"
 #include "pmfs_config.h"
-
+// IMPORTANT: 这个值需要根据CAT分配的缓存调整
 #define FREQUENT_LIMIT (5 * 896 * 4096) // TODO: 写请求可能包含多页
 #define RECENT_LIMIT (5 * 896 * 4096) // 这个调小可以减少抖动？TODO: 驱逐时flush
 
+#define ACCESS_COUNT 1
+#if ACCESS_COUNT
+#define PROMOTE_THRESHOLD 16
+#endif
+
 #define DEBUG 0
+#if DEBUG
+#define ACCESS_COUNT 1
+#endif
+
 #define PEEK 0
 #if PEEK
 #define PEEK_THRESHOLD  (100000000)
@@ -26,7 +35,7 @@
 struct page_node {
     u64 xmem;
     size_t count;
-#if DEBUG
+#if ACCESS_COUNT
     size_t access_count;
 #endif
     struct hlist_node hash;

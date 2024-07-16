@@ -25,6 +25,14 @@ size=1g
 bs=4k
 stonewall
 
+[seq-write-4K-zipf]
+rw=randwrite
+size=64m
+bs=4k
+random_distribution=zipf:2.0
+runtime=1
+stonewall
+
 [seq-write-2M]
 rw=write
 size=1g
