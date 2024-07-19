@@ -331,6 +331,9 @@ static ssize_t __pmfs_xip_file_write(struct address_space *mapping,
 		int left;
 		int delegate = 0;
 #endif
+#if PMFS_HOT_NO_FLUSH
+		int hot = 0;
+#endif
 
 		page_offset = pos & (sb->s_blocksize - 1);
 
@@ -395,6 +398,10 @@ static ssize_t __pmfs_xip_file_write(struct address_space *mapping,
 
 #else
 		PMFS_START_TIMING(memcpy_w_t, memcpy_time);
+#if PMFS_HOT_NO_FLUSH
+		hot = pmfs_get_hotness((u64)xmem + page_offset, bytes);
+		if (!hot) {
+#endif
 
 		pmfs_xip_mem_protect(sb, xmem + page_offset, bytes, 1);
 		copied = memcpy_to_nvmm((char *)xmem, page_offset, buf, bytes);
@@ -406,6 +413,13 @@ static ssize_t __pmfs_xip_file_write(struct address_space *mapping,
 		 * (instead of movnti) to write. So flush those cachelines.
 		 */
 		pmfs_flush_edge_cachelines(pos, copied, xmem + page_offset);
+#if PMFS_HOT_NO_FLUSH
+		} else {
+			pmfs_xip_mem_protect(sb, xmem + page_offset, bytes, 1);
+			copied = bytes - __copy_from_user((char *)xmem + page_offset, buf, bytes);
+			pmfs_xip_mem_protect(sb, xmem + page_offset, bytes, 0);
+		}
+#endif
 
 		PMFS_END_TIMING(memcpy_w_t, memcpy_time);
 #endif
@@ -478,6 +492,9 @@ static ssize_t pmfs_file_write_fast(struct super_block *sb, struct inode *inode,
 #endif
 	int delegate = count >= PMFS_WRITE_DELEGATION_LIMIT
 #endif
+#if PMFS_HOT_NO_FLUSH
+		int hot = 0;
+#endif
 
 	PMFS_DEFINE_TIMING_VAR(memcpy_time);
 
@@ -516,11 +533,22 @@ static ssize_t pmfs_file_write_fast(struct super_block *sb, struct inode *inode,
 	}
 #else
 	PMFS_START_TIMING(memcpy_w_t, memcpy_time);
+#if PMFS_HOT_NO_FLUSH
+	hot = pmfs_get_hotness((u64)xmem + offset, count);
+	if (!hot) {
+#endif
 
 	pmfs_xip_mem_protect(sb, xmem + offset, count, 1);
 	copied = memcpy_to_nvmm((char *)xmem, offset, buf, count);
 	pmfs_xip_mem_protect(sb, xmem + offset, count, 0);
 	pmfs_flush_edge_cachelines(pos, copied, xmem + offset);
+#if PMFS_HOT_NO_FLUSH
+	} else {
+		pmfs_xip_mem_protect(sb, xmem + offset, count, 1);
+		copied = count - __copy_from_user((char *)xmem + offset, buf, count);
+		pmfs_xip_mem_protect(sb, xmem + offset, count, 0);
+	}
+#endif
 	PMFS_END_TIMING(memcpy_w_t, memcpy_time);
 #endif
 
@@ -578,6 +606,9 @@ static inline void pmfs_clear_edge_blk(struct super_block *sb,
 	PMFS_DEFINE_TIMING_VAR(do_delegation_time);
 	int delegate = 0;
 #endif
+#if PMFS_HOT_NO_FLUSH
+		int hot = 0;
+#endif
 
 	PMFS_DEFINE_TIMING_VAR(memcpy_time);
 
@@ -623,10 +654,21 @@ static inline void pmfs_clear_edge_blk(struct super_block *sb,
 			}
 #else
 			PMFS_START_TIMING(memcpy_w_t, memcpy_time);
+#if PMFS_HOT_NO_FLUSH
+		hot = pmfs_get_hotness((u64)ptr, count);
+		if (!hot) {
+#endif
 			pmfs_memunlock_range(sb, ptr, pmfs_inode_blk_size(pi));
 			memset_nt(ptr, 0, count);
 			pmfs_memlock_range(sb, ptr, pmfs_inode_blk_size(pi));
 			PMFS_END_TIMING(memcpy_w_t, memcpy_time);
+#if PMFS_HOT_NO_FLUSH
+		} else {
+			pmfs_memunlock_range(sb, ptr, pmfs_inode_blk_size(pi));
+			memset(ptr, 0, count);
+			pmfs_memlock_range(sb, ptr, pmfs_inode_blk_size(pi));
+		}
+#endif
 #endif
 		}
 	}

@@ -1,9 +1,10 @@
 #!/bin/bash
 
-echo "Remember run ./compile.sh after reboot"
 echo "Build fio-3.37 with libnuma-dev"
 
 source common.sh
+
+# sed -i 's/#define PMFS_DELEGATION_ENABLE 1/#define PMFS_DELEGATION_ENABLE 0/' ../../fs/odinfs/pmfs_config.h
 
 cd ../../fs
 ./compile.sh
@@ -18,7 +19,7 @@ cd ../eval/scripts
 
 # $FXMARK_BIN_PATH/run-fxmark.py --media='pmem-local' \
 #     --fs='^ext4$|^pmfs$|^nova$|^winefs$' \
-#     --workload='^fio_global_seq-write-4K-zipf$' \
+#     --workload='^fio_global_breakdown-zipf$' \
 #     --ncore='*' --iotype='bufferedio' --dthread='0' --dsocket='0' \
 #     --rcore='False' --delegate='False' --confirm='True' \
 #     --directory_name="fio" --log_name="fs-write.log" --duration=1
@@ -30,7 +31,7 @@ cd ../eval/scripts
 #     --directory_name="fio" --log_name="ext4-raid0-read.log" --duration=1
 
 # $FXMARK_BIN_PATH/run-fxmark.py --media='^dm-stripe$' --fs='^ext4$' \
-#     --workload='^fio_global_seq-write-4K-zipf$' \
+#     --workload='^fio_global_breakdown-zipf$' \
 #     --ncore='*' --iotype='bufferedio' --dthread='0' --dsocket='1' \
 #     --rcore='False' --delegate='False' --confirm='True' \
 #     --directory_name="fio" --log_name="ext4-raid0-write.log" --duration=1
@@ -54,8 +55,8 @@ sudo bash -c 'echo "L3:0=fc0;1=fc0">/sys/fs/resctrl/schemata'
 #     --directory_name="fio" --log_name="odinfs-read-2m.log" --duration=1
 
 $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
-    --workload='^fio_global_seq-write-4K-zipf$' \
-    --ncore='12' --iotype='bufferedio' --dthread='12' --dsocket='1' \
+    --workload='^fio_global_breakdown-zipf$' \
+    --ncore='8' --iotype='bufferedio' --dthread='12' --dsocket='1' \
     --rcore='False' --delegate='True' --confirm='True' \
     --directory_name="fio" --log_name="odinfs-write.log" --duration=1
 
@@ -70,3 +71,5 @@ echo ""
 
 echo "卸载resctrl文件系统"
 sudo umount /sys/fs/resctrl/
+
+# sed -i 's/#define PMFS_DELEGATION_ENABLE 0/#define PMFS_DELEGATION_ENABLE 1/' ../../fs/odinfs/pmfs_config.h

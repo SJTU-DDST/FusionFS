@@ -70,6 +70,7 @@ int init_page_node_cache(void) {
 }
 
 int destroy_page_node_cache(void) {
+    struct page_node *node, *tmp;
 #if BATCHING
     int cpu;
     for_each_possible_cpu(cpu) {
@@ -78,7 +79,6 @@ int destroy_page_node_cache(void) {
     }
 #endif
     // free all page nodes with list_for_each_entry_safe
-    struct page_node *node, *tmp;
     list_for_each_entry_safe(node, tmp, &frequent->head, list) {
         hash_del(&node->hash);
         list_del(&node->list);
@@ -102,6 +102,7 @@ int pmfs_get_hotness_single(u64 xmem, size_t count) { // TODO: iterover over pag
     struct page_node *node;
     struct hlist_node *tmp;
     int result = 0;
+    struct page_node *new_node;
 #if DEBUG
     static int hotness_cnt[5] = {0, 0, 0, 0, 0};
     int cold_recent_evict = 0;
@@ -156,7 +157,7 @@ int pmfs_get_hotness_single(u64 xmem, size_t count) { // TODO: iterover over pag
                     struct page_node *old_node = list_last_entry(&frequent->head, struct page_node, list);
                     hash_del(&old_node->hash);
                     list_del(&old_node->list);
-                    pmfs_flush_buffer(old_node->xmem, old_node->count, false);
+                    pmfs_flush_buffer((void *) old_node->xmem, old_node->count, false);
                     frequent->size -= old_node->count;
                     kmem_cache_free(page_node_cache, old_node);
                     result = 3; // recent->frequent evict
@@ -173,7 +174,7 @@ int pmfs_get_hotness_single(u64 xmem, size_t count) { // TODO: iterover over pag
 #endif
         }
     }
-    struct page_node *new_node = kmem_cache_alloc(page_node_cache, GFP_KERNEL);
+    new_node = kmem_cache_alloc(page_node_cache, GFP_KERNEL);
     if (!new_node) {
         pr_err("Failed to allocate memory for new_node\n");
         up_write(&my_rwsem);
@@ -202,7 +203,9 @@ ret:
 #if !BATCHING
     up_write(&my_rwsem);
 #endif
+#if PEEK
 ret_peek:
+#endif
 #if DEBUG
     hotness_cnt[cold_recent_evict ? 1 : result]++;
     if (hotness_cnt[0] + hotness_cnt[1] + hotness_cnt[2] + hotness_cnt[3] + hotness_cnt[4] >= 1000000) {

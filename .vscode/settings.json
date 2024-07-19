@@ -24,6 +24,7 @@
         "typeinfo": "cpp",
         "pmem_ar.h": "c",
         "list": "c",
-        "rwsem.h": "c"
+        "rwsem.h": "c",
+        "charconv": "c"
     }
 }

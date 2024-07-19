@@ -224,7 +224,9 @@ static void do_write_request(struct mm_struct *mm, unsigned long kaddr,
 			     int flush_cache, atomic_t *notify_cnt) // IMPORTANT: 处理写委托
 {
 	int i = 0, tasks_index = 0;
+#if !PMFS_NT_STORE && !PMFS_DELEGATE_NO_FLUSH
 	unsigned long orig_kaddr = kaddr;
+#endif
 // #if PMFS_ADAPTIVE_FLUSH
 // 	int hotness, counter = 0;
 // 	static int hotness_cnt[5] = {0, 0, 0, 0, 0};
@@ -440,6 +442,11 @@ int pmfs_init_agents(int cpus, int sockets)
 #if PMFS_DELE_THREAD_BIND_TO_NUMA
 	struct cpumask * numa_cpumask;
 #endif
+#if PMFS_CAT
+	struct file *fp = (struct file *) NULL;
+	char *tasks_COS1_file = "/sys/fs/resctrl/c1/tasks";
+	char pid_str[10];
+#endif
 	memset(pmfs_agent_tasks, 0,
 	       sizeof(struct task_struct *) * PMFS_MAX_AGENT);
 
@@ -485,9 +492,6 @@ int pmfs_init_agents(int cpus, int sockets)
 #if PMFS_CAT
 			pmfs_dbg("kthread_bind: pid: %d, i: %d, j: %d, index: %d, target_cpu: %d\n", pmfs_agent_tasks[index]->pid, i, j, index, target_cpu);
 
-			struct file *fp = (struct file *) NULL;
-			char *tasks_COS1_file = "/sys/fs/resctrl/c1/tasks";
-			char pid_str[10];
 			fp = filp_open(tasks_COS1_file, O_WRONLY|O_CREAT|O_TRUNC, 0666);
 			if (IS_ERR(fp)) {
 				printk("%s, %s open failed\n", __func__, tasks_COS1_file);

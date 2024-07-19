@@ -111,6 +111,8 @@ class Plotter(object):
     def _get_data(self, media, bench, iomode, type):
 
         def _get_data_file(fs):
+            if "breakdown" in self.log_file:
+                return os.path.basename(self.log_file)
             return "%s:%s:%s:%s.dat" % (media, fs, bench, iomode)
 
         # check if there are data

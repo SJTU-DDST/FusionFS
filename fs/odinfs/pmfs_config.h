@@ -47,6 +47,10 @@
 // #pragma message "随机选择委托线程"
 // #endif
 
+// breakdown
+#define PMFS_NO_FLUSH 0
+#define PMFS_HOT_NO_FLUSH 0
+
 #define PMFS_ENCODE_ADDRESS 0
 #define RANDOM_DELEGATION 0
 #if RANDOM_DELEGATION

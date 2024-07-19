@@ -17,6 +17,8 @@
 #ifndef _LINUX_PMFS_DEF_H
 #define _LINUX_PMFS_DEF_H
 
+#include "pmfs_config.h"
+
 #include <linux/cpu.h>
 #include <linux/magic.h>
 #include <linux/types.h>
@@ -283,7 +285,7 @@ static inline void PERSISTENT_BARRIER(void)
 
 static inline void pmfs_flush_buffer(void *buf, uint32_t len, bool fence)
 {
-	// #pragma message "NO FLUSH"
+#if !PMFS_NO_FLUSH
 	uint32_t i;
 	len = len + ((unsigned long)(buf) & (CACHELINE_SIZE - 1));
 	if (support_clwb_pmfs) {
@@ -293,6 +295,7 @@ static inline void pmfs_flush_buffer(void *buf, uint32_t len, bool fence)
 		for (i = 0; i < len; i += CACHELINE_SIZE)
 			_mm_clflush(buf + i);
 	}
+#endif
 	/* Do a fence only if asked. We often don't need to do a fence
    * immediately after clflush because even if we get context switched
    * between clflush and subsequent fence, the context switch operation

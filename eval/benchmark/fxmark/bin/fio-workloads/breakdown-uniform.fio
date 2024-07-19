@@ -1,0 +1,9 @@
+[breakdown-uniform]
+new_group
+ioengine=sync
+rw=randwrite
+size=16m
+bs=4k
+#random_distribution=zipf:0.99
+runtime=10
+time_based
