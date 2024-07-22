@@ -1,0 +1,8 @@
+[threshold-cold-4K]
+new_group
+ioengine=sync
+rw=randwrite
+size=1g
+bs=4k
+runtime=10
+time_based

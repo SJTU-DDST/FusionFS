@@ -355,7 +355,13 @@ class Plotter(object):
                 if barplot:
                     ax.bar(x, dat[1], width=width, edgecolor='black', lw=1.2, color=c[0], hatch=hat[0], label=label_fs(fs))
                 else:
-                    x, y = np.loadtxt(os.path.join(self.dat_dir, _get_data_file(fs)), unpack=True)
+                    data = np.loadtxt(os.path.join(self.dat_dir, _get_data_file(fs)))
+                    if data.shape[1] == 2:
+                        x, y = data[:, 0], data[:, 1]
+                        media_read = np.zeros_like(x)
+                        media_write = np.zeros_like(x)
+                    elif data.shape[1] == 4:
+                        x, y, media_read, media_write = data[:, 0], data[:, 1], data[:, 2], data[:, 3]
                     y = y / divider
                     ax.plot(x, y, label=label_fs(fs), color=c[0], marker=markers[0], lw=3, mec='black', markersize=8, alpha=1)
 
@@ -367,7 +373,13 @@ class Plotter(object):
                     if barplot:
                         ax.bar(x + width * (j+1), np.loadtxt(os.path.join(self.dat_dir, _get_data_file(fs)), unpack=True)[1], width=width, edgecolor='black', lw=1.2, color=c[j+1], hatch=hat[j+1], label=label_fs(fs))
                     else:
-                        x, y = np.loadtxt(os.path.join(self.dat_dir, _get_data_file(fs)), unpack=True)
+                        data = np.loadtxt(os.path.join(self.dat_dir, _get_data_file(fs)))
+                        if data.shape[1] == 2:
+                            x, y = data[:, 0], data[:, 1]
+                            media_read = np.zeros_like(x)
+                            media_write = np.zeros_like(x)
+                        elif data.shape[1] == 4:
+                            x, y, media_read, media_write = data[:, 0], data[:, 1], data[:, 2], data[:, 3]
                         y = y / divider
                         ax.plot(x, y, label=label_fs(fs), color=c[j+1], marker=markers[j+1], lw=3, mec='black', markersize=8, alpha=1)
                 

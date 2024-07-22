@@ -1,0 +1,8 @@
+[threshold-hot-2M]
+new_group
+ioengine=sync
+rw=randwrite
+size=16m
+bs=2m
+runtime=10
+time_based

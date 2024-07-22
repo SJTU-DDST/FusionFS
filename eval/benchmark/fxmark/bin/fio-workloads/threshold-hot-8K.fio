@@ -1,0 +1,8 @@
+[threshold-hot-8K]
+new_group
+ioengine=sync
+rw=randwrite
+size=16m
+bs=8k
+runtime=10
+time_based

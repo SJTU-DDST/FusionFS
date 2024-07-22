@@ -1,0 +1,8 @@
+[threshold-cold-32K]
+new_group
+ioengine=sync
+rw=randwrite
+size=1g
+bs=32k
+runtime=10
+time_based

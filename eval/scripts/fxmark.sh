@@ -14,18 +14,18 @@ cd ../../scripts
 
 # TODO: set duration to 30
 
-$FXMARK_BIN_PATH/run-fxmark.py --media='pmem-local' \
-    --fs='^ext4$|^pmfs$|^nova$|^winefs$' \
-    --workload='^DRBL$|^DRBM$|^DRBH$|^DWOL$|^DWOM$|^DWAL$|^DWSL$|^MWCL$|^MWCM$|^MWRL$|^MRDL$' \
-    --ncore='*' --iotype='bufferedio' --dthread='0' --dsocket='1' \
-    --rcore='False' --delegate='False' --confirm='True' \
-    --directory_name="fxmark" --log_name="fs.log" --duration=1
+# $FXMARK_BIN_PATH/run-fxmark.py --media='pmem-local' \
+#     --fs='^ext4$|^pmfs$|^nova$|^winefs$' \
+#     --workload='^DRBL$|^DRBM$|^DRBH$|^DWOL$|^DWOM$|^DWAL$|^MWCL$|^MWCM$' \
+#     --ncore='*' --iotype='bufferedio' --dthread='0' --dsocket='1' \
+#     --rcore='False' --delegate='False' --confirm='True' \
+#     --directory_name="fxmark" --log_name="fs.log" --duration=1
 
-$FXMARK_BIN_PATH/run-fxmark.py --media='^dm-stripe$' --fs='^ext4$' \
-    --workload='^DRBL$|^DRBM$|^DRBH$|^DWOL$|^DWOM$ |^DWAL$|^DWSL$|^MWCL$|^MWCM$|^MWRL$|^MRDL$' \
-    --ncore='*' --iotype='bufferedio' --dthread='0' --dsocket='1' \
-    --rcore='False' --delegate='False' --confirm='True' \
-    --directory_name="fxmark" --log_name="ext-raid0.log" --duration=1
+# $FXMARK_BIN_PATH/run-fxmark.py --media='^dm-stripe$' --fs='^ext4$' \
+#     --workload='^DRBL$|^DRBM$|^DRBH$|^DWOL$|^DWOM$|^DWAL$|^MWCL$|^MWCM$' \
+#     --ncore='*' --iotype='bufferedio' --dthread='0' --dsocket='1' \
+#     --rcore='False' --delegate='False' --confirm='True' \
+#     --directory_name="fxmark" --log_name="ext-raid0.log" --duration=1
 
 echo "挂载resctrl文件系统"
 sudo mount -t resctrl resctrl /sys/fs/resctrl # TODO: do this in kernel
@@ -40,7 +40,7 @@ $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
     --directory_name="fxmark" --log_name="odinfs-read.log" --duration=1
 
 $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
-    --workload='^DWOL$|^DWOM$|^DWAL$|^DWSL$|^MWCL$|^MWCM$|^MWRL$|^MRDL$' \
+    --workload='^DWOL$|^DWOM$|^DWAL$|^MWCL$|^MWCM$' \
     --ncore='*' --iotype='bufferedio' --dthread='12' --dsocket='1' \
     --rcore='False' --delegate='True' --confirm='True' \
     --directory_name="fxmark" --log_name="odinfs-write.log" --duration=1
@@ -52,8 +52,6 @@ do
     echo "On $i"
     $FXMARK_PARSER_PATH/pdata.py --log="$FXMARK_LOG_PATH/fxmark/$i" \
     --type='fxmark' --out="$DATA_PATH/fxmark"
-    # $FXMARK_PARSER_PATH/pdata.py --log="$FXMARK_LOG_PATH/fxmark/$i" \
-    # --type='fxmark' --out="/home/congyong/fxmark-plain/out"
 done
 echo ""
 

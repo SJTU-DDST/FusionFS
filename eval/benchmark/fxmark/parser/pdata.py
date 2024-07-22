@@ -7,6 +7,7 @@ import optparse
 import math
 import pdb
 from parser import Parser
+from pathlib import Path
 
 CUR_DIR     = os.path.abspath(os.path.dirname(__file__))
 
@@ -111,8 +112,10 @@ class Plotter(object):
     def _get_data(self, media, bench, iomode, type):
 
         def _get_data_file(fs):
-            if "breakdown" in self.log_file:
+            if "breakdown" in self.log_file: # or "threshold" in self.log_file:
                 return os.path.basename(self.log_file)
+            if "threshold" in self.log_file:
+                return "%s:%s.dat" % (Path(os.path.basename(self.log_file)).stem, bench)
             return "%s:%s:%s:%s.dat" % (media, fs, bench, iomode)
 
         # check if there are data
