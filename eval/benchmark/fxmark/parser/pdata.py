@@ -88,9 +88,9 @@ class Plotter(object):
 
                 read_99_lat = self._parse_latency(d_kv["read_99_latency"],
                                                         "99.000000%")
-                print("%s %s %s %s %s %s" %
+                print("%s %s %s %s" %
                       (d_kv["ncpu"], float(d_kv["read_bandwidth"]),
-                       read_50_lat,  read_99_lat, d_kv["MediaReads"], d_kv["MediaWrites"]), file=out_file)
+                       read_50_lat,  read_99_lat), file=out_file)
 
             else:
                 write_50_lat = self._parse_latency(d_kv["write_50_latency"],

@@ -211,11 +211,18 @@ unsigned int pmfs_do_write_delegation(struct pmfs_sb_info *sbi,
 #else
 		thread = pmfs_choose_rings();
 #endif
-		#pragma message "只使用NUMA0的委托线程"
+#if PMFS_LOCAL_NUMA_ONLY
+	if (socket == 0) { // TODO: support more than 2 NUMA nodes
 		if (thread % 2 == 1) {
 			thread = thread - 1;
 		}
-		// thread = 4;
+	} 
+	else {
+		if (thread % 2 == 0) {
+			thread = thread + 1;
+		}
+	}
+#endif
 		ret = pmfs_send_request(pmfs_ring_buffer[socket][thread], // 发送到循环缓冲区
 					&request);
 		// pmfs_dbg("send kaddr to ring: %d, %d, %lx, counter: %d\n", socket, thread, kaddr, counter++);

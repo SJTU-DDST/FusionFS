@@ -33,18 +33,23 @@ sudo mkdir /sys/fs/resctrl/c1
 sudo bash -c 'echo "L3:0=03f;1=03f">/sys/fs/resctrl/c1/schemata'
 sudo bash -c 'echo "L3:0=fc0;1=fc0">/sys/fs/resctrl/schemata'
 
-$FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
-    --workload='^DRBL$|^DRBM$|^DRBH$' \
-    --ncore='*' --iotype='bufferedio' --dthread='12' --dsocket='1' \
-    --rcore='False' --delegate='False' --confirm='True' \
-    --directory_name="fxmark" --log_name="odinfs-read.log" --duration=1
+# $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
+#     --workload='^DRBL$|^DRBM$|^DRBH$' \
+#     --ncore='*' --iotype='bufferedio' --dthread='12' --dsocket='1' \
+#     --rcore='False' --delegate='False' --confirm='True' \
+#     --directory_name="fxmark" --log_name="odinfs-read.log" --duration=1
 
+# $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
+#     --workload='^DWOL$|^DWOM$|^DWAL$' \
+#     --ncore='*' --iotype='bufferedio' --dthread='12' --dsocket='1' \
+#     --rcore='False' --delegate='True' --confirm='True' \
+#     --directory_name="fxmark" --log_name="odinfs-write.log" --duration=1
+    
 $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
-    --workload='^DWOL$|^DWOM$|^DWAL$|^MWCL$|^MWCM$' \
+    --workload='^MWCL$|^MWCM$' \
     --ncore='*' --iotype='bufferedio' --dthread='12' --dsocket='1' \
     --rcore='False' --delegate='True' --confirm='True' \
-    --directory_name="fxmark" --log_name="odinfs-write.log" --duration=1
-
+    --directory_name="fxmark" --log_name="odinfs-dir.log" --duration=1
 
 echo "Parsing fxmark results"
 for i in `ls $FXMARK_LOG_PATH/fxmark/`

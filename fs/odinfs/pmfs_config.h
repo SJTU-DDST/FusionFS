@@ -15,6 +15,8 @@
 #define PMFS_DELEGATE_NO_FLUSH 1
 #define PMFS_CAT 1
 #define PMFS_HASH_RING 1
+#define PMFS_LOCAL_NUMA_ONLY 1
+
 // TODO: 冷数据用不在CAT里的线程委托写入？但有额外CPU占用。
 
 // OdinFS
@@ -51,6 +53,7 @@
 #define PMFS_NO_FLUSH 0
 #define PMFS_HOT_NO_FLUSH 0
 
+#define PMFS_NUMA_BIND 0
 #define PMFS_ENCODE_ADDRESS 0
 #define RANDOM_DELEGATION 0
 #if RANDOM_DELEGATION

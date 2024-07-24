@@ -1,8 +1,8 @@
-[seq-write-2M]
+[seq-write-2M-hot]
 new_group
 ioengine=sync
 rw=write
-size=1g
+size=2m
 bs=2m
 runtime=1
 time_based

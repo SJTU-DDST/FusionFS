@@ -1,5 +1,6 @@
 #include <linux/io.h>
 #include <linux/kthread.h>
+#include <linux/cpumask.h>
 
 #include "agent.h"
 #include "pmfs.h"
@@ -447,6 +448,9 @@ int pmfs_init_agents(int cpus, int sockets)
 	char *tasks_COS1_file = "/sys/fs/resctrl/c1/tasks";
 	char pid_str[10];
 #endif
+#if PMFS_NUMA_BIND
+	int threads_count[2] = {0, 0};
+#endif
 	memset(pmfs_agent_tasks, 0,
 	       sizeof(struct task_struct *) * PMFS_MAX_AGENT);
 
@@ -457,9 +461,15 @@ int pmfs_init_agents(int cpus, int sockets)
 		for (j = 0; j < pmfs_dele_thrds; j++) {
 			/* Use the first few cpus of each socket */
 			int target_cpu = i * cpus_per_socket + j;
-			// int target_cpu = j * (sockets + 1) + i; // THIS IS OK, BUT 3 THREADS COLLAPSE
+			// int target_cpu = j * (sockets) + i; // THIS IS OK, BUT 3 THREADS COLLAPSE
 			int index = i * pmfs_dele_thrds + j;
 			struct task_struct *task;
+
+#if PMFS_NUMA_BIND
+			int i_bak = i, j_bak = j;
+			i = target_cpu % sockets;
+			j = threads_count[i]++;
+#endif
 
 			init_waitqueue_head(&delegation_queue[i][j]);
 
@@ -491,6 +501,10 @@ int pmfs_init_agents(int cpus, int sockets)
 			// print i, j, index, target_cpu
 #if PMFS_CAT
 			pmfs_dbg("kthread_bind: pid: %d, i: %d, j: %d, index: %d, target_cpu: %d\n", pmfs_agent_tasks[index]->pid, i, j, index, target_cpu);
+
+#if PMFS_NUMA_BIND
+			i = i_bak; j = j_bak;
+#endif
 
 			fp = filp_open(tasks_COS1_file, O_WRONLY|O_CREAT|O_TRUNC, 0666);
 			if (IS_ERR(fp)) {

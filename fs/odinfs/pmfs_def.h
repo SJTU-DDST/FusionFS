@@ -287,6 +287,7 @@ static inline void pmfs_flush_buffer(void *buf, uint32_t len, bool fence)
 {
 #if !PMFS_NO_FLUSH
 	uint32_t i;
+	if (len <= CACHELINE_SIZE) return;
 	len = len + ((unsigned long)(buf) & (CACHELINE_SIZE - 1));
 	if (support_clwb_pmfs) {
 		for (i = 0; i < len; i += CACHELINE_SIZE)

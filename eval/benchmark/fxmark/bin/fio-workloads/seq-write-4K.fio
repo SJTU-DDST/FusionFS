@@ -1,5 +1,8 @@
 [seq-write-4K]
 new_group
+ioengine=sync
 rw=write
 size=1g
 bs=4k
+runtime=1
+time_based

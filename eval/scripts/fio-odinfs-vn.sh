@@ -2,7 +2,7 @@
 
 source common.sh
 
-for i in 1
+for i in 1 2
 do
     $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
     --workload='^fio_global_seq-read-4K$' \

@@ -54,29 +54,31 @@ def plot_data(data):
     """
     绘制数据。
     """
-    plt.figure(figsize=(5, 3), layout="constrained")
+    plt.figure(figsize=(4, 3), layout="constrained")
     
     i = 0
     for update_mode in labels.keys():
         if update_mode in data:
             points = sorted(data[update_mode], key=lambda x: x[0])  # 按 I/O size 排序
-            x = [point[2] for point in points]  # 使用原始 I/O size 字符串作为标签
+            x = [point[2].replace('K', '') for point in points]  # 去除K
             y = [point[1] / 1024 / 1024 for point in points]
             plt.plot(x, y, label=labels[update_mode], marker=markers[i])
             i += 1
     
-    plt.xlabel('I/O Size')
+    plt.xlabel('I/O Size (KB)')
     plt.ylabel('Throughput (GiB/s)')
-    plt.title('I/O Size vs Throughput for Different Update Modes')
     plt.legend()
     plt.grid(True)
     plt.savefig("threshold.png")
+    plt.savefig("threshold.pdf")
 
 # 读取数据
 data = {}
 
 for root, _, files in os.walk(data_dir):
     for file in files:
+        if "2M" in file:
+            continue
         filepath = os.path.join(root, file)
         update_mode, io_size, io_size_str = parse_filename(file)
         if update_mode and io_size:

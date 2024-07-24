@@ -32,8 +32,8 @@ pid2=$!
 
 # flush all data
 sed -i 's/#define PMFS_DELEGATION_ENABLE 1/#define PMFS_DELEGATION_ENABLE 0/' ../../fs/odinfs/pmfs_config.h
-sed -i 's/#define FREQUENT_LIMIT (5 * 896 * 4096)/#define FREQUENT_LIMIT (6 * 896 * 4096)/' ../../fs/odinfs/cache.h # not associative-friendly
-sed -i 's/#define RECENT_LIMIT (5 * 896 * 4096)/#define RECENT_LIMIT (6 * 896 * 4096)/' ../../fs/odinfs/cache.h
+# sed -i 's/#define FREQUENT_LIMIT (5 * 896 * 4096)/#define FREQUENT_LIMIT (6 * 896 * 4096)/' ../../fs/odinfs/cache.h # not associative-friendly
+# sed -i 's/#define RECENT_LIMIT (5 * 896 * 4096)/#define RECENT_LIMIT (6 * 896 * 4096)/' ../../fs/odinfs/cache.h
 cd ../../fs && ./compile.sh > /dev/null 2>&1 && cd ../eval/scripts
 $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
     --workload='^fio_global_breakdown-uniform$' \
@@ -81,8 +81,8 @@ $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
     --directory_name="breakdown" --log_name="odinfs-breakdown-uniform-isolated-data-access.log" --duration=10
 
 # associativity-friendly data layout
-sed -i 's/#define FREQUENT_LIMIT (6 * 896 * 4096)/#define FREQUENT_LIMIT (5 * 896 * 4096)/' ../../fs/odinfs/cache.h
-sed -i 's/#define RECENT_LIMIT (6 * 896 * 4096)/#define RECENT_LIMIT (5 * 896 * 4096)/' ../../fs/odinfs/cache.h
+# sed -i 's/#define FREQUENT_LIMIT (6 * 896 * 4096)/#define FREQUENT_LIMIT (5 * 896 * 4096)/' ../../fs/odinfs/cache.h
+# sed -i 's/#define RECENT_LIMIT (6 * 896 * 4096)/#define RECENT_LIMIT (5 * 896 * 4096)/' ../../fs/odinfs/cache.h
 cd ../../fs && ./compile.sh > /dev/null 2>&1 && cd ../eval/scripts
 
 $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
@@ -102,8 +102,8 @@ $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
     --directory_name="breakdown" --log_name="odinfs-breakdown-uniform-DDIO-aware-way-allocation.log" --duration=10
 
 # reset
-sed -i 's/#define FREQUENT_LIMIT (6 * 896 * 4096)/#define FREQUENT_LIMIT (5 * 896 * 4096)/' ../../fs/odinfs/cache.h
-sed -i 's/#define RECENT_LIMIT (6 * 896 * 4096)/#define RECENT_LIMIT (5 * 896 * 4096)/' ../../fs/odinfs/cache.h
+# sed -i 's/#define FREQUENT_LIMIT (6 * 896 * 4096)/#define FREQUENT_LIMIT (5 * 896 * 4096)/' ../../fs/odinfs/cache.h
+# sed -i 's/#define RECENT_LIMIT (6 * 896 * 4096)/#define RECENT_LIMIT (5 * 896 * 4096)/' ../../fs/odinfs/cache.h
 
 # echo "卸载resctrl文件系统"
 # sudo umount /sys/fs/resctrl/

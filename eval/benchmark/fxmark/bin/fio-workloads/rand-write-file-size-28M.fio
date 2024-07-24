@@ -1,0 +1,9 @@
+[rand-write-file-size-28M]
+new_group
+ioengine=sync
+rw=randwrite
+size=28m
+bs=4k
+#random_distribution=zipf:0.99
+runtime=10
+time_based

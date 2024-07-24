@@ -14,22 +14,23 @@ sudo mkdir /sys/fs/resctrl/c1
 sudo bash -c 'echo "L3:0=03f;1=03f">/sys/fs/resctrl/c1/schemata'
 sudo bash -c 'echo "L3:0=fc0;1=fc0">/sys/fs/resctrl/schemata'
 
-for i in 4 8 14 20 
+for i in 4 8 16 20 
 do
-    $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
-    --workload='^fio_global_seq-read-4K$' \
-    --ncore='*' --iotype='bufferedio' --dthread="$i" --dsocket='1' \
-    --rcore='False' --delegate='False' --confirm='True' \
-    --directory_name="fio-vd" --log_name="odinfs-read-$i-4k.log" --duration=1
+    # $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
+    # --workload='^fio_global_seq-read-4K$' \
+    # --ncore='*' --iotype='bufferedio' --dthread="$i" --dsocket='1' \
+    # --rcore='False' --delegate='False' --confirm='True' \
+    # --directory_name="fio-vd" --log_name="odinfs-read-$i-4k.log" --duration=1
     
-    $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
-    --workload='^fio_global_seq-read-2M$' \
-    --ncore='*' --iotype='bufferedio' --dthread="$i" --dsocket='1' \
-    --rcore='False' --delegate='True' --confirm='True' \
-    --directory_name="fio-vd" --log_name="odinfs-read-$i-2m.log" --duration=1
+    # $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
+    # --workload='^fio_global_seq-read-2M$' \
+    # --ncore='*' --iotype='bufferedio' --dthread="$i" --dsocket='1' \
+    # --rcore='False' --delegate='True' --confirm='True' \
+    # --directory_name="fio-vd" --log_name="odinfs-read-$i-2m.log" --duration=1
 
+    # $|^fio_global_seq-write-2M-hot$
     $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
-    --workload='^fio_global_seq-write-4K$|^fio_global_seq-write-2M$' \
+    --workload='^fio_global_seq-write-4K-hot' \
     --ncore='*' --iotype='bufferedio' --dthread="$i" --dsocket='1' \
     --rcore='False' --delegate='True' --confirm='True' \
     --directory_name="fio-vd" --log_name="odinfs-write-$i.log" --duration=1
@@ -47,3 +48,5 @@ echo ""
 
 echo "卸载resctrl文件系统"
 sudo umount /sys/fs/resctrl/
+
+# TODO: zipf，否则都没有delegate
