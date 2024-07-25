@@ -14,6 +14,7 @@ sudo mount -t resctrl resctrl /sys/fs/resctrl
 sudo mkdir /sys/fs/resctrl/c1
 
 # active-flush update
+sed -i 's/#define PMFS_NT_STORE 1/#define PMFS_NT_STORE 0/' ../../fs/odinfs/pmfs_config.h
 sed -i 's/#define PMFS_DELEGATION_ENABLE 1/#define PMFS_DELEGATION_ENABLE 0/' ../../fs/odinfs/pmfs_config.h
 cd ../../fs && ./compile.sh > /dev/null 2>&1 && cd ../eval/scripts
 $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
@@ -32,7 +33,6 @@ $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
     --directory_name="threshold" --log_name="odinfs-threshold-non-temporal.log" --duration=10
 
 # in-place (cold):
-sed -i 's/#define PMFS_NT_STORE 1/#define PMFS_NT_STORE 0/' ../../fs/odinfs/pmfs_config.h
 sed -i 's/#define PMFS_NO_FLUSH 0/#define PMFS_NO_FLUSH 1/' ../../fs/odinfs/pmfs_config.h
 cd ../../fs && ./compile.sh > /dev/null 2>&1 && cd ../eval/scripts
 

@@ -25,6 +25,7 @@
         "pmem_ar.h": "c",
         "list": "c",
         "rwsem.h": "c",
-        "charconv": "c"
+        "charconv": "c",
+        "pmfs_config.h": "c"
     }
 }

@@ -116,6 +116,8 @@ class Plotter(object):
                 return os.path.basename(self.log_file)
             if "threshold" in self.log_file:
                 return "%s:%s.dat" % (Path(os.path.basename(self.log_file)).stem, bench)
+            if "FusionFS" in self.log_file:
+                fs = "FusionFS"
             return "%s:%s:%s:%s.dat" % (media, fs, bench, iomode)
 
         # check if there are data

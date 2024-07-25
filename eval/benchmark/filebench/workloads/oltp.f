@@ -23,18 +23,19 @@
 # Use is subject to license terms.
 #
 
-set $dir=/tmp
+set $dir=/home/congyong/Odinfs/eval/benchmark/fxmark/bin/root
 set $eventrate=0
 set $runtime=30
 set $iosize=2k
 set $nshadows=200
 set $ndbwriters=10
-set $usermode=200000
-set $filesize=10m
+set $usermode=2
+set $filesize=100m
 set $memperthread=1m
 set $workingset=0
+set $workingsethot=10m
 set $logfilesize=10m
-set $nfiles=10
+set $nfiles=1 # change to 1?
 set $nlogfiles=1
 set $directio=0
 
@@ -48,10 +49,10 @@ define process name=lgwr,instances=1
 {
   thread name=lgwr,memsize=$memperthread,useism
   {
-    flowop aiowrite name=lg-write,filesetname=logfile,
+    flowop write name=lg-write,filesetname=logfile,
         iosize=256k,random,directio=$directio,dsync
-    flowop aiowait name=lg-aiowait
-    flowop semblock name=lg-block,value=3200,highwater=1000
+    #flowop aiowait name=lg-aiowait
+    #flowop semblock name=lg-block,value=32,highwater=1000
   }
 }
 
@@ -60,11 +61,11 @@ define process name=dbwr,instances=$ndbwriters
 {
   thread name=dbwr,memsize=$memperthread,useism
   {
-    flowop aiowrite name=dbwrite-a,filesetname=datafiles,
-        iosize=$iosize,workingset=$workingset,random,iters=100,opennext,directio=$directio,dsync
-    flowop hog name=dbwr-hog,value=10000
-    flowop semblock name=dbwr-block,value=1000,highwater=2000
-    flowop aiowait name=dbwr-aiowait
+    flowop write name=dbwrite-a,filesetname=datafiles,
+        iosize=$iosize,workingset=$workingsethot,random,iters=100,opennext,directio=$directio,dsync
+    #flowop hog name=dbwr-hog,value=1
+    #flowop semblock name=dbwr-block,value=10,highwater=2000
+    #flowop aiowait name=dbwr-aiowait
   }
 }
 
@@ -73,11 +74,11 @@ define process name=shadow,instances=$nshadows
   thread name=shadow,memsize=$memperthread,useism
   {
     flowop read name=shadowread,filesetname=datafiles,
-      iosize=$iosize,workingset=$workingset,random,opennext,directio=$directio
-    flowop hog name=shadowhog,value=$usermode
-    flowop sempost name=shadow-post-lg,value=1,target=lg-block,blocking
-    flowop sempost name=shadow-post-dbwr,value=1,target=dbwr-block,blocking
-    flowop eventlimit name=random-rate
+      iosize=$iosize,workingset=$workingsethot,random,opennext,directio=$directio
+    #flowop hog name=shadowhog,value=$usermode
+    #flowop sempost name=shadow-post-lg,value=1,target=lg-block,blocking
+    #flowop sempost name=shadow-post-dbwr,value=1,target=dbwr-block,blocking
+    #flowop eventlimit name=random-rate
   }
 }
 

@@ -149,10 +149,11 @@ class Runner(object):
             "DWTL",
 
             # filebench
-            "filebench_varmail",
-            "filebench_fileserver",
-            "filebench_videoserver",
-            "filebench_webserver",
+            # "filebench_varmail",
+            # "filebench_fileserver",
+            # "filebench_videoserver",
+            # "filebench_webserver",
+            "filebench_oltp",
 
             # dbench
             "dbench_client",

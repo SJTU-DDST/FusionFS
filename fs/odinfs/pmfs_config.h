@@ -9,22 +9,23 @@
 #define __PMFS_CONFIG_H_
 
 #define PMFS_DELEGATION_ENABLE 1
+#define PMFS_FUSIONFS 1
 
 // FusionFS
+#if PMFS_FUSIONFS
 #define PMFS_DELEGATE_HOT 1
 #define PMFS_DELEGATE_NO_FLUSH 1
 #define PMFS_CAT 1
 #define PMFS_HASH_RING 1
 #define PMFS_LOCAL_NUMA_ONLY 1
-
+#else
 // TODO: 冷数据用不在CAT里的线程委托写入？但有额外CPU占用。
-
 // OdinFS
-// #define PMFS_DELEGATE_HOT 0
-// #define PMFS_DELEGATE_NO_FLUSH 0
-// #define PMFS_CAT 0
-// #define PMFS_HASH_RING 0
-
+#define PMFS_DELEGATE_HOT 0
+#define PMFS_DELEGATE_NO_FLUSH 0
+#define PMFS_CAT 0
+#define PMFS_HASH_RING 0
+#endif
 // #if PMFS_DELEGATE_HOT
 // #pragma message "只委托热数据"
 // #else
@@ -107,9 +108,12 @@
 
 #define PMFS_SOLROS_RING_BUFFER 1
 
+#if PMFS_FUSIONFS
 /* write delegation limits: 256 */ // IMPORTANT: This is the limit for the number of writes that can be delegated to the agents
+#define PMFS_WRITE_DELEGATION_LIMIT 4096
+#else
 #define PMFS_WRITE_DELEGATION_LIMIT 256
-// #pragma message "NO DELEGATION"
+#endif
 
 /* read delegation limits: 32K */
 #define PMFS_READ_DELEGATION_LIMIT (32 * 1024)
@@ -117,8 +121,12 @@
 /* Number of default delegation threads per socket */
 #define PMFS_DEF_DELE_THREADS_PER_SOCKET 1
 
+#if PMFS_FUSIONFS
 /* When set, use nt store to write to memory */
-#define PMFS_NT_STORE 0 // TODO: We now use non-temporal stores to write to memory in delegation threads to avoid cache pollution
+#define PMFS_NT_STORE 1 // TODO: We now use non-temporal stores to write to memory in delegation threads to avoid cache pollution
+#else
+#define PMFS_NT_STORE 0
+#endif
 
 /* 2MB */
 #define PMFS_RING_SIZE (2 * 1024 * 1024)
