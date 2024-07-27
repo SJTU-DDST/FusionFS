@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/usr/include",
+                "/usr/local/include",
+                "/usr/lib/gcc/x86_64-linux-gnu/9/include",
+                "~/kernel/include",
+                "~/kernel/arch/x86/include",
+                "~/kernel/arch/x86/include/generated",
+                "~/kernel/include/uapi"
+            ],
+            "defines": ["__KERNEL__", "__GUN__", "KBUILD_MODNAME = \"\""],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-gcc-x64",
+            "configurationProvider": "ms-vscode.makefile-tools"
+        }
+    ],
+    "version": 4
+}

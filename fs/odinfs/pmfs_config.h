@@ -138,6 +138,7 @@
 #define PMFS_ENABLE_JOURNAL  1
 
 #define PMFS_FINE_GRAINED_LOCK 1
+// FIXME: currently fine grained lock is not compatible with Kyoto Cabinet (concurrent writes/mmap to the same file)
 
 /* stock inode lock in the linux kernel */
 #define PMFS_INODE_LOCK_STOCK        1

@@ -175,6 +175,11 @@ static loff_t pmfs_llseek(struct file *file, loff_t offset, int origin)
  * pmfs_flush_buffer() on fsync() */
 int pmfs_fsync(struct file *file, loff_t start, loff_t end, int datasync)
 {
+// #if PMFS_FUSIONFS
+// 	// pmfs_dbg("fsync: start(%llx), end(%llx), datasync(%d)\n", start, end,
+// 	// 	 datasync);
+// 	return 0; // TODO: adaptive flush
+// #endif
 	/* Sync from start to end[inclusive] */
 	struct address_space *mapping = file->f_mapping;
 	struct inode *inode = mapping->host;
@@ -224,8 +229,8 @@ int pmfs_fsync(struct file *file, loff_t start, loff_t end, int datasync)
 			xip_mem = pmfs_get_virt_addr_from_offset(inode->i_sb,
 								 block);
 			/* flush the range */
-			increase_fsync_pages_count();
-			pmfs_flush_buffer(xip_mem + offset, nr_flush_bytes, 0);
+			// increase_fsync_pages_count();
+			// pmfs_flush_buffer(xip_mem + offset, nr_flush_bytes, 0); TODO: adaptive flush
 		} else {
 			/* sparse files could have such holes */
 			pmfs_dbg_verbose("[%s:%d] : start(%llx), end(%llx),"
