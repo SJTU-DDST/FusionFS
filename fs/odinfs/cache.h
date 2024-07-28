@@ -13,7 +13,10 @@
 
 #define ACCESS_COUNT 1
 #if ACCESS_COUNT
-#define PROMOTE_THRESHOLD 16
+#define WRITE_PROMOTE_THRESHOLD 16
+#if PMFS_ADAPTIVE_MMAP
+#define MMAP_PROMOTE_THRESHOLD 4
+#endif
 #endif
 
 #define DEBUG 0
@@ -57,7 +60,7 @@ int destroy_page_node_cache(void);
 // struct queue *create_queue(int limit);
 // void enqueue(struct queue *q, int inode_number, int file_index);
 // int dequeue(struct queue *q, int inode_number, int file_index);
-int pmfs_get_hotness_single(u64 xmem, size_t count);
+int pmfs_get_hotness_single(u64 xmem, size_t count, int threshold);
 int pmfs_peek_hotness(u64 xmem, size_t count);
 int pmfs_get_hotness(u64 xmem, size_t count);
 

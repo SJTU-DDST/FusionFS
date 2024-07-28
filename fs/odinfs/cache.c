@@ -98,7 +98,7 @@ int destroy_page_node_cache(void) {
     return 0;
 }
 
-int pmfs_get_hotness_single(u64 xmem, size_t count) { // TODO: iterover over pages, add them as separate page_node, but how can we return hotness?
+int pmfs_get_hotness_single(u64 xmem, size_t count, int threshold) { // TODO: iterover over pages, add them as separate page_node, but how can we return hotness?
     struct page_node *node;
     struct hlist_node *tmp;
     int result = 0;
@@ -145,7 +145,7 @@ int pmfs_get_hotness_single(u64 xmem, size_t count) { // TODO: iterover over pag
         if (node->xmem == xmem) {
 #if ACCESS_COUNT
             node->access_count++;
-            if (node->access_count >= PROMOTE_THRESHOLD) {
+            if (node->access_count >= threshold) {
 #endif
                 list_move(&node->list, &frequent->head);
                 recent->size -= count;
@@ -168,7 +168,7 @@ int pmfs_get_hotness_single(u64 xmem, size_t count) { // TODO: iterover over pag
                 goto ret;
 #if ACCESS_COUNT
             } else {
-                result = 0; // recent->frequent no evict
+                result = 0; // recent->recent
                 goto ret;
             }
 #endif
@@ -242,12 +242,12 @@ int pmfs_peek_hotness(u64 xmem, size_t count) {
             goto ret;
         }
     }
-    hash_for_each_possible_safe(recent->hash_table, node, tmp, hash, xmem) {
-        if (node->xmem == xmem) {
-            result = 2; // recent
-            goto ret;
-        }
-    }
+    // hash_for_each_possible_safe(recent->hash_table, node, tmp, hash, xmem) { // removed, recent is cold
+    //     if (node->xmem == xmem) {
+    //         result = 2; // recent
+    //         goto ret;
+    //     }
+    // }
 
 ret:
     up_read(&my_rwsem);
@@ -263,7 +263,7 @@ int pmfs_get_hotness(u64 xmem, size_t count) {
         int i;
         down_write(&my_rwsem);
         for (i = 0; i < batch_size; i++)
-            pmfs_get_hotness_single(this_cpu_read(cpu_xmem_array_ptr)[i], this_cpu_read(cpu_count_array_ptr)[i]);
+            pmfs_get_hotness_single(this_cpu_read(cpu_xmem_array_ptr)[i], this_cpu_read(cpu_count_array_ptr)[i], WRITE_PROMOTE_THRESHOLD);
         up_write(&my_rwsem);
         this_cpu_write(cpu_batch_size, 0);
         batch_size = 0;
@@ -276,6 +276,6 @@ int pmfs_get_hotness(u64 xmem, size_t count) {
     return pmfs_peek_hotness(xmem, count);
 #else
     if (count > FREQUENT_LIMIT || count > RECENT_LIMIT) return 0; // too large, ignore
-    return pmfs_get_hotness_single(xmem, count);
+    return pmfs_get_hotness_single(xmem, count, WRITE_PROMOTE_THRESHOLD);
 #endif
 }

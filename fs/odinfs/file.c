@@ -16,6 +16,9 @@
 #include "pmfs.h"
 #include "pmfs_stats.h"
 #include "xip.h"
+#if PMFS_ADAPTIVE_MMAP
+#include "cache.h"
+#endif
 #include <asm/mman.h>
 #include <linux/falloc.h>
 #include <linux/fs.h>
@@ -175,15 +178,13 @@ static loff_t pmfs_llseek(struct file *file, loff_t offset, int origin)
  * pmfs_flush_buffer() on fsync() */
 int pmfs_fsync(struct file *file, loff_t start, loff_t end, int datasync)
 {
-// #if PMFS_FUSIONFS
-// 	// pmfs_dbg("fsync: start(%llx), end(%llx), datasync(%d)\n", start, end,
-// 	// 	 datasync);
-// 	return 0; // TODO: adaptive flush
-// #endif
 	/* Sync from start to end[inclusive] */
 	struct address_space *mapping = file->f_mapping;
 	struct inode *inode = mapping->host;
 	loff_t isize;
+#if PMFS_ADAPTIVE_MMAP
+	struct pmfs_inode_info *vi = PMFS_I(inode);
+#endif
 
 	PMFS_DEFINE_TIMING_VAR(fsync_time);
 
@@ -191,6 +192,12 @@ int pmfs_fsync(struct file *file, loff_t start, loff_t end, int datasync)
 	/* if the file is not mmap'ed, there is no need to do clflushes */
 	if (mapping_mapped(mapping) == 0)
 		goto persist;
+
+#if PMFS_ADAPTIVE_MMAP
+	if (vi->msync_count++ < PMFS_MSYNC_BATCH)
+		goto persist;
+	vi->msync_count = 0;
+#endif
 
 	end += 1; /* end is inclusive. We like our indices normal please ! */
 
@@ -215,7 +222,9 @@ int pmfs_fsync(struct file *file, loff_t start, loff_t end, int datasync)
 		pgoff_t pgoff;
 		loff_t offset;
 		unsigned long nr_flush_bytes;
-
+#if PMFS_ADAPTIVE_MMAP
+		int hot = 0;
+#endif
 		pgoff = start >> PAGE_SHIFT;
 		offset = start & ~PAGE_MASK;
 
@@ -229,8 +238,24 @@ int pmfs_fsync(struct file *file, loff_t start, loff_t end, int datasync)
 			xip_mem = pmfs_get_virt_addr_from_offset(inode->i_sb,
 								 block);
 			/* flush the range */
-			// increase_fsync_pages_count();
-			// pmfs_flush_buffer(xip_mem + offset, nr_flush_bytes, 0); TODO: adaptive flush
+#if PMFS_ADAPTIVE_MMAP
+			hot = pmfs_peek_hotness((u64)xip_mem, PAGE_SIZE);
+			if (!hot) {
+				increase_fsync_pages_count();
+				pmfs_flush_buffer(xip_mem + offset, nr_flush_bytes, 0);
+
+				// pmfs_dbg_mmap("fsync: xip_mem(%p), start(%llx), end(%llx),"
+				// 	 " hot(%d)\n",
+				// 	 xip_mem, start, end, hot);
+			} 
+			// else
+			// 	pmfs_dbg_mmap("no fsync: xip_mem(%p), start(%llx), end(%llx),"
+			// 		 " hot(%d)\n",
+			// 		 xip_mem, start, end, hot);
+#else
+			increase_fsync_pages_count();
+			pmfs_flush_buffer(xip_mem + offset, nr_flush_bytes, 0);
+#endif
 		} else {
 			/* sparse files could have such holes */
 			pmfs_dbg_verbose("[%s:%d] : start(%llx), end(%llx),"

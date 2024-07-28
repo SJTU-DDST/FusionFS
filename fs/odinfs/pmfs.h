@@ -77,6 +77,8 @@ extern unsigned int pmfs_dbgmask;
 #define pmfs_dbg_mmapvv(s, args...)                                            \
 	((pmfs_dbgmask & PMFS_DBGMASK_MMAPVVERBOSE) ? pmfs_dbg(s, args) : 0)
 
+#define pmfs_dbg_mmap(s, args...) // pr_info(s, ##args)
+
 #define pmfs_dbg_verbose(s, args...)                                           \
 	((pmfs_dbgmask & PMFS_DBGMASK_VERBOSE) ? pmfs_dbg(s, ##args) : 0)
 #define pmfs_dbg_trans(s, args...)                                             \
@@ -241,6 +243,13 @@ struct inode_map {
 	struct pmfs_range_node *first_inode_range;
 };
 
+#if PMFS_ADAPTIVE_MMAP
+struct mmap_file {
+	struct address_space *mapping;
+	struct list_head list;
+};
+#endif
+
 
 /*
  * PMFS super-block data in memory
@@ -290,6 +299,11 @@ struct pmfs_sb_info {
 	struct task_struct *log_cleaner_thread;
 	wait_queue_head_t log_cleaner_wait;
 	bool redo_log;
+
+#if PMFS_ADAPTIVE_MMAP
+	struct task_struct *mmap_tracer;
+	struct list_head mmap_list;
+#endif
 
 	/* truncate list related structures */
 	struct list_head s_truncate;

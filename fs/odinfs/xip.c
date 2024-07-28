@@ -24,6 +24,13 @@
 #include "xip.h"
 #include "range_lock.h"
 #include "rwsem.h"
+#if PMFS_ADAPTIVE_MMAP
+#include "cache.h"
+
+#include "pmem_ar.h"
+#include "pmem_ar_block.h"
+#include <linux/iomap.h>
+#endif
 
 #if RANDOM_DELEGATION
 #include <linux/random.h>
@@ -897,6 +904,9 @@ static vm_fault_t __pmfs_xip_file_fault(struct vm_area_struct *vma,
 	void *xip_mem;
 	unsigned long xip_pfn;
 	vm_fault_t err;
+#if PMFS_ADAPTIVE_MMAP
+	int hot = 0;
+#endif
 
 	size = (i_size_read(inode) + PAGE_SIZE - 1) >> PAGE_SHIFT;
 	if (vmf->pgoff >= size) {
@@ -924,7 +934,11 @@ static vm_fault_t __pmfs_xip_file_fault(struct vm_area_struct *vma,
 
 	err = vmf_insert_mixed(vma, (unsigned long)vmf->address,
 			       pfn_to_pfn_t(xip_pfn));
-
+#if PMFS_ADAPTIVE_MMAP
+	// pmfs_dbg_mmap("xip_mem=%p, xip_pfn=%lx, vmf->address=%lx, start=%lx, end=%lx\n", xip_mem, xip_pfn, vmf->address, vma->vm_start, vma->vm_end);
+	hot = pmfs_get_hotness_single((u64)xip_mem, PAGE_SIZE, MMAP_PROMOTE_THRESHOLD);
+	pmfs_dbg_mmap("xip_mem=%p, vmf->address=%llx, hot=%d\n", xip_mem, vmf->address, hot);
+#endif
 	if (err == -ENOMEM)
 		return VM_FAULT_SIGBUS;
 	/*
@@ -940,6 +954,35 @@ static vm_fault_t pmfs_xip_file_fault(struct vm_fault *vmf)
 {
 	vm_fault_t ret = 0;
 	PMFS_DEFINE_TIMING_VAR(fault_time);
+#if PMFS_ADAPTIVE_MMAP
+	struct file *file = vmf->vma->vm_file;
+	struct inode *inode = file_inode(file);
+	struct pmfs_inode_info *vi = PMFS_I(inode);
+
+	if (!vi->mmap_tracing) {
+		// get sbi
+		struct pmfs_sb_info *sbi = PMFS_SB(inode->i_sb);
+		struct mmap_file *new_data, *data_ptr, *tmp;
+		bool found = 0;
+
+		list_for_each_entry_safe(data_ptr, tmp, &sbi->mmap_list, list) {
+			if (data_ptr->mapping == file->f_mapping) {
+				found = 1;
+				break;
+			}
+		}
+
+		if (!found) {
+			new_data = kmalloc(sizeof(struct mmap_file), GFP_KERNEL);
+			if (new_data) {
+				new_data->mapping = file->f_mapping;
+				list_add_tail(&new_data->list, &sbi->mmap_list);
+				pmfs_dbg_mmap("mmap file=%p, vma=%p, mapping=%p start=%lx end=%lx\n", file, vmf->vma, file->f_mapping, vmf->vma->vm_start, vmf->vma->vm_end);
+			}
+			vi->mmap_tracing = 1; // prevent from scanning again, TODO: turn off when munmap?
+		} else pmfs_dbg_mmap("already mmap file=%p, vma=%p, mapping=%p\n", file, vmf->vma, file->f_mapping);
+	}
+#endif
 
 	PMFS_START_TIMING(mmap_fault_t, fault_time);
 	rcu_read_lock();

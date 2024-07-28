@@ -1417,6 +1417,20 @@ void pmfs_evict_inode(struct inode *inode)
 	int destroy = 0;
 
 	PMFS_DEFINE_TIMING_VAR(evict_time);
+#if PMFS_ADAPTIVE_MMAP // remove mapping from mmap_list
+	struct mmap_file *data_ptr, *next_ptr;
+	struct pmfs_sb_info *sbi = PMFS_SB(sb);
+	struct pmfs_inode_info *vi = PMFS_I(inode);
+	if (vi->mmap_tracing) {
+		list_for_each_entry_safe(data_ptr, next_ptr, &sbi->mmap_list, list) {
+			if (data_ptr->mapping == inode->i_mapping) {
+				pmfs_dbg_mmap("EVICT INODE: data_ptr->mapping=%px, inode->i_mapping=%px\n", data_ptr->mapping, inode->i_mapping);
+				list_del(&data_ptr->list);
+				kfree(data_ptr);
+			}
+		}
+	}
+#endif
 
 	si = PMFS_I(inode);
 	sih = &si->header;

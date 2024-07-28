@@ -18,6 +18,7 @@
 #define PMFS_CAT 1
 #define PMFS_HASH_RING 1
 #define PMFS_LOCAL_NUMA_ONLY 1
+#define PMFS_ADAPTIVE_MMAP 1
 #else
 // TODO: 冷数据用不在CAT里的线程委托写入？但有额外CPU占用。
 // OdinFS
@@ -158,6 +159,9 @@
 
 #define PMFS_DELE_THREAD_SLEEP 1
 
+#if PMFS_ADAPTIVE_MMAP
+#define PMFS_MSYNC_BATCH 256
+#endif
 
 
 #endif /* __PMFS_CONFIG_H_ */

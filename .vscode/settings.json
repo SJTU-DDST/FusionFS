@@ -26,6 +26,12 @@
         "list": "c",
         "rwsem.h": "c",
         "charconv": "c",
-        "pmfs_config.h": "c"
+        "pmfs_config.h": "c",
+        "shmem_fs.h": "c",
+        "range_lock.h": "c",
+        "writeback.h": "c",
+        "magic.h": "c",
+        "nova.h": "c",
+        "pagemap.h": "c"
     }
 }

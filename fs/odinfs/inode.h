@@ -20,6 +20,11 @@ struct pmfs_inode_info {
 #elif PMFS_INODE_LOCK == PMFS_INODE_LOCK_PERCPU
     struct percpu_rw_semaphore rwlock;
 #endif
+
+#if PMFS_ADAPTIVE_MMAP
+	bool mmap_tracing;
+	int msync_count;
+#endif
 };
 
 static inline struct pmfs_inode_info *PMFS_I(struct inode *inode)

@@ -35,6 +35,14 @@
 #include <linux/vfs.h>
 #include <uapi/linux/mount.h>
 
+#if PMFS_ADAPTIVE_MMAP
+#include <linux/writeback.h>
+#include <linux/dax.h>
+#include <linux/jiffies.h>
+#include <linux/smp.h>
+#include <asm/tlbflush.h>
+#endif
+
 #include "pmfs.h"
 #include "range_lock.h"
 #include "rwsem.h"
@@ -711,6 +719,100 @@ static void pmfs_recover_truncate_list(struct super_block *sb)
 	PERSISTENT_BARRIER();
 }
 
+#if PMFS_ADAPTIVE_MMAP
+static pte_t* user_addr_to_pte(struct vm_area_struct *vma, unsigned long address)
+{
+    pgd_t* pgd;
+    p4d_t* p4d;
+    pud_t* pud;
+    pmd_t* pmd;
+    pte_t* pte;
+    struct mm_struct *mm = vma->vm_mm;
+    pgd = pgd_offset(mm, address);
+    if(pgd_none(*pgd) || pgd_bad(*pgd))
+        return 0;
+    p4d = p4d_offset(pgd, address);
+    if(p4d_none(*p4d) || p4d_bad(*p4d))
+        return 0;
+    pud = pud_offset(p4d, address);
+    if(pud_none(*pud) || pud_bad(*pud))
+        return 0;
+    pmd = pmd_offset(pud, address);
+    if(pmd_none(*pmd) || pmd_bad(*pmd))
+        return 0;
+    pte = pte_offset_kernel(pmd, address);
+	return pte;
+    // if(pte_none(*pte))
+    //     return 0;
+    // return (pte_val(*pte) & PTE_PFN_MASK) | (address & ~PAGE_MASK);
+}
+
+// 刷新当前 CPU 的 TLB 条目
+static inline void flush_tlb_one(unsigned long addr) {
+    asm volatile("invlpg (%0)" ::"r" (addr) : "memory");
+}
+
+// IPI 处理函数，用于刷新其他 CPU 的 TLB 条目
+static void flush_tlb_others(void *info) {
+    unsigned long addr = *(unsigned long *)info;
+    flush_tlb_one(addr);
+}
+
+// 刷新所有 CPU 的 TLB 条目
+void flush_tlb_all_cpus(unsigned long addr) {
+    // 刷新当前 CPU 的 TLB 条目
+    flush_tlb_one(addr);
+
+    // 向所有其他 CPU 发送 IPI，刷新它们的 TLB 条目
+    smp_call_function(flush_tlb_others, &addr, 1);
+}
+
+static int pmfs_mmap_tracer(void *arg) {
+	struct super_block *sb = (struct super_block *)arg;
+	struct pmfs_sb_info *sbi = PMFS_SB(sb);
+	struct mmap_file *data_ptr, *tmp;
+
+	pmfs_dbg_trans("Running mmap tracer thread\n");
+	while (!kthread_should_stop()) {
+		set_current_state(TASK_INTERRUPTIBLE);
+		// schedule_timeout(5000); // 3s
+		schedule_timeout(msecs_to_jiffies(5000));
+
+		list_for_each_entry_safe(data_ptr, tmp, &sbi->mmap_list, list) {
+			struct inode *inode = data_ptr->mapping->host;
+			struct pmfs_inode_info *vi = PMFS_I(inode);
+			struct vm_area_struct *vma_ptr;
+			struct rb_node *node;
+			struct rb_root_cached *root = &data_ptr->mapping->i_mmap;
+
+			for (node = rb_first_cached(root); node; node = rb_next(node)) {
+				unsigned long virt_addr;
+				vma_ptr = rb_entry(node, struct vm_area_struct, shared.rb);
+				virt_addr = vma_ptr->vm_start;
+				pmfs_dbg_mmap("RB vma_ptr=%p start=%llx, end=%llx\n", vma_ptr, vma_ptr->vm_start, vma_ptr->vm_end);
+
+				while (virt_addr < vma_ptr->vm_end) {
+					pte_t *pte = user_addr_to_pte(vma_ptr, virt_addr);
+					if (pte) {
+                        pte_clear(vma_ptr->vm_mm, virt_addr, pte);
+						
+                        // __flush_tlb_one_user(virt_addr);
+						// asm volatile("invlpg (%0)" ::"r" (virt_addr) : "memory");
+						// pte_unmap(pte);
+
+						// 刷新所有 CPU 的 TLB 条目
+						flush_tlb_all_cpus(virt_addr);
+						// pmfs_dbg_mmap("CLEAR pte=%p, virt=%llx\n", pte, virt_addr);
+					}
+					virt_addr += PAGE_SIZE;
+				}
+			}
+		}
+	}
+	return 0;
+}
+#endif
+
 static int pmfs_fill_super(struct super_block *sb, void *data, int silent)
 {
 	struct pmfs_super_block *super;
@@ -771,6 +873,21 @@ static int pmfs_fill_super(struct super_block *sb, void *data, int silent)
 	mutex_init(&sbi->inode_table_mutex);
 	mutex_init(&sbi->s_lock);
 
+#if PMFS_ADAPTIVE_MMAP
+	INIT_LIST_HEAD(&sbi->mmap_list);
+
+	// struct cpumask *mask = cpumask_of_node(0);
+	// sbi->mmap_tracer = kthread_create(pmfs_mmap_tracer, sb, "pmfs_mmap_tracer");
+	// if (IS_ERR(sbi->mmap_tracer)) {
+    //     pr_err("Failed to create pmfs_mmap_tracer thread\n");
+    // }
+    // // set_cpus_allowed_ptr(sbi->mmap_tracer, mask);
+    // wake_up_process(sbi->mmap_tracer); // 启动线程
+
+	
+	sbi->mmap_tracer = kthread_run(pmfs_mmap_tracer, sb, "pmfs_mmap_tracer_0x%llx",
+				       sbi->phys_addr);
+#endif
 	sbi->inode_maps = kcalloc(sbi->cpus, sizeof(struct inode_map),
 				  GFP_KERNEL);
 
@@ -1017,7 +1134,16 @@ static void pmfs_put_super(struct super_block *sb)
 	struct pmfs_sb_info *sbi = PMFS_SB(sb);
 	struct inode_map *inode_map;
 	int i;
-
+#if PMFS_ADAPTIVE_MMAP
+	struct mmap_file *data_ptr, *next_ptr;
+	kthread_stop(sbi->mmap_tracer);
+	pmfs_dbg_mmap("Stopping mmap tracer thread\n");
+	list_for_each_entry_safe(data_ptr, next_ptr, &sbi->mmap_list, list) {
+		pmfs_dbg_mmap("Freeing mmap_file %p\n", data_ptr->mapping);
+		list_del(&data_ptr->list);
+		kfree(data_ptr);
+	}
+#endif
 #if PMFS_DELEGATION_ENABLE
 	pmfs_agents_fini();
 	pmfs_fini_ring_buffers();
@@ -1073,6 +1199,10 @@ static struct inode *pmfs_alloc_inode(struct super_block *sb)
 
 	pmfs_pinode_rwsem_init(vi);
 	/* I am assuming that we will be able to allocate segment rwlock */
+#if PMFS_ADAPTIVE_MMAP
+	vi->mmap_tracing = 0;
+	vi->msync_count = 0;
+#endif
 	return &vi->vfs_inode;
 }
 
