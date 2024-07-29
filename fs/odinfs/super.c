@@ -1201,7 +1201,8 @@ static struct inode *pmfs_alloc_inode(struct super_block *sb)
 	/* I am assuming that we will be able to allocate segment rwlock */
 #if PMFS_ADAPTIVE_MMAP
 	vi->mmap_tracing = 0;
-	vi->msync_count = 0;
+	// vi->msync_count = 0;
+	vi->last_msync_time = 0;
 #endif
 	return &vi->vfs_inode;
 }

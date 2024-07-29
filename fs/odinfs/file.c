@@ -18,6 +18,7 @@
 #include "xip.h"
 #if PMFS_ADAPTIVE_MMAP
 #include "cache.h"
+#include <linux/jiffies.h>
 #endif
 #include <asm/mman.h>
 #include <linux/falloc.h>
@@ -194,9 +195,11 @@ int pmfs_fsync(struct file *file, loff_t start, loff_t end, int datasync)
 		goto persist;
 
 #if PMFS_ADAPTIVE_MMAP
-	if (vi->msync_count++ < PMFS_MSYNC_BATCH)
-		goto persist;
-	vi->msync_count = 0;
+	// if (vi->msync_count++ % PMFS_MSYNC_BATCH != 0)
+	// 	goto persist;
+    if (jiffies - vi->last_msync_time > HZ) // 检查是否超过1秒
+        goto persist;
+	vi->last_msync_time = jiffies; // 更新上次msync的时间
 #endif
 
 	end += 1; /* end is inclusive. We like our indices normal please ! */

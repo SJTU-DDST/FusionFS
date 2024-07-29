@@ -23,7 +23,8 @@ struct pmfs_inode_info {
 
 #if PMFS_ADAPTIVE_MMAP
 	bool mmap_tracing;
-	int msync_count;
+	// int msync_count;
+	unsigned long last_msync_time;
 #endif
 };
 
