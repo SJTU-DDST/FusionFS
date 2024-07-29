@@ -187,6 +187,9 @@ int pmfs_fsync(struct file *file, loff_t start, loff_t end, int datasync)
 	struct pmfs_inode_info *vi = PMFS_I(inode);
 #endif
 
+	pmfs_dbg_mmap("fsync: inode(%p), start(%llx), end(%llx), datasync(%d)\n",
+		      inode, start, end, datasync);
+
 	PMFS_DEFINE_TIMING_VAR(fsync_time);
 
 	PMFS_START_TIMING(fsync_t, fsync_time);

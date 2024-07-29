@@ -1,44 +1,27 @@
-import kyotocabinet as kc # sudo apt-get install -y python3-kyotocabinet
+import lmdb
 import time
 import argparse
 import csv
 from tqdm import tqdm
 
-def set_operation(db_path, duration=30):
-    # 打开数据库
-    db = kc.DB()
-    if not db.open(db_path, kc.DB.OWRITER | kc.DB.OCREATE | kc.DB.OAUTOSYNC):
-        print("open error: " + str(db.error()))
-        return
-
-    # 开始计时
+def run_lmdb_test(env_path, duration=30):
+    env = lmdb.open(env_path, map_size=10**9, sync=True, metasync=True)
+    
     start_time = time.time()
     end_time = start_time + duration
     num_records = 0
-
-    # 进行SET操作
     while time.time() < end_time:
         for i in range(100):
-            key = str(num_records).zfill(8)
+            key = str(num_records % 100000).zfill(8)
             value = "x" * 1024
-            if not db.set(key, value):
-                print("set error: " + str(db.error()))
-                break
+            txn = env.begin(write=True)
+            # txn.put(f'key{num_records}'.encode(), f'value{num_records}'.encode())
+            txn.put(key.encode(), value.encode())
+            txn.commit()
             num_records += 1
-
-    # 结束计时
     elapsed_time = time.time() - start_time
-
-    # 关闭数据库
-    if not db.close():
-        print("close error: " + str(db.error()))
-
-    # 计算并打印性能指标
+    env.close()
     ops_per_sec = num_records / elapsed_time
-    # print(f"Total records: {num_records}")
-    # print(f"Elapsed time: {elapsed_time:.2f} seconds")
-    # print(f"Operations per second: {ops_per_sec:.2f} ops/sec")
-
     return ops_per_sec
 
 def update_csv(fs_name, ops_per_sec, csv_path):
@@ -70,14 +53,15 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Run KyotoCabinet benchmark.')
     parser.add_argument('fs_name', type=str, help='File system name')
     args = parser.parse_args()
+    # db_path = "/tmp/lmdb_test"
+    db_path = "/home/congyong/Odinfs/eval/benchmark/fxmark/bin/root/lmdb_test"
+    ops_per_sec = run_lmdb_test(db_path)
+# 在不同文件系统上运行测试
 
-    # 修改这里的路径以运行不同文件系统上的测试
-    # db_path = "./test.kch"
-    # db_path = "/tmp/test.kch"
-    db_path = "/home/congyong/Odinfs/eval/benchmark/fxmark/bin/root/test.kch"
-    ops_per_sec = set_operation(db_path)
+# print(f"Running test on file system")
+# run_lmdb_test(f'/tmp/lmdb_test')
 
     if ops_per_sec is not None:
-        update_csv(args.fs_name, ops_per_sec, '/home/congyong/Odinfs/eval/data/KyotoCabinet/KyotoCabinet.csv')
+        update_csv(args.fs_name, ops_per_sec, '/home/congyong/Odinfs/eval/data/lmdb/lmdb.csv')
         print(f"File system: {args.fs_name}")
         print(f"Operations per second: {ops_per_sec:.2f} ops/sec")
