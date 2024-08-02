@@ -23,12 +23,12 @@
 # Use is subject to license terms.
 #
 
-set $dir=/home/congyong/Odinfs/eval/benchmark/fxmark/bin/root
+#set $dir=/home/congyong/Odinfs/eval/benchmark/fxmark/bin/root
 set $eventrate=0
-set $runtime=30
+#set $runtime=30
 set $iosize=2k
-set $nshadows=200
-set $ndbwriters=10
+#set $nshadows=200
+#set $ndbwriters=10
 set $usermode=2
 set $filesize=100m
 set $memperthread=1m
@@ -84,4 +84,4 @@ define process name=shadow,instances=$nshadows
 
 echo "OLTP Version 3.0  personality successfully loaded"
 
-run 60
+#run 60

@@ -195,7 +195,10 @@ class FileBench(object):
 
     def setup_workload_start(self):
         # config number of workers
-        if self.workload == "fileserver":
+        if self.workload == "oltp":
+            self._append_to_config("set $nshadows=%d"   % (self.ncore))
+            self._append_to_config("set $ndbwriters=%d" % (min(self.ncore, 63)))
+        elif self.workload == "fileserver":
             self._append_to_config("set $nthreads=%d"   % (self.ncore))
         elif self.workload == "varmail":
             self._append_to_config("set $nthreads=%d"   % (self.ncore))

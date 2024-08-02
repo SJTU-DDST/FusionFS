@@ -4,7 +4,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 from pprint import pprint
 
+old_fontsize = plt.rcParams['font.size']
+plt.rcParams['font.size'] = old_fontsize * 1.1
+
 # Threshold 图的参数
+c = np.array([[102, 194, 165], [252, 141, 98], [141, 160, 203], 
+        [231, 138, 195], [166,216,84], [255, 217, 47],
+        [229, 196, 148], [179, 179, 179]])
+c  = c/255
 threshold_markers = ['H', '^', '>', 'D', 'o', 's', 'p', 'x']
 threshold_data_dir = '../data/threshold'
 threshold_labels = {
@@ -18,8 +25,8 @@ threshold_labels = {
 # Fig9 图的参数
 fig9_data_dir = '../data'
 fig9_labels = ['4', '8', '12', '16', '20']
-fig9_linestyles = ['-', '--', '-.', ':', '-']
-fig9_markers = ['o', '^', 's', 'D', 'x']
+# fig9_linestyles = ['-', '--', '-.', ':', '-']
+# fig9_markers = ['o', '^', 's', 'D', 'x']
 
 fig9_files = [
     'odinfs-4-threads/pm-array:odinfs:seq-write-4K-hot:bufferedio.dat',
@@ -138,13 +145,14 @@ def plot_threshold(ax, data):
             points = sorted(data[update_mode], key=lambda x: x[0])
             x = [point[2].replace('K', '') for point in points]
             y = [point[1] / 1024 / 1024 for point in points]
-            ax.plot(x, y, label=threshold_labels[update_mode], marker=threshold_markers[i])
+            ax.plot(x, y, label=threshold_labels[update_mode], marker=threshold_markers[i], color=c[i], lw=3, mec='black', markersize=8, alpha=1)
             i += 1
-    ax.set_xlabel('I/O Size (KB)')
+    ax.set_xlabel('I/O size (KB)')
     ax.set_ylabel('Throughput (GiB/s)')
-    ax.legend()
-    ax.grid(True)
-    ax.set_title('(a) I/O sizes')
+    # ax.legend()
+    ax.legend(loc='upper center', bbox_to_anchor=(0.5, 1.6), ncol=2, frameon=False)
+    ax.grid(axis='y', linestyle='-.')
+    ax.set_title('(a) 4K uniform rand write')
 
 def plot_fig9(ax, data):
     for label in fig9_labels:
@@ -152,26 +160,31 @@ def plot_fig9(ax, data):
             points = sorted(data[label], key=lambda x: x[0])
             x = [point[0] for point in points]
             y = [point[1] for point in points]
-            ax.plot(x, y, label=label, linestyle=fig9_linestyles[fig9_labels.index(label)], marker=fig9_markers[fig9_labels.index(label)])
+            ax.plot(x, y, label=label + " threads", marker=threshold_markers[fig9_labels.index(label)], color=c[fig9_labels.index(label)], lw=3, mec='black', markersize=8, alpha=1)
     ax.set_xlabel('# threads')
     ax.set_ylabel('Throughput (GiB/s)')
-    ax.legend(ncol=2)
-    ax.grid(True)
-    ax.set_title('(b) kernel threads')
+    # ax.legend(ncol=2)
+    ax.legend(loc='upper center', bbox_to_anchor=(0.5, 1.6), ncol=2, frameon=False)
+    ax.grid(axis='y', linestyle='-.')
+    ax.set_xticks([1, 4, 8, 16, 28, 56])
+    ax.set_title('(b) 4K hot write')
 
 def plot_numa(ax, data):
     sorted_sockets = sorted(data.keys())
     for sockets in sorted_sockets:
         points = sorted(data[sockets], key=lambda x: x[0])
         x = [point[0] for point in points]
+        # ax.set_xticks(x)
         y = [point[1] / 1024 for point in points]
         label = '1 socket' if sockets == 1 else f'{sockets} sockets'
-        ax.plot(x, y, label=label, marker='o')
-    ax.set_xlabel('File Size (MB)')
-    ax.set_ylabel('PM Writes (GB)')
-    ax.legend()
-    ax.grid(True)
-    ax.set_title('(c) NUMA nodes')
+        ax.plot(x, y, label=label, marker=threshold_markers[sorted_sockets.index(sockets)], color=c[sorted_sockets.index(sockets)], lw=3, mec='black', markersize=8, alpha=1)
+    ax.set_xlabel('File size (MB)')
+    ax.set_ylabel('PM writes (GB)')
+    # ax.legend()
+    ax.legend(loc='upper center', bbox_to_anchor=(0.5, 1.35), ncol=2, frameon=False)
+    ax.grid(axis='y', linestyle='-.')
+    ax.set_xticks([8, 16, 24, 32, 40])
+    ax.set_title('(c) 4K uniform rand write')
 
 # 收集数据
 threshold_data = collect_threshold_data()
@@ -179,7 +192,7 @@ fig9_data = collect_fig9_data()
 numa_data = collect_numa_data()
 
 # 创建图形和子图
-fig, axs = plt.subplots(1, 3, figsize=(10, 3), layout="constrained")
+fig, axs = plt.subplots(1, 3, figsize=(10, 3))
 
 # 绘制每个子图
 plot_threshold(axs[0], threshold_data)
@@ -187,7 +200,8 @@ plot_fig9(axs[1], fig9_data)
 plot_numa(axs[2], numa_data)
 
 # 调整布局并保存图形
-# plt.tight_layout()
-plt.savefig("sensitivity.png")
-plt.savefig("sensitivity.pdf")
+plt.tight_layout()
+fig.subplots_adjust(top=0.8)
+plt.savefig("sensitivity.png", bbox_inches='tight')
+plt.savefig("sensitivity.pdf", bbox_inches='tight')
 plt.show()

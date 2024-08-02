@@ -6,18 +6,35 @@ import re
 
 order = ['ext4', 'pmfs', 'nova', 'winefs', 'odinfs', 'FusionFS']
 
+old_fontsize = plt.rcParams['font.size']
+plt.rcParams['font.size'] = old_fontsize * 1.1
+
+c = np.array([[102, 194, 165], [252, 141, 98], [141, 160, 203], 
+        [231, 138, 195], [166,216,84], [255, 217, 47],
+        [229, 196, 148], [179, 179, 179]])
+c  = c/255
+
 # 创建子图
-fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(10, 3), layout='constrained')
+fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(10, 3))
 
 data_dir = '../data/filebench'
 
 filesystems = {
     "pmem-local:ext4": "ext4",
-    "pmfs": "pmfs",
-    "nova": "nova",
-    "winefs": "winefs",
+    "pmfs": "PMFS",
+    "nova": "NOVA",
+    "winefs": "WineFS",
     "dm-stripe:ext4": "ext4(RAID0)",
-    "pm-array:odinfs": "odinfs",
+    "pm-array:odinfs": "ODINFS",
+    "FusionFS": "FusionFS"
+}
+
+labels = {
+    "ext4": "ext4",
+    "pmfs": "PMFS",
+    "nova": "NOVA",
+    "winefs": "WineFS",
+    "odinfs": "ODINFS",
     "FusionFS": "FusionFS"
 }
 
@@ -33,13 +50,15 @@ for fs, label in filesystems.items():
             if pattern.search(file):
                 filepath = os.path.join(root, file)
                 data = np.loadtxt(filepath, usecols=(0, 1))
-                ax1.plot(data[:, 0], data[:, 1] / 1000000, label=label, marker=markers[i])
+                ax1.plot(data[:, 0], data[:, 1] / 1000000, label=label, marker=markers[i], color=c[i], lw=3, mec='black', markersize=8, alpha=1)
     i = i + 1
 ax1.set_xlabel('# threads')
 ax1.set_ylabel('Throughput (M ops/sec)')
-ax1.set_title('OLTP')
-ax1.grid(True)
-ax1.legend()
+ax1.set_title('(a) Filebench OLTP')
+ax1.grid(axis='y', linestyle='-.')
+ax1.set_xticks([1, 4, 8, 16, 28, 56])
+# ax1.legend()
+ax1.legend(loc='upper center', bbox_to_anchor=(0.5, 1.6), ncol=2, frameon=False)
 
 
 # 读取CSV文件
@@ -62,36 +81,43 @@ width1 = 0.1  # 柱状图的宽度
 # 左子图：TPCC
 # ax2.bar(x, tpcc_performance, width, label='TPCC')
 for i, fs in enumerate(order):
-    ax2.bar(x1 + i * width1 - (len(order) / 2 - 0.5) * width1, [tpcc_performance[i]], width1, label=fs)
+    ax2.bar(x1 + i * width1 - (len(order) / 2 - 0.5) * width1, [tpcc_performance[i] / 1000], width1, label=labels[fs])
 
-ax2.set_xlabel('File System')
-ax2.set_ylabel('Throughput (ops/sec)')
-ax2.set_title('TPCC Performance')
+# ax2.set_xlabel('File system')
+ax2.set_ylabel('K transactions/sec')
+ax2.set_title('(b) TPC-C on SQLite')
 # ax2.set_xticks(x)
 # ax2.set_xticklabels(order)
 ax2.set_xticks(x1)
-ax2.set_xticklabels(['TPCC'])
-ax2.legend()
+ax2.set_xticklabels(['TPC-C'])
+ax2.grid(axis='y', linestyle='-.')
+ax2.set_xlim(-0.8, 0.8)
+# ax2.legend()
+ax2.legend(loc='upper center', bbox_to_anchor=(0.5, 1.6), ncol=2, frameon=False)
 
 # 右子图：KyotoCabinet 和 LMDB
 x2 = np.arange(2)  # x 轴的位置，2个负载
 width2 = 0.1  # 柱状图的宽度
 
 for i, fs in enumerate(order):
-    ax3.bar(x2 + i * width2 - (len(order) / 2 - 0.5) * width2, [kyoto_performance[i], lmdb_performance[i]], width2, label=fs)
+    ax3.bar(x2 + i * width2 - (len(order) / 2 - 0.5) * width2, [kyoto_performance[i] / 1000, lmdb_performance[i] / 1000], width2, label=labels[fs])
 
-ax3.set_xlabel('Workload')
-ax3.set_ylabel('Throughput (ops/sec)')
-ax3.set_title('KyotoCabinet and LMDB Performance')
+# ax3.set_xlabel('Workload')
+ax3.set_ylabel('Throughput (K ops/sec)')
+ax3.set_title('(c) mmap applications')
 ax3.set_xticks(x2)
 ax3.set_xticklabels(['KyotoCabinet', 'LMDB'])
-ax3.legend(title='File System')
+ax3.grid(axis='y', linestyle='-.')
+# ax3.legend(title='File System')
+ax3.legend(loc='upper center', bbox_to_anchor=(0.5, 1.6), ncol=2, frameon=False)
 
 # 调整布局
-# plt.tight_layout()
+plt.tight_layout()
 
 # 显示图表
-plt.savefig('application.png')
+fig.subplots_adjust(top=0.8)
+plt.savefig('application.png', bbox_inches='tight')
+plt.savefig('application.pdf', bbox_inches='tight')
 # plt.show()
 
 # import pandas as pd

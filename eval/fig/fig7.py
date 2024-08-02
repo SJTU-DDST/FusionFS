@@ -12,51 +12,18 @@ old_fontsize = plt.rcParams['font.size']
 plt.rcParams['font.size'] = old_fontsize * 1.1
 
 # 定义绘图函数
-def plot_data(ax, file_paths, labels, title, ylabel=None, xlabel=None):
+def plot_data(ax, file_paths, labels, title, ylabel=None, xlabel=None, data_col=4): # 3: 50, 4: 99
     i = 0
-    fusionfs_data = None
-    other_data = []
     for file_path, label in zip(file_paths, labels):
         try:
             data = pd.read_csv(file_path, sep='\s+', header=None, skiprows=1, on_bad_lines='skip')
             data[0] = pd.to_numeric(data[0], errors='coerce')
             data[1] = pd.to_numeric(data[1], errors='coerce')
             data = data.dropna()
-            ax.plot(data[0], data[1] / 1024 / 1024, label=label, marker=markers[i], color=c[i], lw=3, mec='black', markersize=8, alpha=1)
-            if label == 'FusionFS':
-                fusionfs_data = data
-            else:
-                other_data.append(data)
+            ax.plot(data[0], data[data_col], label=label, marker=markers[i], color=c[i], lw=3, mec='black', markersize=8, alpha=1)
         except pd.errors.ParserError as e:
             print(f"Error parsing {file_path}: {e}")
         i += 1
-    
-    if fusionfs_data is not None:
-        max_outperform = {}
-        max_underperform = {}
-        for thread_count in fusionfs_data[0]:
-            fusionfs_value = fusionfs_data[fusionfs_data[0] == thread_count][1].values[0]
-            max_ratio = 0
-            max_percentage = 0
-            for other in other_data:
-                other_value = other[other[0] == thread_count][1].values[0]
-                ratio = fusionfs_value / other_value
-                if ratio > max_ratio:
-                    max_ratio = ratio
-                percentage = ((other_value - fusionfs_value) / other_value) * 100
-                if percentage > max_percentage:
-                    max_percentage = percentage
-            max_outperform[thread_count] = max_ratio
-            max_underperform[thread_count] = max_percentage
-        
-        print("FusionFS outperform ratios for", title)
-        for thread_count, ratio in max_outperform.items():
-            print(f"Thread count {thread_count}: {ratio:.2f} times")
-        
-        print("FusionFS underperform percentages for", title)
-        for thread_count, percentage in max_underperform.items():
-            print(f"Thread count {thread_count}: {percentage:.2f}%")
-    
     ax.set_title(title)
     if ylabel:
         ax.set_ylabel(ylabel)
@@ -148,15 +115,8 @@ labels_2m_zipf_write = ['ext4', 'PMFS', 'NOVA', 'WineFS', 'ODINFS', 'FusionFS']
 # 创建子图
 fig, axs = plt.subplots(1, 4, figsize=(10, 3))
 
-# 绘制4K读数据
-# plot_data(axs[3], file_paths_4k_read, labels_4k_read, '(a) 4K read', ylabel='Throughput (GiB/s)')
-
 # 绘制4K写数据
 plot_data(axs[0], file_paths_4k_write, labels_4k_write, '(a) 4K write', ylabel='Throughput (GiB/s)', xlabel='# threads')
-
-# 绘制2M读数据
-# plot_data(axs[1, 0], file_paths_2m_read, labels_2m_read, '(c) 2M read', ylabel='Throughput (GiB/s)', xlabel='# threads')
-
 # 绘制2M写数据
 plot_data(axs[1], file_paths_4k_zipf_write, labels_4k_zipf_write, '(b) 4K zipf write', xlabel='# threads')
 
@@ -171,5 +131,5 @@ fig.legend(handles, labels, loc=9, ncol=len(labels_2m_zipf_write), frameon=False
 # 调整布局
 plt.tight_layout()
 fig.subplots_adjust(top=0.8)
-plt.savefig("fio.pdf", bbox_inches='tight')
+plt.savefig("fig7.png", bbox_inches='tight')
 plt.show()
