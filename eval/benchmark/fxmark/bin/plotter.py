@@ -7,14 +7,14 @@ import optparse
 import math
 import pdb
 from parser import Parser
-import scienceplots
+# import scienceplots
 
 import matplotlib.pyplot as plt
 import numpy as np
 
-plt.style.use(['science','ieee'])#,'no-latex']) # apt install cm-super dvipng
+# plt.style.use(['science','ieee'])#,'no-latex']) # apt install cm-super dvipng
 old_fontsize = plt.rcParams['font.size']
-plt.rcParams['font.size'] = old_fontsize * 1.5
+plt.rcParams['font.size'] = old_fontsize * 1.1
 
 
 CUR_DIR     = os.path.abspath(os.path.dirname(__file__))
@@ -98,6 +98,8 @@ class Plotter(object):
         "BorschFS-clwb": 5,
         "BorschFS-ntstore": 6,
         "EulerFS-S": 7,
+        "odinfs": 8,
+        "FusionFS": 9,
     }
 
     def _get_fs_list(self, media, bench, iomode):
@@ -205,16 +207,16 @@ class Plotter(object):
             new_media = media
             if "pm-array" in fs:
                 return "pm-array:%s:%s:%s.dat" % (fs.replace("-pm-array", ""), bench, iomode)
-            if fs == "odinfs":
+            if fs == "odinfs" or fs == "FusionFS":
                 new_media = "pm-array"
             # if fs == "ext4":
             #     new_media = "dm-stripe"
             return "%s:%s:%s:%s.dat" % (new_media, fs, bench, iomode)
 
         def label_fs(fs):
-            if fs == "EulerFS-S" or fs == "odinfs":
-                return "FusionFS"
-            elif fs == "EulerFS":
+            # if fs == "EulerFS-S": # or fs == "odinfs":
+            #     return "FusionFS"
+            if fs == "EulerFS":
                 return "SoupFS"
             elif fs == "pmfs":
                 return "PMFS"
@@ -224,6 +226,8 @@ class Plotter(object):
                 return "NOVA"
             elif fs == "winefs":
                 return "WineFS"
+            elif fs == "odinfs":
+                return "ODINFS"
             else:
                 return fs
         
@@ -299,7 +303,7 @@ class Plotter(object):
             # #     fig, axs = plt.subplots(1, len(benches), figsize=(3 * len(benches), 3))
             # else:  
                 # plt.rcParams.update({'font.size': 12})
-            fig, axs = plt.subplots(1, len(benches), figsize=(2.5 * len(benches), 2), layout='constrained')
+            fig, axs = plt.subplots(1, len(benches), figsize=(2 * len(benches), 2), layout='constrained')
             for i, bench in enumerate(benches):
                 fs_list = self._get_fs_list(media, bench, iomode)
                 if fs_list == []:
@@ -433,7 +437,7 @@ class Plotter(object):
                     #     print("Error: %s" % bench)
                     #     print(dat)
                     ax.set_xticks([i for i in dat[0].astype(int) if i % 4 == 0 or i == 1])
-                    ax.set_xlabel("\# Threads")
+                    ax.set_xlabel("# threads")
                 if "fio" in bench:
                     ax.set_ylabel("MiB/sec")
                 elif "silversearcher" in bench or bench == "YCSB":
@@ -441,7 +445,8 @@ class Plotter(object):
                 elif bench == "TPC-C":
                     ax.set_ylabel("Transactions/sec")
                 else:
-                    ax.set_ylabel("M ops/sec")
+                    if i == 0:
+                        ax.set_ylabel("M ops/sec")
                 if barplot:
                     # # print xrange of ax
                     # print(bench, ax.get_xlim())

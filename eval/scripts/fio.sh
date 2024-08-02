@@ -16,12 +16,12 @@ cd ../eval/scripts
 #     --rcore='False' --delegate='False' --confirm='True' \
 #     --directory_name="fio" --log_name="fs-read.log" --duration=1
 
-# $FXMARK_BIN_PATH/run-fxmark.py --media='pmem-local' \
-#     --fs='^ext4$|^pmfs$|^nova$|^winefs$' \
-#     --workload='^fio_global_seq-write-4K$|^fio_global_seq-write-2M$' \
-#     --ncore='*' --iotype='bufferedio' --dthread='0' --dsocket='0' \
-#     --rcore='False' --delegate='False' --confirm='True' \
-#     --directory_name="fio" --log_name="fs-write.log" --duration=1
+$FXMARK_BIN_PATH/run-fxmark.py --media='pmem-local' \
+    --fs='^ext4$|^pmfs$|^nova$|^winefs$' \
+    --workload='^fio_global_seq-write-4K$|^fio_global_seq-write-4K-zipf$|^fio_global_seq-write-2M$|^fio_global_seq-write-2M-zipf$' \
+    --ncore='*' --iotype='bufferedio' --dthread='0' --dsocket='0' \
+    --rcore='False' --delegate='False' --confirm='True' \
+    --directory_name="fio" --log_name="fs-write.log" --duration=10
 
 # $FXMARK_BIN_PATH/run-fxmark.py --media='^dm-stripe$' --fs='^ext4$' \
 #     --workload='^fio_global_seq-read-4K$|^fio_global_seq-read-2M$' \
@@ -45,6 +45,33 @@ sudo bash -c 'echo "L3:0=fc0;1=fc0">/sys/fs/resctrl/schemata'
 #     --workload='^fio_global_seq-read-4K$' \
 #     --ncore='*' --iotype='bufferedio' --dthread='12' --dsocket='1' \
 #     --rcore='False' --delegate='False' --confirm='True' \
+#     --directory_name="fio" --log_name="FusionFS-read-4k.log" --duration=1
+
+# $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
+#     --workload='^fio_global_seq-read-2M$' \
+#     --ncore='*' --iotype='bufferedio' --dthread='12' --dsocket='1' \
+#     --rcore='False' --delegate='True' --confirm='True' \
+#     --directory_name="fio" --log_name="FusionFS-read-2m.log" --duration=1
+
+#^fio_global_seq-write-4K$|^fio_global_seq-write-4K-zipf$|
+#|^fio_global_seq-write-4K-hot$|^fio_global_seq-write-2M-hot$
+#^fio_global_seq-write-4K-mmap$|^fio_global_seq-write-4K-mmap-zipf$
+$FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
+    --workload='^fio_global_seq-write-4K$|^fio_global_seq-write-4K-zipf$|^fio_global_seq-write-2M$|^fio_global_seq-write-2M-zipf$' \
+    --ncore='*' --iotype='bufferedio' --dthread='12' --dsocket='1' \
+    --rcore='False' --delegate='True' --confirm='True' \
+    --directory_name="fio" --log_name="FusionFS-write.log" --duration=10
+
+sudo bash -c 'echo "L3:0=fff;1=fff">/sys/fs/resctrl/c1/schemata'
+sudo bash -c 'echo "L3:0=fff;1=fff">/sys/fs/resctrl/schemata'
+
+sed -i 's/#define PMFS_FUSIONFS 1/#define PMFS_FUSIONFS 0/' ../../fs/odinfs/pmfs_config.h
+cd ../../fs && ./compile.sh > /dev/null 2>&1 && cd ../eval/scripts
+
+# $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
+#     --workload='^fio_global_seq-read-4K$' \
+#     --ncore='*' --iotype='bufferedio' --dthread='12' --dsocket='1' \
+#     --rcore='False' --delegate='False' --confirm='True' \
 #     --directory_name="fio" --log_name="odinfs-read-4k.log" --duration=1
 
 # $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
@@ -53,12 +80,16 @@ sudo bash -c 'echo "L3:0=fc0;1=fc0">/sys/fs/resctrl/schemata'
 #     --rcore='False' --delegate='True' --confirm='True' \
 #     --directory_name="fio" --log_name="odinfs-read-2m.log" --duration=1
 
+#^fio_global_seq-write-4K$|^fio_global_seq-write-4K-zipf$|
 #|^fio_global_seq-write-4K-hot$|^fio_global_seq-write-2M-hot$
 $FXMARK_BIN_PATH/run-fxmark.py --media='pm-array' --fs='odinfs' \
-    --workload='^fio_global_seq-write-4K$|^fio_global_seq-write-2M$' \
+    --workload='^fio_global_seq-write-4K$|^fio_global_seq-write-4K-zipf$|^fio_global_seq-write-2M$|^fio_global_seq-write-2M-zipf$' \
     --ncore='*' --iotype='bufferedio' --dthread='12' --dsocket='1' \
     --rcore='False' --delegate='True' --confirm='True' \
-    --directory_name="fio" --log_name="odinfs-write.log" --duration=1
+    --directory_name="fio" --log_name="odinfs-write.log" --duration=10
+
+sed -i 's/#define PMFS_FUSIONFS 0/#define PMFS_FUSIONFS 1/' ../../fs/odinfs/pmfs_config.h
+cd ../../fs && ./compile.sh > /dev/null 2>&1 && cd ../eval/scripts
 
 echo "Parsing fio results"
 for i in `ls $FXMARK_LOG_PATH/fio/`
@@ -69,5 +100,5 @@ do
 done
 echo ""
 
-echo "卸载resctrl文件系统"
-sudo umount /sys/fs/resctrl/
+# echo "卸载resctrl文件系统"
+# sudo umount /sys/fs/resctrl/

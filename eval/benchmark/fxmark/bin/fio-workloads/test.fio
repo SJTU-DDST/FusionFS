@@ -24,7 +24,38 @@ ioengine=sync
 rw=write
 size=1g
 bs=4k
-runtime=1
+runtime=10
+time_based
+stonewall
+
+[seq-write-4K-mmap]
+ioengine=mmap
+fdatasync=1
+rw=write
+size=1g
+bs=4k
+runtime=10
+time_based
+stonewall
+
+[seq-write-4K-zipf]
+ioengine=sync
+rw=randwrite
+size=1g
+bs=4k
+random_distribution=zipf:0.99
+runtime=10
+time_based
+stonewall
+
+[seq-write-4K-mmap-zipf]
+ioengine=mmap
+fdatasync=1
+rw=randwrite
+size=1g
+bs=4k
+random_distribution=zipf:0.99
+runtime=10
 time_based
 stonewall
 
@@ -33,7 +64,7 @@ ioengine=sync
 rw=write
 size=16m
 bs=4k
-runtime=1
+runtime=10
 time_based
 stonewall
 
@@ -42,7 +73,17 @@ ioengine=sync
 rw=write
 size=1g
 bs=2m
-runtime=1
+runtime=10
+time_based
+stonewall
+
+[seq-write-2M-zipf]
+ioengine=sync
+rw=randwrite
+size=1g
+bs=2m
+random_distribution=zipf:0.99
+runtime=10
 time_based
 stonewall
 

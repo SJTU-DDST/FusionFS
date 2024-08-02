@@ -62,6 +62,9 @@ int destroy_page_node_cache(void);
 // int dequeue(struct queue *q, int inode_number, int file_index);
 int pmfs_get_hotness_single(u64 xmem, size_t count, int threshold);
 int pmfs_peek_hotness(u64 xmem, size_t count);
-int pmfs_get_hotness(u64 xmem, size_t count);
+int pmfs_get_hotness(u64 xmem, size_t count, int threshold);
+
+void down_my_rwsem(void);
+void up_my_rwsem(void);
 
 #endif /* __CACHE_H_ */

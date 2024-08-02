@@ -2,7 +2,6 @@ import kyotocabinet as kc # sudo apt-get install -y python3-kyotocabinet
 import time
 import argparse
 import csv
-from tqdm import tqdm
 
 def set_operation(db_path, duration=30):
     # 打开数据库

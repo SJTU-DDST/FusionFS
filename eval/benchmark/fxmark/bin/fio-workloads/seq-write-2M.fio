@@ -4,5 +4,5 @@ ioengine=sync
 rw=write
 size=1g
 bs=2m
-runtime=1
+runtime=10
 time_based

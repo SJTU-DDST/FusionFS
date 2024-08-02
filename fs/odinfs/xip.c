@@ -368,7 +368,7 @@ static ssize_t __pmfs_xip_file_write(struct address_space *mapping,
 
 		/* do not delegate if bytes is less than PMFS_WRITE_DELEGATION_LIMIT */
 #if PMFS_DELEGATE_HOT
-		delegate = delegate ? pmfs_get_hotness((u64)xmem + page_offset, bytes) : 0;
+		delegate = delegate ? pmfs_get_hotness((u64)xmem + page_offset, bytes, WRITE_PROMOTE_THRESHOLD) : 0;
 #endif
 #if RANDOM_DELEGATION
 		delegate = prandom_u32(); // 1, delegate for slow
@@ -406,7 +406,7 @@ static ssize_t __pmfs_xip_file_write(struct address_space *mapping,
 #else
 		PMFS_START_TIMING(memcpy_w_t, memcpy_time);
 #if PMFS_HOT_NO_FLUSH
-		hot = pmfs_get_hotness((u64)xmem + page_offset, bytes);
+		hot = pmfs_get_hotness((u64)xmem + page_offset, bytes, WRITE_PROMOTE_THRESHOLD);
 		if (!hot) {
 #endif
 
@@ -511,7 +511,7 @@ static ssize_t pmfs_file_write_fast(struct super_block *sb, struct inode *inode,
 
 	/* do not delegate if the size is less than PMFS_WRITE_DELEGATION_LIMIT */
 #if PMFS_DELEGATE_HOT
-	delegate = delegate ? pmfs_get_hotness((u64)xmem + offset, count) : 0;
+	delegate = delegate ? pmfs_get_hotness((u64)xmem + offset, count, WRITE_PROMOTE_THRESHOLD) : 0;
 #endif
 #if RANDOM_DELEGATION
 	delegate = prandom_u32(); // 0, no delegate for fast
@@ -541,7 +541,7 @@ static ssize_t pmfs_file_write_fast(struct super_block *sb, struct inode *inode,
 #else
 	PMFS_START_TIMING(memcpy_w_t, memcpy_time);
 #if PMFS_HOT_NO_FLUSH
-	hot = pmfs_get_hotness((u64)xmem + offset, count);
+	hot = pmfs_get_hotness((u64)xmem + offset, count, WRITE_PROMOTE_THRESHOLD);
 	if (!hot) {
 #endif
 
@@ -634,7 +634,7 @@ static inline void pmfs_clear_edge_blk(struct super_block *sb,
 #if PMFS_DELEGATION_ENABLE
 			delegate = count >= PMFS_WRITE_DELEGATION_LIMIT; // IMPORTANT: 注意这里是＞，是相反的
 #if PMFS_DELEGATE_HOT
-			delegate = delegate ? pmfs_get_hotness((u64)ptr, count) : 0;
+			delegate = delegate ? pmfs_get_hotness((u64)ptr, count, WRITE_PROMOTE_THRESHOLD) : 0;
 #endif
 #if RANDOM_DELEGATION
 			delegate = prandom_u32();; // 1, delegate for slow
@@ -662,7 +662,7 @@ static inline void pmfs_clear_edge_blk(struct super_block *sb,
 #else
 			PMFS_START_TIMING(memcpy_w_t, memcpy_time);
 #if PMFS_HOT_NO_FLUSH
-		hot = pmfs_get_hotness((u64)ptr, count);
+		hot = pmfs_get_hotness((u64)ptr, count, WRITE_PROMOTE_THRESHOLD);
 		if (!hot) {
 #endif
 			pmfs_memunlock_range(sb, ptr, pmfs_inode_blk_size(pi));
@@ -936,7 +936,11 @@ static vm_fault_t __pmfs_xip_file_fault(struct vm_area_struct *vma,
 			       pfn_to_pfn_t(xip_pfn));
 #if PMFS_ADAPTIVE_MMAP
 	// pmfs_dbg_mmap("xip_mem=%p, xip_pfn=%lx, vmf->address=%lx, start=%lx, end=%lx\n", xip_mem, xip_pfn, vmf->address, vma->vm_start, vma->vm_end);
+	down_my_rwsem();
 	hot = pmfs_get_hotness_single((u64)xip_mem, PAGE_SIZE, MMAP_PROMOTE_THRESHOLD);
+	up_my_rwsem();
+
+	// pmfs_get_hotness((u64)xip_mem, PAGE_SIZE, MMAP_PROMOTE_THRESHOLD);
 	pmfs_dbg_mmap("xip_mem=%p, vmf->address=%llx, hot=%d\n", xip_mem, vmf->address, hot);
 #endif
 	if (err == -ENOMEM)

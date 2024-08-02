@@ -2,10 +2,9 @@ import lmdb
 import time
 import argparse
 import csv
-from tqdm import tqdm
 
 def run_lmdb_test(env_path, duration=30):
-    env = lmdb.open(env_path, map_size=10**9, sync=True, metasync=True)
+    env = lmdb.open(env_path, map_size=10**9, writemap=True, sync=True, metasync=True)
     
     start_time = time.time()
     end_time = start_time + duration

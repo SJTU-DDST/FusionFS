@@ -14,6 +14,7 @@ sudo umount /home/congyong/Odinfs/eval/benchmark/fxmark/bin/root
 
 sed -i 's/#define PMFS_FUSIONFS 1/#define PMFS_FUSIONFS 0/' ../../fs/odinfs/pmfs_config.h
 cd ../../fs && ./compile.sh > /dev/null 2>&1 && cd ../eval/scripts
+sudo parradm create /dev/pmem0 
 sudo mount -o init,dele_thrds=12 -t odinfs /dev/pmem_ar0 /home/congyong/Odinfs/eval/benchmark/fxmark/bin/root
 sudo -E python kc_test.py odinfs
 sudo umount /home/congyong/Odinfs/eval/benchmark/fxmark/bin/root

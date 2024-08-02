@@ -24,6 +24,14 @@ static struct queue *frequent, *recent;
 // static struct spinlock queue_lock;
 static DECLARE_RWSEM(my_rwsem);
 
+void down_my_rwsem(void) {
+    down_write(&my_rwsem);
+}
+
+void up_my_rwsem(void) {
+    up_write(&my_rwsem);
+}
+
 static struct queue *create_queue(int limit) {
     struct queue *q = kmalloc(sizeof(*q), GFP_KERNEL);
     if (!q)
@@ -254,7 +262,7 @@ ret:
     return result;
 }
 
-int pmfs_get_hotness(u64 xmem, size_t count) {
+int pmfs_get_hotness(u64 xmem, size_t count, int threshold) {
 #if BATCHING
     int batch_size = this_cpu_read(cpu_batch_size);
     if (count > FREQUENT_LIMIT || count > RECENT_LIMIT) return 0; // too large, ignore
@@ -263,7 +271,7 @@ int pmfs_get_hotness(u64 xmem, size_t count) {
         int i;
         down_write(&my_rwsem);
         for (i = 0; i < batch_size; i++)
-            pmfs_get_hotness_single(this_cpu_read(cpu_xmem_array_ptr)[i], this_cpu_read(cpu_count_array_ptr)[i], WRITE_PROMOTE_THRESHOLD);
+            pmfs_get_hotness_single(this_cpu_read(cpu_xmem_array_ptr)[i], this_cpu_read(cpu_count_array_ptr)[i], threshold);
         up_write(&my_rwsem);
         this_cpu_write(cpu_batch_size, 0);
         batch_size = 0;
@@ -276,6 +284,6 @@ int pmfs_get_hotness(u64 xmem, size_t count) {
     return pmfs_peek_hotness(xmem, count);
 #else
     if (count > FREQUENT_LIMIT || count > RECENT_LIMIT) return 0; // too large, ignore
-    return pmfs_get_hotness_single(xmem, count, WRITE_PROMOTE_THRESHOLD);
+    return pmfs_get_hotness_single(xmem, count, threshold);
 #endif
 }
