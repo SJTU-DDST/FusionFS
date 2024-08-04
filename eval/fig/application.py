@@ -41,6 +41,8 @@ labels = {
 markers = ['H', '^', '>', 'D', 'o', 's', 'p', 'x']
 
 i = 0
+fusionfs_data = None
+other_data = []
 for fs, label in filesystems.items():
     if fs == "dm-stripe:ext4":
         continue
@@ -51,13 +53,33 @@ for fs, label in filesystems.items():
                 filepath = os.path.join(root, file)
                 data = np.loadtxt(filepath, usecols=(0, 1))
                 ax1.plot(data[:, 0], data[:, 1] / 1000000, label=label, marker=markers[i], color=c[i], lw=3, mec='black', markersize=8, alpha=1)
+                if label == "FusionFS":
+                    fusionfs_data = data
+                else:
+                    other_data.append((label, data))
     i = i + 1
+
+if fusionfs_data is not None:
+    max_outperform = {}
+    for thread_count in fusionfs_data[:, 0]:
+        fusionfs_value = fusionfs_data[fusionfs_data[:, 0] == thread_count][0, 1]
+        max_ratio = 0
+        for label, other in other_data:
+            other_value = other[other[:, 0] == thread_count][0, 1]
+            ratio = fusionfs_value / other_value
+            if ratio > max_ratio:
+                max_ratio = ratio
+        max_outperform[thread_count] = max_ratio
+    
+    print("FusionFS outperform ratios for OLTP:")
+    for thread_count, ratio in max_outperform.items():
+        print(f"Thread count {thread_count}: {ratio:.2f} times")
+
 ax1.set_xlabel('# threads')
 ax1.set_ylabel('Throughput (M ops/sec)')
 ax1.set_title('(a) Filebench OLTP')
 ax1.grid(axis='y', linestyle='-.')
 ax1.set_xticks([1, 4, 8, 16, 28, 56])
-# ax1.legend()
 ax1.legend(loc='upper center', bbox_to_anchor=(0.5, 1.6), ncol=2, frameon=False)
 
 
@@ -80,8 +102,27 @@ width1 = 0.1  # 柱状图的宽度
 
 # 左子图：TPCC
 # ax2.bar(x, tpcc_performance, width, label='TPCC')
+fusionfs_performance = None
+other_performances = []
+
 for i, fs in enumerate(order):
-    ax2.bar(x1 + i * width1 - (len(order) / 2 - 0.5) * width1, [tpcc_performance[i] / 1000], width1, label=labels[fs])
+    performance = tpcc_performance[i] / 1000
+    ax2.bar(x1 + i * width1 - (len(order) / 2 - 0.5) * width1, [performance], width1, label=labels[fs])
+    if labels[fs] == 'FusionFS':
+        fusionfs_performance = performance
+    else:
+        other_performances.append((labels[fs], performance))
+
+# 计算 FusionFS 的 TPC-C 性能是其他文件系统多少倍
+if fusionfs_performance is not None:
+    outperform_ratios = {}
+    for label, performance in other_performances:
+        ratio = fusionfs_performance / performance
+        outperform_ratios[label] = ratio
+    
+    print("FusionFS outperform ratios for TPC-C:")
+    for label, ratio in outperform_ratios.items():
+        print(f"{label}: {ratio:.2f} times")
 
 # ax2.set_xlabel('File system')
 ax2.set_ylabel('K transactions/sec')
