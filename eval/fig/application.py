@@ -38,6 +38,7 @@ labels = {
     "FusionFS": "FusionFS"
 }
 
+hat = ['|//','-\\\\','|\\\\','-//',"--","\\\\",'//',"xx"]
 markers = ['H', '^', '>', 'D', 'o', 's', 'p', 'x']
 
 i = 0
@@ -107,7 +108,7 @@ other_performances = []
 
 for i, fs in enumerate(order):
     performance = tpcc_performance[i] / 1000
-    ax2.bar(x1 + i * width1 - (len(order) / 2 - 0.5) * width1, [performance], width1, label=labels[fs])
+    ax2.bar(x1 + i * width1 - (len(order) / 2 - 0.5) * width1, [performance], width1, label=labels[fs], color=c[i], edgecolor='black', lw=1.2, hatch=hat[i])
     if labels[fs] == 'FusionFS':
         fusionfs_performance = performance
     else:
@@ -141,13 +142,13 @@ x2 = np.arange(2)  # x 轴的位置，2个负载
 width2 = 0.1  # 柱状图的宽度
 
 for i, fs in enumerate(order):
-    ax3.bar(x2 + i * width2 - (len(order) / 2 - 0.5) * width2, [kyoto_performance[i] / 1000, lmdb_performance[i] / 1000], width2, label=labels[fs])
+    ax3.bar(x2 + i * width2 - (len(order) / 2 - 0.5) * width2, [kyoto_performance[i] / 1000, lmdb_performance[i] / 1000], width2, label=labels[fs], color=c[i], edgecolor='black', lw=1.2, hatch=hat[i])
 
 # ax3.set_xlabel('Workload')
 ax3.set_ylabel('Throughput (K ops/sec)')
 ax3.set_title('(c) mmap applications')
 ax3.set_xticks(x2)
-ax3.set_xticklabels(['KyotoCabinet', 'LMDB'])
+ax3.set_xticklabels(['Kyoto Cabinet', 'LMDB'])
 ax3.grid(axis='y', linestyle='-.')
 # ax3.legend(title='File System')
 ax3.legend(loc='upper center', bbox_to_anchor=(0.5, 1.6), ncol=2, frameon=False)

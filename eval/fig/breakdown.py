@@ -1,4 +1,12 @@
 import matplotlib.pyplot as plt
+import numpy as np
+
+hat = ['|//','-\\\\','|\\\\','-//',"--","\\\\",'//',"xx"]
+markers = ['H', '^', '>', 'D', 'o', 's', 'p', 'x']
+c = np.array([[102, 194, 165], [252, 141, 98], [141, 160, 203], 
+        [231, 138, 195], [166,216,84], [255, 217, 47],
+        [229, 196, 148], [179, 179, 179]])
+c  = c/255
 
 # Define the log file names in the desired order
 log_files = {
@@ -43,21 +51,23 @@ fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 3), layout="constrained")
 # Plot the first subplot
 width = 0.35  # width of the bars
 x = range(len(x_values))
-ax1.bar(x, [val/1024/1024 for val in y_values_1_uniform], width, label="Uniform")
-# ax1.bar([i + width for i in x], [val/1000000 for val in y_values_1_zipf], width, label="Zipf", alpha=0.5)
+ax1.bar(x, [val/1024/1024 for val in y_values_1_uniform], width, label="uniform", color=c[0], edgecolor='black', lw=1.2, hatch=hat[0])
+# ax1.bar([i + width for i in x], [val/1000000 for val in y_values_1_zipf], width, label="zipf", alpha=0.5)
 ax1.set_ylabel("Throughput (GiB/s)")
 # ax1.set_xticks([i + width/2 for i in x])
 ax1.set_xticks(x)
 ax1.set_xticklabels(x_values, rotation=45, ha="right")
 # ax1.legend()
+ax1.grid(axis='y', linestyle='-.')
 
 # Plot the second subplot
-ax2.bar(x, [val/1024 for val in y_values_2_uniform], width, label="Uniform")
-# ax2.bar([i + width for i in x], [val/1024 for val in y_values_2_zipf], width, label="Zipf", alpha=0.5)
+ax2.bar(x, [val/1024 for val in y_values_2_uniform], width, label="uniform", color=c[0], edgecolor='black', lw=1.2, hatch=hat[0])
+# ax2.bar([i + width for i in x], [val/1024 for val in y_values_2_zipf], width, label="zipf", alpha=0.5)
 ax2.set_ylabel("PM Writes (GB)")
 # ax2.set_xticks([i + width/2 for i in x])
 ax2.set_xticks(x)
 ax2.set_xticklabels(x_values, rotation=45, ha="right")
+ax2.grid(axis='y', linestyle='-.')
 
-plt.savefig("breakdown.png")
-plt.savefig("breakdown.pdf")
+plt.savefig("breakdown.png", bbox_inches='tight')
+plt.savefig("breakdown.pdf", bbox_inches='tight')
