@@ -1,8 +1,9 @@
-[rand-write-2M]
+[rand-write-4K-zipf-60-40]
 new_group
 ioengine=sync
 rw=randwrite
 size=16m
-bs=2m
+bs=4k
+random_distribution=zipf:0.44
 runtime=10
 time_based

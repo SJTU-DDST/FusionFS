@@ -152,7 +152,7 @@ labels_2m_zipf_write = ['ext4', 'PMFS', 'NOVA', 'WineFS', 'ODINFS', 'FusionFS']
 fig, axs = plt.subplots(1, 4, figsize=(10, 3))
 
 # 绘制4K写数据
-plot_data(axs[0], file_paths_4k_write, labels_4k_write, '(a) 4K write-50%', ylabel='Throughput (GiB/s)', xlabel='# threads')
+plot_data(axs[0], file_paths_4k_write, labels_4k_write, '(a) 4K write-50%', ylabel='Latency (μs)', xlabel='# threads')
 plot_data(axs[1], file_paths_4k_zipf_write, labels_4k_zipf_write, '(b) 4K zipf write-50%', xlabel='# threads')
 plot_data(axs[2], file_paths_4k_write, labels_4k_write, '(c) 4K write-99%', xlabel='# threads', data_col=3)
 plot_data(axs[3], file_paths_4k_zipf_write, labels_4k_zipf_write, '(d) 4K zipf write-99%', xlabel='# threads', data_col=3)

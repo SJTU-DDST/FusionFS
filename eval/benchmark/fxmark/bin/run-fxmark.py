@@ -187,6 +187,10 @@ class Runner(object):
             "fio_global_rand-read-1G",
             # "fio_global_rand-read-4K-2M",
             "fio_global_rand-write-4K",
+            "fio_global_rand-write-4K-zipf-90-10",
+            "fio_global_rand-write-4K-zipf-80-20",
+            "fio_global_rand-write-4K-zipf-70-30",
+            "fio_global_rand-write-4K-zipf-60-40",
             "fio_global_breakdown-uniform",
             "fio_global_breakdown-zipf",
             "fio_global_rand-write-file-size-4M",
@@ -204,6 +208,10 @@ class Runner(object):
             "fio_global_rand-write-16K",
             "fio_global_rand-write-32K",
             "fio_global_rand-write-2M",
+            "fio_global_rand-write-2M-zipf-90-10",
+            "fio_global_rand-write-2M-zipf-80-20",
+            "fio_global_rand-write-2M-zipf-70-30",
+            "fio_global_rand-write-2M-zipf-60-40",
             "fio_global_rand-write-1G",
             # mixed workload
             "fio_global_seq-read-2M_seq-write-4K",
@@ -455,6 +463,11 @@ class Runner(object):
             if hint_core <= 0 or hint_core > self.npcpu:
                 print("Invalid ncore hint", file=sys.stderr)
             return [(hint_core, 1)]
+        if "," in hint:
+            ncores = []
+            for ncore in hint.split(","):
+                ncores.append((int(ncore), 1))
+            return ncores
 
         delegation_threads = self.DELEGATION_THREADS if self.rcore else 0
         delegation_sockets = self.DELEGATION_SOCKETS if self.rcore else 0

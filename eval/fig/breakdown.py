@@ -15,7 +15,7 @@ log_files = {
     "flush-cold-data": "+adaptive\ndata update",
     "isolated-data-access": "+isolated\ndata access",
     "associativity-friendly-data-layout": "+associativity-\nfriendly\ndata layout",
-    "DDIO-aware-way-allocation": "+DDIO-aware\nway allocation",
+    "DDIO-aware-way-allocation": "+DCA-aware\nway allocation",
 }
 
 # Initialize lists to store the data

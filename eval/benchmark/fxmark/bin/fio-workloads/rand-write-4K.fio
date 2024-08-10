@@ -1,5 +1,8 @@
 [rand-write-4K]
 new_group
+ioengine=sync
 rw=randwrite
-size=1g
+size=16m
 bs=4k
+runtime=10
+time_based
