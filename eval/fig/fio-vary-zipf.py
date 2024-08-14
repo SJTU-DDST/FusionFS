@@ -26,6 +26,13 @@ labels = {
     "FusionFS": "FusionFS"
 }
 zipf_distributions = ["", "60-40", "70-30", "80-20", "90-10"]
+zipf_labels = {
+    "": "50/50 (θ=0)",
+    "60-40": "60/40 (θ=0.44)",
+    "70-30": "70/30 (θ=0.71)",
+    "80-20": "80/20 (θ=0.88)",
+    "90-10": "90/10 (θ=1.04)"
+}
 data_dir = "../data/fio-vary-zipf"  # 修改为实际数据目录
 
 # 初始化数据结构
@@ -69,7 +76,7 @@ for fs in filesystems:
                                 # print(fs, zipf, data[0][row], data[col][row])
 
 # 绘制子图
-fig, axs = plt.subplots(3, 4, figsize=(12, 7))
+fig, axs = plt.subplots(3, 4, figsize=(10, 6))
 x = np.arange(len(filesystems))
 
 for i, (iosize, row, col) in enumerate([("4K", rows[0], cols[0]), ("2M", rows[0], cols[0]), ("4K", rows[1], cols[0]), ("2M", rows[1], cols[0]),
@@ -78,9 +85,26 @@ for i, (iosize, row, col) in enumerate([("4K", rows[0], cols[0]), ("2M", rows[0]
     ax = axs[i // 4, i % 4]
     for j, zipf in enumerate(zipf_distributions):
         y = [throughput_data[fs][zipf].get((iosize, row, col), 0) for fs in filesystems]
-        ax.bar(x + j * width, y, width, label="50-50" if zipf == "" else zipf, color=c[j], edgecolor='black', lw=1.2, hatch=hat[j])
+        ax.bar(x + j * width, y, width, label=zipf_labels[zipf], color=c[j], edgecolor='black', lw=1.2, hatch=hat[j])
+    
+    maxes = []
+    avgs = []
+    # 计算 FusionFS 吞吐量最多/平均比其他文件系统高的百分比
+    for j, zipf in enumerate(zipf_distributions):
+        fusionfs_throughput = throughput_data["FusionFS"][zipf].get((iosize, row, col), 0)
+        other_fs_throughputs = [throughput_data[fs][zipf].get((iosize, row, col), 0) for fs in filesystems if fs != "FusionFS"]
+        if other_fs_throughputs:
+            max_other_fs_throughput = max(other_fs_throughputs)
+            avg_other_fs_throughput = sum(other_fs_throughputs) / len(other_fs_throughputs)
+            max_percentage = ((fusionfs_throughput - max_other_fs_throughput) / max_other_fs_throughput) * 100 if max_other_fs_throughput != 0 else 0
+            avg_percentage = ((fusionfs_throughput - avg_other_fs_throughput) / avg_other_fs_throughput) * 100 if avg_other_fs_throughput != 0 else 0
+            maxes.append(max_percentage)
+            avgs.append(avg_percentage)
+            print(f"Subplot {i+1}, Zipf {zipf}: FusionFS is {max_percentage:.2f}% higher than the max of other filesystems, {avg_percentage:.2f}% higher than the average of other filesystems.")
+    print(f"Subplot {i+1}, Max: {max(maxes):.2f}%, Avg: {sum(avgs) / len(avgs):.2f}%")
+
     if i // 4 == 0:
-        ax.set_title(f'{iosize}, {"Single-thread" if row == 0 else "8 threads"}')
+        ax.set_title(f'{iosize} write, {"1 thread" if row == 0 else "8 threads"}')
     if i // 4 == 2:
         ax.set_xticks(x + width * (len(zipf_distributions) - 1) / 2)
         ax.set_xticklabels(labels.values(), rotation=45)

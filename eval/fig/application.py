@@ -62,6 +62,7 @@ for fs, label in filesystems.items():
 
 if fusionfs_data is not None:
     max_outperform = {}
+    sum_outperform = {}
     for thread_count in fusionfs_data[:, 0]:
         fusionfs_value = fusionfs_data[fusionfs_data[:, 0] == thread_count][0, 1]
         max_ratio = 0
@@ -70,7 +71,13 @@ if fusionfs_data is not None:
             ratio = fusionfs_value / other_value
             if ratio > max_ratio:
                 max_ratio = ratio
+            # print(f"FusionFS vs {label} at thread count {thread_count}: {ratio:.2f}x")
+            sum_outperform[label] = sum_outperform.get(label, 0) + ratio
         max_outperform[thread_count] = max_ratio
+    
+    for label, other in other_data:
+        avg_ratio = sum_outperform[label] / len(fusionfs_data[:, 0])
+        print(f"Average FusionFS vs {label}: {avg_ratio:.2f}x")
     
     print("FusionFS outperform ratios for OLTP:")
     for thread_count, ratio in max_outperform.items():
