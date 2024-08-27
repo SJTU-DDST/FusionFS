@@ -1,0 +1,1506 @@
+TAP version 13
+# Pass: Check kernel supports resctrl filesystem
+# Pass: Check resctrl mountpoint "/sys/fs/resctrl" exists
+# resctrl filesystem not mounted
+1..1
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # are ready
+# Writing: bm_pid=287905 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 0 , number of bits: 6, miss: 861, ref: 344089, miss rate: 0.3%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-99.4
+# TEST cat_type: 0, n_bombs: 0 , number of bits: 5, miss: 5, ref: 286745, miss rate: 0.0%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-20.0
+# TEST cat_type: 0, n_bombs: 0 , number of bits: 4, miss: 4, ref: 229398, miss rate: 0.0%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-50.0
+# TEST cat_type: 0, n_bombs: 0 , number of bits: 3, miss: 2, ref: 172053, miss rate: 0.0%, allocated cache (bytes): 11010048, span: 33030144
+# Pass: Check cache miss rate changed more than 1.0%
+# Percent diff=7150.0
+# TEST cat_type: 0, n_bombs: 0 , number of bits: 2, miss: 145, ref: 114709, miss rate: 0.1%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-100.0
+# TEST cat_type: 0, n_bombs: 0 , number of bits: 1, miss: 0, ref: 57364, miss rate: 0.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 1 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288030, CPU: 67
+Bomb pid: 288032, CPU: 73
+Bomb pid: 288029, CPU: 9
+Bomb pid: 288031, CPU: 71
+# All bombs: # 288029 # 288030 # 288031 # 288032 # are ready
+# Writing: bm_pid=287905 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 4 , number of bits: 6, miss: 155311, ref: 341682, miss rate: 45.5%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-16.9
+# TEST cat_type: 0, n_bombs: 4 , number of bits: 5, miss: 129120, ref: 284695, miss rate: 45.4%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-37.9
+# TEST cat_type: 0, n_bombs: 4 , number of bits: 4, miss: 80119, ref: 226399, miss rate: 35.4%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-44.9
+# TEST cat_type: 0, n_bombs: 4 , number of bits: 3, miss: 44126, ref: 168515, miss rate: 26.2%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-87.5
+# TEST cat_type: 0, n_bombs: 4 , number of bits: 2, miss: 5531, ref: 114354, miss rate: 4.8%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-97.4
+# TEST cat_type: 0, n_bombs: 4 , number of bits: 1, miss: 143, ref: 57354, miss rate: 0.2%, allocated cache (bytes): 3670016, span: 33030144
+not ok 2 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288061, CPU: 19
+Bomb pid: 288065, CPU: 31
+Bomb pid: 288062, CPU: 21
+Bomb pid: 288059, CPU: 11
+Bomb pid: 288063, CPU: 27
+Bomb pid: 288064, CPU: 85
+Bomb pid: 288060, CPU: 15
+Bomb pid: 288058, CPU: 9
+# All bombs: # 288058 # 288059 # 288060 # 288061 # 288062 # 288063 # 288064 # 288065 # are ready
+# Writing: bm_pid=287905 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 8 , number of bits: 6, miss: 193980, ref: 342020, miss rate: 56.7%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-25.8
+# TEST cat_type: 0, n_bombs: 8 , number of bits: 5, miss: 143957, ref: 284342, miss rate: 50.6%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-27.5
+# TEST cat_type: 0, n_bombs: 8 , number of bits: 4, miss: 104325, ref: 226977, miss rate: 46.0%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-51.1
+# TEST cat_type: 0, n_bombs: 8 , number of bits: 3, miss: 51036, ref: 168715, miss rate: 30.2%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-84.9
+# TEST cat_type: 0, n_bombs: 8 , number of bits: 2, miss: 7711, ref: 114407, miss rate: 6.7%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-97.3
+# TEST cat_type: 0, n_bombs: 8 , number of bits: 1, miss: 211, ref: 57354, miss rate: 0.4%, allocated cache (bytes): 3670016, span: 33030144
+not ok 3 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288071, CPU: 19
+Bomb pid: 288075, CPU: 35
+Bomb pid: 288072, CPU: 21
+Bomb pid: 288074, CPU: 33
+Bomb pid: 288068, CPU: 11
+Bomb pid: 288078, CPU: 105
+Bomb pid: 288073, CPU: 27
+Bomb pid: 288070, CPU: 73
+Bomb pid: 288077, CPU: 99
+Bomb pid: 288069, CPU: 15
+Bomb pid: 288067, CPU: 65
+Bomb pid: 288076, CPU: 41
+# All bombs: # 288067 # 288068 # 288069 # 288070 # 288071 # 288072 # 288073 # 288074 # 288075 # 288076 # 288077 # 288078 # are ready
+# Writing: bm_pid=287905 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 12 , number of bits: 6, miss: 193955, ref: 341812, miss rate: 56.7%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-21.8
+# TEST cat_type: 0, n_bombs: 12 , number of bits: 5, miss: 151701, ref: 284506, miss rate: 53.3%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-29.9
+# TEST cat_type: 0, n_bombs: 12 , number of bits: 4, miss: 106269, ref: 226998, miss rate: 46.8%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-49.5
+# TEST cat_type: 0, n_bombs: 12 , number of bits: 3, miss: 53686, ref: 168910, miss rate: 31.8%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-84.5
+# TEST cat_type: 0, n_bombs: 12 , number of bits: 2, miss: 8339, ref: 114449, miss rate: 7.3%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-97.1
+# TEST cat_type: 0, n_bombs: 12 , number of bits: 1, miss: 245, ref: 57355, miss rate: 0.4%, allocated cache (bytes): 3670016, span: 33030144
+not ok 4 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288085, CPU: 19
+Bomb pid: 288089, CPU: 87
+Bomb pid: 288091, CPU: 35
+Bomb pid: 288090, CPU: 33
+Bomb pid: 288086, CPU: 77
+Bomb pid: 288082, CPU: 11
+Bomb pid: 288094, CPU: 105
+Bomb pid: 288095, CPU: 107
+Bomb pid: 288087, CPU: 27
+Bomb pid: 288084, CPU: 73
+Bomb pid: 288088, CPU: 85
+Bomb pid: 288081, CPU: 65
+Bomb pid: 288096, CPU: 109
+Bomb pid: 288093, CPU: 99
+Bomb pid: 288083, CPU: 15
+Bomb pid: 288092, CPU: 41
+# All bombs: # 288081 # 288082 # 288083 # 288084 # 288085 # 288086 # 288087 # 288088 # 288089 # 288090 # 288091 # 288092 # 288093 # 288094 # 288095 # 288096 # are ready
+# Writing: bm_pid=287905 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 16 , number of bits: 6, miss: 198307, ref: 341872, miss rate: 58.0%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-19.9
+# TEST cat_type: 0, n_bombs: 16 , number of bits: 5, miss: 158921, ref: 284690, miss rate: 55.8%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-27.1
+# TEST cat_type: 0, n_bombs: 16 , number of bits: 4, miss: 115919, ref: 227234, miss rate: 51.0%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-63.3
+# TEST cat_type: 0, n_bombs: 16 , number of bits: 3, miss: 42536, ref: 170175, miss rate: 25.0%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-79.3
+# TEST cat_type: 0, n_bombs: 16 , number of bits: 2, miss: 8792, ref: 114471, miss rate: 7.7%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-96.6
+# TEST cat_type: 0, n_bombs: 16 , number of bits: 1, miss: 296, ref: 57356, miss rate: 0.5%, allocated cache (bytes): 3670016, span: 33030144
+not ok 5 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288101, CPU: 75
+Bomb pid: 288103, CPU: 25
+Bomb pid: 288108, CPU: 35
+Bomb pid: 288106, CPU: 87
+Bomb pid: 288102, CPU: 77
+Bomb pid: 288098, CPU: 11
+Bomb pid: 288107, CPU: 33
+Bomb pid: 288115, CPU: 103
+Bomb pid: 288111, CPU: 49
+Bomb pid: 288112, CPU: 107
+Bomb pid: 288116, CPU: 39
+Bomb pid: 288104, CPU: 27
+Bomb pid: 288113, CPU: 109
+Bomb pid: 288100, CPU: 73
+Bomb pid: 288110, CPU: 99
+Bomb pid: 288105, CPU: 85
+Bomb pid: 288099, CPU: 15
+Bomb pid: 288114, CPU: 111
+Bomb pid: 288109, CPU: 41
+Bomb pid: 288117, CPU: 5
+# All bombs: # 288098 # 288099 # 288100 # 288101 # 288102 # 288103 # 288104 # 288105 # 288106 # 288107 # 288108 # 288109 # 288110 # 288111 # 288112 # 288113 # 288114 # 288115 # 288116 # 288117 # are ready
+# Writing: bm_pid=287905 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 20 , number of bits: 6, miss: 206875, ref: 342083, miss rate: 60.5%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-20.1
+# TEST cat_type: 0, n_bombs: 20 , number of bits: 5, miss: 165276, ref: 284867, miss rate: 58.0%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-27.0
+# TEST cat_type: 0, n_bombs: 20 , number of bits: 4, miss: 120617, ref: 227355, miss rate: 53.1%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-61.5
+# TEST cat_type: 0, n_bombs: 20 , number of bits: 3, miss: 46408, ref: 170299, miss rate: 27.3%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-77.6
+# TEST cat_type: 0, n_bombs: 20 , number of bits: 2, miss: 10386, ref: 114505, miss rate: 9.1%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-96.2
+# TEST cat_type: 0, n_bombs: 20 , number of bits: 1, miss: 399, ref: 57354, miss rate: 0.7%, allocated cache (bytes): 3670016, span: 33030144
+not ok 6 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288137, CPU: 87
+Bomb pid: 288149, CPU: 19
+Bomb pid: 288139, CPU: 35
+Bomb pid: 288146, CPU: 81
+Bomb pid: 288152, CPU: 37
+Bomb pid: 288134, CPU: 77
+Bomb pid: 288131, CPU: 11
+Bomb pid: 288138, CPU: 33
+Bomb pid: 288153, CPU: 47
+Bomb pid: 288142, CPU: 49
+Bomb pid: 288143, CPU: 107
+Bomb pid: 288150, CPU: 3
+Bomb pid: 288135, CPU: 27
+Bomb pid: 288147, CPU: 39
+Bomb pid: 288144, CPU: 109
+Bomb pid: 288133, CPU: 73
+Bomb pid: 288136, CPU: 85
+Bomb pid: 288141, CPU: 99
+Bomb pid: 288145, CPU: 111
+Bomb pid: 288130, CPU: 9
+Bomb pid: 288140, CPU: 41
+Bomb pid: 288132, CPU: 15
+Bomb pid: 288148, CPU: 7
+Bomb pid: 288151, CPU: 5
+# All bombs: # 288130 # 288131 # 288132 # 288133 # 288134 # 288135 # 288136 # 288137 # 288138 # 288139 # 288140 # 288141 # 288142 # 288143 # 288144 # 288145 # 288146 # 288147 # 288148 # 288149 # 288150 # 288151 # 288152 # 288153 # are ready
+# Writing: bm_pid=287905 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 24 , number of bits: 6, miss: 216943, ref: 342336, miss rate: 63.4%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-19.3
+# TEST cat_type: 0, n_bombs: 24 , number of bits: 5, miss: 175055, ref: 285079, miss rate: 61.4%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-30.4
+# TEST cat_type: 0, n_bombs: 24 , number of bits: 4, miss: 121882, ref: 227327, miss rate: 53.6%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-57.2
+# TEST cat_type: 0, n_bombs: 24 , number of bits: 3, miss: 52125, ref: 170304, miss rate: 30.6%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-76.2
+# TEST cat_type: 0, n_bombs: 24 , number of bits: 2, miss: 12380, ref: 114559, miss rate: 10.8%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-95.4
+# TEST cat_type: 0, n_bombs: 24 , number of bits: 1, miss: 575, ref: 57349, miss rate: 1.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 7 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288202, CPU: 78
+Bomb pid: 288201, CPU: 76
+Bomb pid: 288200, CPU: 72
+Bomb pid: 288199, CPU: 70
+Bomb pid: 288178, CPU: 81
+Bomb pid: 288181, CPU: 37
+Bomb pid: 288196, CPU: 19
+Bomb pid: 288180, CPU: 35
+Bomb pid: 288193, CPU: 31
+Bomb pid: 288197, CPU: 23
+Bomb pid: 288177, CPU: 21
+Bomb pid: 288192, CPU: 11
+Bomb pid: 288198, CPU: 33
+Bomb pid: 288186, CPU: 49
+Bomb pid: 288185, CPU: 47
+Bomb pid: 288187, CPU: 107
+Bomb pid: 288190, CPU: 59
+Bomb pid: 288182, CPU: 39
+Bomb pid: 288188, CPU: 53
+Bomb pid: 288179, CPU: 85
+Bomb pid: 288194, CPU: 17
+Bomb pid: 288184, CPU: 99
+Bomb pid: 288189, CPU: 111
+Bomb pid: 288195, CPU: 9
+Bomb pid: 288176, CPU: 15
+Bomb pid: 288183, CPU: 41
+Bomb pid: 288191, CPU: 7
+Bomb pid: 288175, CPU: 5
+# All bombs: # 288175 # 288176 # 288177 # 288178 # 288179 # 288180 # 288181 # 288182 # 288183 # 288184 # 288185 # 288186 # 288187 # 288188 # 288189 # 288190 # 288191 # 288192 # 288193 # 288194 # 288195 # 288196 # 288197 # 288198 # 288199 # 288200 # 288201 # 288202 # are ready
+# Writing: bm_pid=287905 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 28 , number of bits: 6, miss: 220815, ref: 342413, miss rate: 64.5%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-19.6
+# TEST cat_type: 0, n_bombs: 28 , number of bits: 5, miss: 177627, ref: 285128, miss rate: 62.3%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-32.1
+# TEST cat_type: 0, n_bombs: 28 , number of bits: 4, miss: 120535, ref: 227253, miss rate: 53.0%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-57.5
+# TEST cat_type: 0, n_bombs: 28 , number of bits: 3, miss: 51264, ref: 170443, miss rate: 30.1%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-75.0
+# TEST cat_type: 0, n_bombs: 28 , number of bits: 2, miss: 12803, ref: 114600, miss rate: 11.2%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-95.4
+# TEST cat_type: 0, n_bombs: 28 , number of bits: 1, miss: 591, ref: 57346, miss rate: 1.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 8 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288243, CPU: 78
+Bomb pid: 288239, CPU: 20
+Bomb pid: 288238, CPU: 80
+Bomb pid: 288244, CPU: 34
+Bomb pid: 288242, CPU: 72
+Bomb pid: 288240, CPU: 18
+Bomb pid: 288245, CPU: 10
+Bomb pid: 288241, CPU: 70
+Bomb pid: 288235, CPU: 19
+Bomb pid: 288223, CPU: 31
+Bomb pid: 288226, CPU: 37
+Bomb pid: 288225, CPU: 35
+Bomb pid: 288236, CPU: 23
+Bomb pid: 288221, CPU: 25
+Bomb pid: 288220, CPU: 21
+Bomb pid: 288224, CPU: 33
+Bomb pid: 288217, CPU: 11
+Bomb pid: 288234, CPU: 47
+Bomb pid: 288230, CPU: 107
+Bomb pid: 288229, CPU: 49
+Bomb pid: 288214, CPU: 59
+Bomb pid: 288233, CPU: 39
+Bomb pid: 288219, CPU: 17
+Bomb pid: 288231, CPU: 53
+Bomb pid: 288228, CPU: 99
+Bomb pid: 288222, CPU: 85
+Bomb pid: 288216, CPU: 9
+Bomb pid: 288232, CPU: 111
+Bomb pid: 288227, CPU: 41
+Bomb pid: 288218, CPU: 15
+Bomb pid: 288215, CPU: 5
+Bomb pid: 288237, CPU: 7
+# All bombs: # 288214 # 288215 # 288216 # 288217 # 288218 # 288219 # 288220 # 288221 # 288222 # 288223 # 288224 # 288225 # 288226 # 288227 # 288228 # 288229 # 288230 # 288231 # 288232 # 288233 # 288234 # 288235 # 288236 # 288237 # 288238 # 288239 # 288240 # 288241 # 288242 # 288243 # 288244 # 288245 # are ready
+# Writing: bm_pid=287905 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 32 , number of bits: 6, miss: 220794, ref: 342420, miss rate: 64.5%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-19.8
+# TEST cat_type: 0, n_bombs: 32 , number of bits: 5, miss: 177112, ref: 285136, miss rate: 62.1%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-32.2
+# TEST cat_type: 0, n_bombs: 32 , number of bits: 4, miss: 120040, ref: 227244, miss rate: 52.8%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-57.1
+# TEST cat_type: 0, n_bombs: 32 , number of bits: 3, miss: 51536, ref: 170344, miss rate: 30.3%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-75.2
+# TEST cat_type: 0, n_bombs: 32 , number of bits: 2, miss: 12763, ref: 114565, miss rate: 11.1%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-95.4
+# TEST cat_type: 0, n_bombs: 32 , number of bits: 1, miss: 586, ref: 57346, miss rate: 1.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 9 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # are ready
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 0 , number of bits: 6, miss: 26027, ref: 344032, miss rate: 7.6%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-83.6
+# TEST cat_type: 5, n_bombs: 0 , number of bits: 5, miss: 4269, ref: 286740, miss rate: 1.5%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-95.8
+# TEST cat_type: 5, n_bombs: 0 , number of bits: 4, miss: 179, ref: 229400, miss rate: 0.1%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-95.5
+# TEST cat_type: 5, n_bombs: 0 , number of bits: 3, miss: 8, ref: 172053, miss rate: 0.0%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-50.0
+# TEST cat_type: 5, n_bombs: 0 , number of bits: 2, miss: 4, ref: 114707, miss rate: 0.0%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-100.0
+# TEST cat_type: 5, n_bombs: 0 , number of bits: 1, miss: 0, ref: 57361, miss rate: 0.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 10 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288272, CPU: 87
+Bomb pid: 288271, CPU: 81
+Bomb pid: 288270, CPU: 79
+Bomb pid: 288269, CPU: 77
+# All bombs: # 288269 # 288270 # 288271 # 288272 # are ready
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 4 , number of bits: 6, miss: 179679, ref: 342128, miss rate: 52.5%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-27.9
+# TEST cat_type: 5, n_bombs: 4 , number of bits: 5, miss: 129461, ref: 284712, miss rate: 45.5%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-25.9
+# TEST cat_type: 5, n_bombs: 4 , number of bits: 4, miss: 95924, ref: 227335, miss rate: 42.2%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-31.8
+# TEST cat_type: 5, n_bombs: 4 , number of bits: 3, miss: 65417, ref: 170129, miss rate: 38.5%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-42.9
+# TEST cat_type: 5, n_bombs: 4 , number of bits: 2, miss: 37370, ref: 113020, miss rate: 33.1%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-97.4
+# TEST cat_type: 5, n_bombs: 4 , number of bits: 1, miss: 961, ref: 57291, miss rate: 1.7%, allocated cache (bytes): 3670016, span: 33030144
+not ok 11 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288277, CPU: 87
+Bomb pid: 288276, CPU: 81
+Bomb pid: 288275, CPU: 79
+Bomb pid: 288280, CPU: 93
+Bomb pid: 288279, CPU: 91
+Bomb pid: 288278, CPU: 89
+Bomb pid: 288281, CPU: 39
+Bomb pid: 288282, CPU: 97
+# All bombs: # 288275 # 288276 # 288277 # 288278 # 288279 # 288280 # 288281 # 288282 # are ready
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 8 , number of bits: 6, miss: 201036, ref: 342276, miss rate: 58.7%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-20.0
+# TEST cat_type: 5, n_bombs: 8 , number of bits: 5, miss: 160832, ref: 284979, miss rate: 56.4%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-24.6
+# TEST cat_type: 5, n_bombs: 8 , number of bits: 4, miss: 121198, ref: 227709, miss rate: 53.2%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-29.2
+# TEST cat_type: 5, n_bombs: 8 , number of bits: 3, miss: 85773, ref: 170580, miss rate: 50.3%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-37.4
+# TEST cat_type: 5, n_bombs: 8 , number of bits: 2, miss: 53674, ref: 113555, miss rate: 47.3%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-95.9
+# TEST cat_type: 5, n_bombs: 8 , number of bits: 1, miss: 2218, ref: 57299, miss rate: 3.9%, allocated cache (bytes): 3670016, span: 33030144
+not ok 12 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288286, CPU: 87
+Bomb pid: 288285, CPU: 81
+Bomb pid: 288289, CPU: 93
+Bomb pid: 288284, CPU: 79
+Bomb pid: 288288, CPU: 91
+Bomb pid: 288287, CPU: 89
+Bomb pid: 288293, CPU: 103
+Bomb pid: 288294, CPU: 105
+Bomb pid: 288295, CPU: 107
+Bomb pid: 288290, CPU: 39
+Bomb pid: 288292, CPU: 99
+Bomb pid: 288291, CPU: 97
+# All bombs: # 288284 # 288285 # 288286 # 288287 # 288288 # 288289 # 288290 # 288291 # 288292 # 288293 # 288294 # 288295 # are ready
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 12 , number of bits: 6, miss: 209590, ref: 342348, miss rate: 61.2%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-19.6
+# TEST cat_type: 5, n_bombs: 12 , number of bits: 5, miss: 168565, ref: 285089, miss rate: 59.1%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-22.9
+# TEST cat_type: 5, n_bombs: 12 , number of bits: 4, miss: 130031, ref: 227911, miss rate: 57.1%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-27.5
+# TEST cat_type: 5, n_bombs: 12 , number of bits: 3, miss: 94258, ref: 170835, miss rate: 55.2%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-37.4
+# TEST cat_type: 5, n_bombs: 12 , number of bits: 2, miss: 59000, ref: 113724, miss rate: 51.9%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-96.2
+# TEST cat_type: 5, n_bombs: 12 , number of bits: 1, miss: 2238, ref: 57307, miss rate: 3.9%, allocated cache (bytes): 3670016, span: 33030144
+not ok 13 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288318, CPU: 79
+Bomb pid: 288319, CPU: 81
+Bomb pid: 288320, CPU: 87
+Bomb pid: 288333, CPU: 19
+Bomb pid: 288322, CPU: 91
+Bomb pid: 288321, CPU: 33
+Bomb pid: 288326, CPU: 105
+Bomb pid: 288325, CPU: 103
+Bomb pid: 288327, CPU: 107
+Bomb pid: 288328, CPU: 109
+Bomb pid: 288332, CPU: 17
+Bomb pid: 288324, CPU: 99
+Bomb pid: 288331, CPU: 9
+Bomb pid: 288329, CPU: 111
+Bomb pid: 288323, CPU: 97
+Bomb pid: 288330, CPU: 5
+# All bombs: # 288318 # 288319 # 288320 # 288321 # 288322 # 288323 # 288324 # 288325 # 288326 # 288327 # 288328 # 288329 # 288330 # 288331 # 288332 # 288333 # are ready
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 16 , number of bits: 6, miss: 217194, ref: 342432, miss rate: 63.4%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-18.6
+# TEST cat_type: 5, n_bombs: 16 , number of bits: 5, miss: 176706, ref: 285227, miss rate: 62.0%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-22.2
+# TEST cat_type: 5, n_bombs: 16 , number of bits: 4, miss: 137537, ref: 228076, miss rate: 60.3%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-27.4
+# TEST cat_type: 5, n_bombs: 16 , number of bits: 3, miss: 99831, ref: 170963, miss rate: 58.4%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-37.1
+# TEST cat_type: 5, n_bombs: 16 , number of bits: 2, miss: 62841, ref: 113814, miss rate: 55.2%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-96.0
+# TEST cat_type: 5, n_bombs: 16 , number of bits: 1, miss: 2532, ref: 57300, miss rate: 4.4%, allocated cache (bytes): 3670016, span: 33030144
+not ok 14 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288341, CPU: 81
+Bomb pid: 288354, CPU: 75
+Bomb pid: 288340, CPU: 79
+Bomb pid: 288345, CPU: 93
+Bomb pid: 288344, CPU: 91
+Bomb pid: 288342, CPU: 87
+Bomb pid: 288337, CPU: 69
+Bomb pid: 288339, CPU: 77
+Bomb pid: 288343, CPU: 33
+Bomb pid: 288349, CPU: 103
+Bomb pid: 288350, CPU: 105
+Bomb pid: 288351, CPU: 107
+Bomb pid: 288335, CPU: 59
+Bomb pid: 288346, CPU: 39
+Bomb pid: 288352, CPU: 109
+Bomb pid: 288348, CPU: 99
+Bomb pid: 288338, CPU: 17
+Bomb pid: 288353, CPU: 111
+Bomb pid: 288336, CPU: 9
+Bomb pid: 288347, CPU: 97
+# All bombs: # 288335 # 288336 # 288337 # 288338 # 288339 # 288340 # 288341 # 288342 # 288343 # 288344 # 288345 # 288346 # 288347 # 288348 # 288349 # 288350 # 288351 # 288352 # 288353 # 288354 # are ready
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 20 , number of bits: 6, miss: 224519, ref: 342573, miss rate: 65.5%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-18.7
+# TEST cat_type: 5, n_bombs: 20 , number of bits: 5, miss: 182530, ref: 285369, miss rate: 64.0%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-21.7
+# TEST cat_type: 5, n_bombs: 20 , number of bits: 4, miss: 143011, ref: 228208, miss rate: 62.7%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-26.7
+# TEST cat_type: 5, n_bombs: 20 , number of bits: 3, miss: 104803, ref: 171088, miss rate: 61.3%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-37.5
+# TEST cat_type: 5, n_bombs: 20 , number of bits: 2, miss: 65541, ref: 113878, miss rate: 57.6%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-95.7
+# TEST cat_type: 5, n_bombs: 20 , number of bits: 1, miss: 2845, ref: 57302, miss rate: 5.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 15 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288386, CPU: 93
+Bomb pid: 288380, CPU: 19
+Bomb pid: 288383, CPU: 81
+Bomb pid: 288382, CPU: 79
+Bomb pid: 288385, CPU: 35
+Bomb pid: 288397, CPU: 87
+Bomb pid: 288381, CPU: 21
+Bomb pid: 288384, CPU: 33
+Bomb pid: 288393, CPU: 11
+Bomb pid: 288398, CPU: 13
+Bomb pid: 288389, CPU: 103
+Bomb pid: 288378, CPU: 3
+Bomb pid: 288400, CPU: 105
+Bomb pid: 288390, CPU: 107
+Bomb pid: 288401, CPU: 27
+Bomb pid: 288394, CPU: 39
+Bomb pid: 288395, CPU: 53
+Bomb pid: 288379, CPU: 73
+Bomb pid: 288388, CPU: 99
+Bomb pid: 288391, CPU: 111
+Bomb pid: 288392, CPU: 9
+Bomb pid: 288387, CPU: 97
+Bomb pid: 288396, CPU: 7
+Bomb pid: 288399, CPU: 5
+# All bombs: # 288378 # 288379 # 288380 # 288381 # 288382 # 288383 # 288384 # 288385 # 288386 # 288387 # 288388 # 288389 # 288390 # 288391 # 288392 # 288393 # 288394 # 288395 # 288396 # 288397 # 288398 # 288399 # 288400 # 288401 # are ready
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 24 , number of bits: 6, miss: 229303, ref: 342673, miss rate: 66.9%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-20.4
+# TEST cat_type: 5, n_bombs: 24 , number of bits: 5, miss: 182506, ref: 285376, miss rate: 64.0%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-21.3
+# TEST cat_type: 5, n_bombs: 24 , number of bits: 4, miss: 143661, ref: 228230, miss rate: 62.9%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-27.0
+# TEST cat_type: 5, n_bombs: 24 , number of bits: 3, miss: 104942, ref: 171106, miss rate: 61.3%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-37.1
+# TEST cat_type: 5, n_bombs: 24 , number of bits: 2, miss: 66017, ref: 113898, miss rate: 58.0%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-95.7
+# TEST cat_type: 5, n_bombs: 24 , number of bits: 1, miss: 2854, ref: 57301, miss rate: 5.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 16 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288428, CPU: 84
+Bomb pid: 288429, CPU: 86
+Bomb pid: 288427, CPU: 82
+Bomb pid: 288430, CPU: 88
+Bomb pid: 288412, CPU: 87
+Bomb pid: 288415, CPU: 93
+Bomb pid: 288410, CPU: 79
+Bomb pid: 288408, CPU: 75
+Bomb pid: 288409, CPU: 77
+Bomb pid: 288414, CPU: 91
+Bomb pid: 288406, CPU: 11
+Bomb pid: 288411, CPU: 81
+Bomb pid: 288407, CPU: 69
+Bomb pid: 288413, CPU: 89
+Bomb pid: 288419, CPU: 47
+Bomb pid: 288420, CPU: 105
+Bomb pid: 288421, CPU: 107
+Bomb pid: 288425, CPU: 3
+Bomb pid: 288416, CPU: 39
+Bomb pid: 288422, CPU: 53
+Bomb pid: 288426, CPU: 27
+Bomb pid: 288424, CPU: 17
+Bomb pid: 288423, CPU: 111
+Bomb pid: 288405, CPU: 9
+Bomb pid: 288417, CPU: 97
+Bomb pid: 288404, CPU: 63
+Bomb pid: 288431, CPU: 5
+Bomb pid: 288418, CPU: 99
+# All bombs: # 288404 # 288405 # 288406 # 288407 # 288408 # 288409 # 288410 # 288411 # 288412 # 288413 # 288414 # 288415 # 288416 # 288417 # 288418 # 288419 # 288420 # 288421 # 288422 # 288423 # 288424 # 288425 # 288426 # 288427 # 288428 # 288429 # 288430 # 288431 # are ready
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 28 , number of bits: 6, miss: 231462, ref: 342723, miss rate: 67.5%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-18.5
+# TEST cat_type: 5, n_bombs: 28 , number of bits: 5, miss: 188554, ref: 285491, miss rate: 66.0%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-21.5
+# TEST cat_type: 5, n_bombs: 28 , number of bits: 4, miss: 148059, ref: 228329, miss rate: 64.8%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-26.3
+# TEST cat_type: 5, n_bombs: 28 , number of bits: 3, miss: 109071, ref: 171205, miss rate: 63.7%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-38.0
+# TEST cat_type: 5, n_bombs: 28 , number of bits: 2, miss: 67650, ref: 113928, miss rate: 59.4%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-95.7
+# TEST cat_type: 5, n_bombs: 28 , number of bits: 1, miss: 2915, ref: 57306, miss rate: 5.1%, allocated cache (bytes): 3670016, span: 33030144
+not ok 17 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288478, CPU: 34
+Bomb pid: 288479, CPU: 80
+Bomb pid: 288477, CPU: 58
+Bomb pid: 288480, CPU: 62
+Bomb pid: 288481, CPU: 10
+Bomb pid: 288484, CPU: 42
+Bomb pid: 288485, CPU: 14
+Bomb pid: 288482, CPU: 0
+Bomb pid: 288460, CPU: 75
+Bomb pid: 288464, CPU: 87
+Bomb pid: 288466, CPU: 91
+Bomb pid: 288463, CPU: 81
+Bomb pid: 288462, CPU: 79
+Bomb pid: 288467, CPU: 93
+Bomb pid: 288458, CPU: 13
+Bomb pid: 288461, CPU: 77
+Bomb pid: 288476, CPU: 67
+Bomb pid: 288465, CPU: 89
+Bomb pid: 288471, CPU: 47
+Bomb pid: 288472, CPU: 105
+Bomb pid: 288454, CPU: 59
+Bomb pid: 288473, CPU: 107
+Bomb pid: 288468, CPU: 39
+Bomb pid: 288483, CPU: 83
+Bomb pid: 288459, CPU: 17
+Bomb pid: 288474, CPU: 53
+Bomb pid: 288470, CPU: 99
+Bomb pid: 288475, CPU: 111
+Bomb pid: 288457, CPU: 9
+Bomb pid: 288469, CPU: 97
+Bomb pid: 288455, CPU: 5
+Bomb pid: 288456, CPU: 63
+# All bombs: # 288454 # 288455 # 288456 # 288457 # 288458 # 288459 # 288460 # 288461 # 288462 # 288463 # 288464 # 288465 # 288466 # 288467 # 288468 # 288469 # 288470 # 288471 # 288472 # 288473 # 288474 # 288475 # 288476 # 288477 # 288478 # 288479 # 288480 # 288481 # 288482 # 288483 # 288484 # 288485 # are ready
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 32 , number of bits: 6, miss: 237852, ref: 342848, miss rate: 69.4%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-19.0
+# TEST cat_type: 5, n_bombs: 32 , number of bits: 5, miss: 192769, ref: 285579, miss rate: 67.5%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-21.2
+# TEST cat_type: 5, n_bombs: 32 , number of bits: 4, miss: 151929, ref: 228413, miss rate: 66.5%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-26.3
+# TEST cat_type: 5, n_bombs: 32 , number of bits: 3, miss: 112022, ref: 171274, miss rate: 65.4%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-38.5
+# TEST cat_type: 5, n_bombs: 32 , number of bits: 2, miss: 68878, ref: 113950, miss rate: 60.4%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-95.3
+# TEST cat_type: 5, n_bombs: 32 , number of bits: 1, miss: 3257, ref: 57310, miss rate: 5.7%, allocated cache (bytes): 3670016, span: 33030144
+not ok 18 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # are ready
+# Writing: bm_pid=287905 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 0 , number of bits: 6, miss: 20707, ref: 344049, miss rate: 6.0%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-80.6
+# TEST cat_type: 1, n_bombs: 0 , number of bits: 5, miss: 4016, ref: 286747, miss rate: 1.4%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-96.5
+# TEST cat_type: 1, n_bombs: 0 , number of bits: 4, miss: 140, ref: 229396, miss rate: 0.1%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-99.3
+# TEST cat_type: 1, n_bombs: 0 , number of bits: 3, miss: 1, ref: 172052, miss rate: 0.0%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-100.0
+# TEST cat_type: 1, n_bombs: 0 , number of bits: 2, miss: 0, ref: 114707, miss rate: 0.0%, allocated cache (bytes): 7340032, span: 33030144
+# TEST cat_type: 1, n_bombs: 0 , number of bits: 1, miss: 0, ref: 57361, miss rate: 0.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 19 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288512, CPU: 67
+Bomb pid: 288509, CPU: 59
+Bomb pid: 288511, CPU: 65
+Bomb pid: 288510, CPU: 5
+# All bombs: # 288509 # 288510 # 288511 # 288512 # are ready
+# Writing: bm_pid=287905 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 4 , number of bits: 6, miss: 41683, ref: 344013, miss rate: 12.1%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-58.5
+# TEST cat_type: 1, n_bombs: 4 , number of bits: 5, miss: 17305, ref: 286724, miss rate: 6.0%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-93.4
+# TEST cat_type: 1, n_bombs: 4 , number of bits: 4, miss: 1138, ref: 229395, miss rate: 0.5%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-96.0
+# TEST cat_type: 1, n_bombs: 4 , number of bits: 3, miss: 46, ref: 172058, miss rate: 0.0%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-97.8
+# TEST cat_type: 1, n_bombs: 4 , number of bits: 2, miss: 1, ref: 114708, miss rate: 0.0%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-100.0
+# TEST cat_type: 1, n_bombs: 4 , number of bits: 1, miss: 0, ref: 57363, miss rate: 0.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 20 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288520, CPU: 79
+Bomb pid: 288521, CPU: 81
+Bomb pid: 288518, CPU: 75
+Bomb pid: 288516, CPU: 67
+Bomb pid: 288519, CPU: 77
+Bomb pid: 288517, CPU: 73
+Bomb pid: 288515, CPU: 65
+Bomb pid: 288514, CPU: 5
+# All bombs: # 288514 # 288515 # 288516 # 288517 # 288518 # 288519 # 288520 # 288521 # are ready
+# Writing: bm_pid=287905 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 8 , number of bits: 6, miss: 20871, ref: 344037, miss rate: 6.1%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-84.4
+# TEST cat_type: 1, n_bombs: 8 , number of bits: 5, miss: 3266, ref: 286751, miss rate: 1.1%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-97.6
+# TEST cat_type: 1, n_bombs: 8 , number of bits: 4, miss: 79, ref: 229397, miss rate: 0.0%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-94.9
+# TEST cat_type: 1, n_bombs: 8 , number of bits: 3, miss: 4, ref: 172056, miss rate: 0.0%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-100.0
+# TEST cat_type: 1, n_bombs: 8 , number of bits: 2, miss: 0, ref: 114709, miss rate: 0.0%, allocated cache (bytes): 7340032, span: 33030144
+# TEST cat_type: 1, n_bombs: 8 , number of bits: 1, miss: 0, ref: 57363, miss rate: 0.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 21 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288531, CPU: 75
+Bomb pid: 288536, CPU: 87
+Bomb pid: 288534, CPU: 81
+Bomb pid: 288533, CPU: 79
+Bomb pid: 288532, CPU: 77
+Bomb pid: 288529, CPU: 11
+Bomb pid: 288525, CPU: 3
+Bomb pid: 288530, CPU: 73
+Bomb pid: 288535, CPU: 85
+Bomb pid: 288528, CPU: 65
+Bomb pid: 288527, CPU: 7
+Bomb pid: 288526, CPU: 5
+# All bombs: # 288525 # 288526 # 288527 # 288528 # 288529 # 288530 # 288531 # 288532 # 288533 # 288534 # 288535 # 288536 # are ready
+# Writing: bm_pid=287905 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 12 , number of bits: 6, miss: 22073, ref: 344051, miss rate: 6.4%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-82.4
+# TEST cat_type: 1, n_bombs: 12 , number of bits: 5, miss: 3882, ref: 286758, miss rate: 1.4%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-96.1
+# TEST cat_type: 1, n_bombs: 12 , number of bits: 4, miss: 152, ref: 229403, miss rate: 0.1%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-95.4
+# TEST cat_type: 1, n_bombs: 12 , number of bits: 3, miss: 7, ref: 172054, miss rate: 0.0%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-85.7
+# TEST cat_type: 1, n_bombs: 12 , number of bits: 2, miss: 1, ref: 114708, miss rate: 0.0%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-100.0
+# TEST cat_type: 1, n_bombs: 12 , number of bits: 1, miss: 0, ref: 57361, miss rate: 0.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 22 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288560, CPU: 93
+Bomb pid: 288555, CPU: 79
+Bomb pid: 288556, CPU: 81
+Bomb pid: 288553, CPU: 75
+Bomb pid: 288557, CPU: 87
+Bomb pid: 288559, CPU: 91
+Bomb pid: 288558, CPU: 89
+Bomb pid: 288554, CPU: 77
+Bomb pid: 288551, CPU: 11
+Bomb pid: 288563, CPU: 105
+Bomb pid: 288562, CPU: 103
+Bomb pid: 288564, CPU: 107
+Bomb pid: 288552, CPU: 73
+Bomb pid: 288561, CPU: 43
+Bomb pid: 288549, CPU: 61
+Bomb pid: 288550, CPU: 63
+# All bombs: # 288549 # 288550 # 288551 # 288552 # 288553 # 288554 # 288555 # 288556 # 288557 # 288558 # 288559 # 288560 # 288561 # 288562 # 288563 # 288564 # are ready
+# Writing: bm_pid=287905 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 16 , number of bits: 6, miss: 21915, ref: 344067, miss rate: 6.4%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-86.2
+# TEST cat_type: 1, n_bombs: 16 , number of bits: 5, miss: 3030, ref: 286749, miss rate: 1.1%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-95.6
+# TEST cat_type: 1, n_bombs: 16 , number of bits: 4, miss: 134, ref: 229399, miss rate: 0.1%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-88.8
+# TEST cat_type: 1, n_bombs: 16 , number of bits: 3, miss: 15, ref: 172052, miss rate: 0.0%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-73.3
+# TEST cat_type: 1, n_bombs: 16 , number of bits: 2, miss: 4, ref: 114709, miss rate: 0.0%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-100.0
+# TEST cat_type: 1, n_bombs: 16 , number of bits: 1, miss: 0, ref: 57362, miss rate: 0.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 23 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288604, CPU: 81
+Bomb pid: 288605, CPU: 87
+Bomb pid: 288603, CPU: 79
+Bomb pid: 288608, CPU: 93
+Bomb pid: 288601, CPU: 75
+Bomb pid: 288607, CPU: 91
+Bomb pid: 288598, CPU: 11
+Bomb pid: 288599, CPU: 13
+Bomb pid: 288606, CPU: 89
+Bomb pid: 288602, CPU: 21
+Bomb pid: 288610, CPU: 103
+Bomb pid: 288611, CPU: 105
+Bomb pid: 288612, CPU: 107
+Bomb pid: 288609, CPU: 43
+Bomb pid: 288613, CPU: 109
+Bomb pid: 288600, CPU: 73
+Bomb pid: 288614, CPU: 111
+Bomb pid: 288597, CPU: 65
+Bomb pid: 288615, CPU: 97
+Bomb pid: 288596, CPU: 63
+# All bombs: # 288596 # 288597 # 288598 # 288599 # 288600 # 288601 # 288602 # 288603 # 288604 # 288605 # 288606 # 288607 # 288608 # 288609 # 288610 # 288611 # 288612 # 288613 # 288614 # 288615 # are ready
+# Writing: bm_pid=287905 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 20 , number of bits: 6, miss: 22224, ref: 344082, miss rate: 6.5%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-81.3
+# TEST cat_type: 1, n_bombs: 20 , number of bits: 5, miss: 4148, ref: 286753, miss rate: 1.4%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-95.7
+# TEST cat_type: 1, n_bombs: 20 , number of bits: 4, miss: 178, ref: 229400, miss rate: 0.1%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-97.2
+# TEST cat_type: 1, n_bombs: 20 , number of bits: 3, miss: 5, ref: 172054, miss rate: 0.0%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-80.0
+# TEST cat_type: 1, n_bombs: 20 , number of bits: 2, miss: 1, ref: 114706, miss rate: 0.0%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-100.0
+# TEST cat_type: 1, n_bombs: 20 , number of bits: 1, miss: 0, ref: 57360, miss rate: 0.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 24 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288679, CPU: 19
+Bomb pid: 288683, CPU: 87
+Bomb pid: 288682, CPU: 25
+Bomb pid: 288686, CPU: 93
+Bomb pid: 288681, CPU: 79
+Bomb pid: 288685, CPU: 91
+Bomb pid: 288680, CPU: 77
+Bomb pid: 288684, CPU: 89
+Bomb pid: 288677, CPU: 13
+Bomb pid: 288694, CPU: 11
+Bomb pid: 288690, CPU: 105
+Bomb pid: 288691, CPU: 107
+Bomb pid: 288689, CPU: 103
+Bomb pid: 288675, CPU: 3
+Bomb pid: 288698, CPU: 27
+Bomb pid: 288692, CPU: 109
+Bomb pid: 288697, CPU: 29
+Bomb pid: 288678, CPU: 73
+Bomb pid: 288676, CPU: 9
+Bomb pid: 288688, CPU: 43
+Bomb pid: 288693, CPU: 111
+Bomb pid: 288687, CPU: 97
+Bomb pid: 288695, CPU: 5
+Bomb pid: 288696, CPU: 7
+# All bombs: # 288675 # 288676 # 288677 # 288678 # 288679 # 288680 # 288681 # 288682 # 288683 # 288684 # 288685 # 288686 # 288687 # 288688 # 288689 # 288690 # 288691 # 288692 # 288693 # 288694 # 288695 # 288696 # 288697 # 288698 # are ready
+# Writing: bm_pid=287905 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 24 , number of bits: 6, miss: 28075, ref: 344093, miss rate: 8.2%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-77.2
+# TEST cat_type: 1, n_bombs: 24 , number of bits: 5, miss: 6398, ref: 286755, miss rate: 2.2%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-96.4
+# TEST cat_type: 1, n_bombs: 24 , number of bits: 4, miss: 228, ref: 229401, miss rate: 0.1%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-97.8
+# TEST cat_type: 1, n_bombs: 24 , number of bits: 3, miss: 5, ref: 172051, miss rate: 0.0%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-40.0
+# TEST cat_type: 1, n_bombs: 24 , number of bits: 2, miss: 3, ref: 114706, miss rate: 0.0%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-100.0
+# TEST cat_type: 1, n_bombs: 24 , number of bits: 1, miss: 0, ref: 57364, miss rate: 0.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 25 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288729, CPU: 90
+Bomb pid: 288730, CPU: 20
+Bomb pid: 288732, CPU: 92
+Bomb pid: 288731, CPU: 8
+Bomb pid: 288710, CPU: 19
+Bomb pid: 288713, CPU: 25
+Bomb pid: 288715, CPU: 31
+Bomb pid: 288718, CPU: 93
+Bomb pid: 288717, CPU: 91
+Bomb pid: 288712, CPU: 79
+Bomb pid: 288708, CPU: 69
+Bomb pid: 288711, CPU: 77
+Bomb pid: 288707, CPU: 11
+Bomb pid: 288716, CPU: 33
+Bomb pid: 288721, CPU: 105
+Bomb pid: 288725, CPU: 47
+Bomb pid: 288722, CPU: 107
+Bomb pid: 288727, CPU: 3
+Bomb pid: 288728, CPU: 27
+Bomb pid: 288723, CPU: 109
+Bomb pid: 288714, CPU: 85
+Bomb pid: 288709, CPU: 73
+Bomb pid: 288720, CPU: 43
+Bomb pid: 288706, CPU: 65
+Bomb pid: 288724, CPU: 111
+Bomb pid: 288719, CPU: 97
+Bomb pid: 288705, CPU: 61
+Bomb pid: 288726, CPU: 7
+# All bombs: # 288705 # 288706 # 288707 # 288708 # 288709 # 288710 # 288711 # 288712 # 288713 # 288714 # 288715 # 288716 # 288717 # 288718 # 288719 # 288720 # 288721 # 288722 # 288723 # 288724 # 288725 # 288726 # 288727 # 288728 # 288729 # 288730 # 288731 # 288732 # are ready
+# Writing: bm_pid=287905 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 28 , number of bits: 6, miss: 21850, ref: 344080, miss rate: 6.4%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-82.3
+# TEST cat_type: 1, n_bombs: 28 , number of bits: 5, miss: 3867, ref: 286761, miss rate: 1.3%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-95.4
+# TEST cat_type: 1, n_bombs: 28 , number of bits: 4, miss: 177, ref: 229406, miss rate: 0.1%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-97.2
+# TEST cat_type: 1, n_bombs: 28 , number of bits: 3, miss: 5, ref: 172054, miss rate: 0.0%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-80.0
+# TEST cat_type: 1, n_bombs: 28 , number of bits: 2, miss: 1, ref: 114709, miss rate: 0.0%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-100.0
+# TEST cat_type: 1, n_bombs: 28 , number of bits: 1, miss: 0, ref: 57363, miss rate: 0.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 26 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+Bomb pid: 288768, CPU: 20
+Bomb pid: 288765, CPU: 8
+Bomb pid: 288763, CPU: 48
+Bomb pid: 288762, CPU: 44
+Bomb pid: 288761, CPU: 38
+Bomb pid: 288766, CPU: 10
+Bomb pid: 288764, CPU: 106
+Bomb pid: 288767, CPU: 14
+Bomb pid: 288751, CPU: 37
+Bomb pid: 288743, CPU: 19
+Bomb pid: 288746, CPU: 25
+Bomb pid: 288745, CPU: 23
+Bomb pid: 288750, CPU: 35
+Bomb pid: 288748, CPU: 31
+Bomb pid: 288740, CPU: 67
+Bomb pid: 288749, CPU: 33
+Bomb pid: 288744, CPU: 21
+Bomb pid: 288741, CPU: 13
+Bomb pid: 288755, CPU: 49
+Bomb pid: 288754, CPU: 47
+Bomb pid: 288756, CPU: 51
+Bomb pid: 288759, CPU: 3
+Bomb pid: 288757, CPU: 53
+Bomb pid: 288742, CPU: 17
+Bomb pid: 288760, CPU: 27
+Bomb pid: 288747, CPU: 29
+Bomb pid: 288753, CPU: 43
+Bomb pid: 288739, CPU: 65
+Bomb pid: 288758, CPU: 55
+Bomb pid: 288752, CPU: 41
+Bomb pid: 288737, CPU: 5
+Bomb pid: 288738, CPU: 63
+# All bombs: # 288737 # 288738 # 288739 # 288740 # 288741 # 288742 # 288743 # 288744 # 288745 # 288746 # 288747 # 288748 # 288749 # 288750 # 288751 # 288752 # 288753 # 288754 # 288755 # 288756 # 288757 # 288758 # 288759 # 288760 # 288761 # 288762 # 288763 # 288764 # 288765 # 288766 # 288767 # 288768 # are ready
+# Writing: bm_pid=287905 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# write_schemata: ctrlgrp= schemata=3c0 cpu_no=1 resource=L3
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# write_schemata: ctrlgrp=c1 schemata=3f cpu_no=1 resource=L3
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 32 , number of bits: 6, miss: 22088, ref: 344086, miss rate: 6.4%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-85.5
+# TEST cat_type: 1, n_bombs: 32 , number of bits: 5, miss: 3196, ref: 286753, miss rate: 1.1%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-95.8
+# TEST cat_type: 1, n_bombs: 32 , number of bits: 4, miss: 134, ref: 229399, miss rate: 0.1%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-96.3
+# TEST cat_type: 1, n_bombs: 32 , number of bits: 3, miss: 5, ref: 172051, miss rate: 0.0%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-80.0
+# TEST cat_type: 1, n_bombs: 32 , number of bits: 2, miss: 1, ref: 114707, miss rate: 0.0%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-100.0
+# TEST cat_type: 1, n_bombs: 32 , number of bits: 1, miss: 0, ref: 57359, miss rate: 0.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 27 L3_CAT: test
+# Planned tests != run tests (1 != 27)
+# Totals: pass:0 fail:27 xfail:0 xpass:0 skip:0 error:0

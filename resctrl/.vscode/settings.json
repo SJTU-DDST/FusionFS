@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "span": "c",
+        "resctrl.h": "c",
+        "mman.h": "c",
+        "unistd.h": "c",
+        "pthread.h": "c"
+    }
+}

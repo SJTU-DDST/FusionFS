@@ -1,0 +1,583 @@
+# c: s
+TAP version 13
+# Pass: Check kernel supports resctrl filesystem
+# Pass: Check resctrl mountpoint "/sys/fs/resctrl" exists
+# resctrl filesystem not mounted
+# dmesg: [    1.845022] resctrl: L3 allocation detected
+# dmesg: [    1.845024] resctrl: MB allocation detected
+# dmesg: [    1.845025] resctrl: L3 monitoring detected
+1..1
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: fff, Full cache mask: fff, Span: 44040192
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Mask: fff, Cache size: 44040192, Buf size: 44040192
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 0 , number of bits: 12, miss: 7763857, ref: 68768219, miss rate: 11.3%, allocated cache (bytes): 44040192, span: 33030144
+ok 1 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: fff, Full cache mask: fff, Span: 44040192
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362107 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Mask: fff, Cache size: 44040192, Buf size: 44040192
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 1 , number of bits: 12, miss: 16725427, ref: 68048025, miss rate: 24.6%, allocated cache (bytes): 44040192, span: 33030144
+ok 2 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: fff, Full cache mask: fff, Span: 44040192
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362139 # 362140 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Mask: fff, Cache size: 44040192, Buf size: 44040192
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 2 , number of bits: 12, miss: 24316224, ref: 68222715, miss rate: 35.6%, allocated cache (bytes): 44040192, span: 33030144
+ok 3 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: fff, Full cache mask: fff, Span: 44040192
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362145 # 362146 # 362147 # 362148 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Mask: fff, Cache size: 44040192, Buf size: 44040192
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 4 , number of bits: 12, miss: 31651906, ref: 68355602, miss rate: 46.3%, allocated cache (bytes): 44040192, span: 33030144
+ok 4 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: fff, Full cache mask: fff, Span: 44040192
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362156 # 362157 # 362158 # 362159 # 362160 # 362161 # 362162 # 362163 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Mask: fff, Cache size: 44040192, Buf size: 44040192
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 8 , number of bits: 12, miss: 36345061, ref: 68437523, miss rate: 53.1%, allocated cache (bytes): 44040192, span: 33030144
+ok 5 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: fff, Full cache mask: fff, Span: 44040192
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362171 # 362172 # 362173 # 362174 # 362175 # 362176 # 362177 # 362178 # 362179 # 362180 # 362181 # 362182 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Mask: fff, Cache size: 44040192, Buf size: 44040192
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 12 , number of bits: 12, miss: 42077759, ref: 68528189, miss rate: 61.4%, allocated cache (bytes): 44040192, span: 33030144
+ok 6 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: fff, Full cache mask: fff, Span: 44040192
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362187 # 362188 # 362189 # 362190 # 362191 # 362192 # 362193 # 362194 # 362195 # 362196 # 362197 # 362198 # 362199 # 362200 # 362201 # 362202 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Mask: fff, Cache size: 44040192, Buf size: 44040192
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 16 , number of bits: 12, miss: 43401275, ref: 68551773, miss rate: 63.3%, allocated cache (bytes): 44040192, span: 33030144
+ok 7 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: fff, Full cache mask: fff, Span: 44040192
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362210 # 362211 # 362212 # 362213 # 362214 # 362215 # 362216 # 362217 # 362218 # 362219 # 362220 # 362221 # 362222 # 362223 # 362224 # 362225 # 362226 # 362227 # 362228 # 362229 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Mask: fff, Cache size: 44040192, Buf size: 44040192
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 20 , number of bits: 12, miss: 46417659, ref: 68596894, miss rate: 67.7%, allocated cache (bytes): 44040192, span: 33030144
+ok 8 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: fff, Full cache mask: fff, Span: 44040192
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362237 # 362238 # 362239 # 362240 # 362241 # 362242 # 362243 # 362244 # 362245 # 362246 # 362247 # 362248 # 362249 # 362250 # 362251 # 362252 # 362253 # 362254 # 362255 # 362256 # 362257 # 362258 # 362259 # 362260 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Mask: fff, Cache size: 44040192, Buf size: 44040192
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 24 , number of bits: 12, miss: 49054373, ref: 68632795, miss rate: 71.5%, allocated cache (bytes): 44040192, span: 33030144
+ok 9 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: fff, Full cache mask: fff, Span: 44040192
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362268 # 362269 # 362270 # 362271 # 362272 # 362273 # 362274 # 362275 # 362276 # 362277 # 362278 # 362279 # 362280 # 362281 # 362282 # 362283 # 362284 # 362285 # 362286 # 362287 # 362288 # 362289 # 362290 # 362291 # 362292 # 362293 # 362294 # 362295 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Mask: fff, Cache size: 44040192, Buf size: 44040192
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 28 , number of bits: 12, miss: 49738227, ref: 68639478, miss rate: 72.5%, allocated cache (bytes): 44040192, span: 33030144
+ok 10 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: fff, Full cache mask: fff, Span: 44040192
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362304 # 362305 # 362306 # 362307 # 362308 # 362309 # 362310 # 362311 # 362312 # 362313 # 362314 # 362315 # 362316 # 362317 # 362318 # 362319 # 362320 # 362321 # 362322 # 362323 # 362324 # 362325 # 362326 # 362327 # 362328 # 362329 # 362330 # 362331 # 362332 # 362333 # 362334 # 362335 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Mask: fff, Cache size: 44040192, Buf size: 44040192
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 32 , number of bits: 12, miss: 50669931, ref: 68669073, miss rate: 73.8%, allocated cache (bytes): 44040192, span: 33030144
+ok 11 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # are ready
+dlock init ok
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 0 , number of bits: 11, miss: 14041058, ref: 62305847, miss rate: 22.5%, allocated cache (bytes): 40370176, span: 33030144
+ok 12 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362346 # are ready
+dlock init ok
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 1 , number of bits: 11, miss: 15748299, ref: 62409650, miss rate: 25.2%, allocated cache (bytes): 40370176, span: 33030144
+ok 13 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362354 # 362355 # are ready
+dlock init ok
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 2 , number of bits: 11, miss: 14187537, ref: 62319575, miss rate: 22.8%, allocated cache (bytes): 40370176, span: 33030144
+ok 14 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362363 # 362364 # 362365 # 362366 # are ready
+dlock init ok
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 4 , number of bits: 11, miss: 15847427, ref: 62418998, miss rate: 25.4%, allocated cache (bytes): 40370176, span: 33030144
+ok 15 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362376 # 362377 # 362378 # 362379 # 362380 # 362381 # 362382 # 362383 # are ready
+dlock init ok
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 8 , number of bits: 11, miss: 33268103, ref: 62735032, miss rate: 53.0%, allocated cache (bytes): 40370176, span: 33030144
+ok 16 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362388 # 362389 # 362390 # 362391 # 362392 # 362393 # 362394 # 362395 # 362396 # 362397 # 362398 # 362399 # are ready
+dlock init ok
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 12 , number of bits: 11, miss: 36252668, ref: 62781100, miss rate: 57.7%, allocated cache (bytes): 40370176, span: 33030144
+ok 17 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362407 # 362408 # 362409 # 362410 # 362411 # 362412 # 362413 # 362414 # 362415 # 362416 # 362417 # 362418 # 362419 # 362420 # 362421 # 362422 # are ready
+dlock init ok
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 16 , number of bits: 11, miss: 39845457, ref: 62852353, miss rate: 63.4%, allocated cache (bytes): 40370176, span: 33030144
+ok 18 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362431 # 362432 # 362433 # 362434 # 362435 # 362436 # 362437 # 362438 # 362439 # 362440 # 362441 # 362442 # 362443 # 362444 # 362445 # 362446 # 362447 # 362448 # 362449 # 362450 # are ready
+dlock init ok
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 20 , number of bits: 11, miss: 42597941, ref: 62875216, miss rate: 67.7%, allocated cache (bytes): 40370176, span: 33030144
+ok 19 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362471 # 362472 # 362473 # 362474 # 362475 # 362476 # 362477 # 362478 # 362479 # 362480 # 362481 # 362482 # 362483 # 362484 # 362485 # 362486 # 362487 # 362488 # 362489 # 362490 # 362491 # 362492 # 362493 # 362494 # are ready
+dlock init ok
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 24 , number of bits: 11, miss: 43895746, ref: 62910782, miss rate: 69.8%, allocated cache (bytes): 40370176, span: 33030144
+ok 20 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362507 # 362508 # 362509 # 362510 # 362511 # 362512 # 362513 # 362514 # 362515 # 362516 # 362517 # 362518 # 362519 # 362520 # 362521 # 362522 # 362523 # 362524 # 362525 # 362526 # 362527 # 362528 # 362529 # 362530 # 362531 # 362532 # 362533 # 362534 # are ready
+dlock init ok
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 28 , number of bits: 11, miss: 45916336, ref: 62924825, miss rate: 73.0%, allocated cache (bytes): 40370176, span: 33030144
+ok 21 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362542 # 362543 # 362544 # 362545 # 362546 # 362547 # 362548 # 362549 # 362550 # 362551 # 362552 # 362553 # 362554 # 362555 # 362556 # 362557 # 362558 # 362559 # 362560 # 362561 # 362562 # 362563 # 362564 # 362565 # 362566 # 362567 # 362568 # 362569 # 362570 # 362571 # 362572 # 362573 # are ready
+dlock init ok
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 32 , number of bits: 11, miss: 46804376, ref: 62957136, miss rate: 74.3%, allocated cache (bytes): 40370176, span: 33030144
+ok 22 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=800;1=800" to resctrl FS
+# Write schema "L3:0=7ff;1=7ff" to resctrl FS
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 0 , number of bits: 11, miss: 5674840, ref: 63043932, miss rate: 9.0%, allocated cache (bytes): 40370176, span: 33030144
+ok 23 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362667 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=800;1=800" to resctrl FS
+# Write schema "L3:0=7ff;1=7ff" to resctrl FS
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 1 , number of bits: 11, miss: 3940932, ref: 63072970, miss rate: 6.2%, allocated cache (bytes): 40370176, span: 33030144
+ok 24 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362671 # 362672 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=800;1=800" to resctrl FS
+# Write schema "L3:0=7ff;1=7ff" to resctrl FS
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 2 , number of bits: 11, miss: 7256602, ref: 63082287, miss rate: 11.5%, allocated cache (bytes): 40370176, span: 33030144
+ok 25 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362681 # 362682 # 362683 # 362684 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=800;1=800" to resctrl FS
+# Write schema "L3:0=7ff;1=7ff" to resctrl FS
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 4 , number of bits: 11, miss: 7326736, ref: 63068746, miss rate: 11.6%, allocated cache (bytes): 40370176, span: 33030144
+ok 26 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362690 # 362691 # 362692 # 362693 # 362694 # 362695 # 362696 # 362697 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=800;1=800" to resctrl FS
+# Write schema "L3:0=7ff;1=7ff" to resctrl FS
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 8 , number of bits: 11, miss: 7597726, ref: 63082380, miss rate: 12.0%, allocated cache (bytes): 40370176, span: 33030144
+ok 27 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362702 # 362703 # 362704 # 362705 # 362706 # 362707 # 362708 # 362709 # 362710 # 362711 # 362712 # 362713 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=800;1=800" to resctrl FS
+# Write schema "L3:0=7ff;1=7ff" to resctrl FS
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 12 , number of bits: 11, miss: 7499977, ref: 63082490, miss rate: 11.9%, allocated cache (bytes): 40370176, span: 33030144
+ok 28 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362721 # 362722 # 362723 # 362724 # 362725 # 362726 # 362727 # 362728 # 362729 # 362730 # 362731 # 362732 # 362733 # 362734 # 362735 # 362736 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=800;1=800" to resctrl FS
+# Write schema "L3:0=7ff;1=7ff" to resctrl FS
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 16 , number of bits: 11, miss: 7659583, ref: 63086224, miss rate: 12.1%, allocated cache (bytes): 40370176, span: 33030144
+ok 29 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362743 # 362744 # 362745 # 362746 # 362747 # 362748 # 362749 # 362750 # 362751 # 362752 # 362753 # 362754 # 362755 # 362756 # 362757 # 362758 # 362759 # 362760 # 362761 # 362762 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=800;1=800" to resctrl FS
+# Write schema "L3:0=7ff;1=7ff" to resctrl FS
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 20 , number of bits: 11, miss: 7619412, ref: 63072624, miss rate: 12.1%, allocated cache (bytes): 40370176, span: 33030144
+ok 30 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362767 # 362768 # 362769 # 362770 # 362771 # 362772 # 362773 # 362774 # 362775 # 362776 # 362777 # 362778 # 362779 # 362780 # 362781 # 362782 # 362783 # 362784 # 362785 # 362786 # 362787 # 362788 # 362789 # 362790 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=800;1=800" to resctrl FS
+# Write schema "L3:0=7ff;1=7ff" to resctrl FS
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 24 , number of bits: 11, miss: 7731526, ref: 63079947, miss rate: 12.3%, allocated cache (bytes): 40370176, span: 33030144
+ok 31 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362798 # 362799 # 362800 # 362801 # 362802 # 362803 # 362804 # 362805 # 362806 # 362807 # 362808 # 362809 # 362810 # 362811 # 362812 # 362813 # 362814 # 362815 # 362816 # 362817 # 362818 # 362819 # 362820 # 362821 # 362822 # 362823 # 362824 # 362825 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=800;1=800" to resctrl FS
+# Write schema "L3:0=7ff;1=7ff" to resctrl FS
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 28 , number of bits: 11, miss: 7735732, ref: 63081002, miss rate: 12.3%, allocated cache (bytes): 40370176, span: 33030144
+ok 32 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362830 # 362831 # 362832 # 362833 # 362834 # 362835 # 362836 # 362837 # 362838 # 362839 # 362840 # 362841 # 362842 # 362843 # 362844 # 362845 # 362846 # 362847 # 362848 # 362849 # 362850 # 362851 # 362852 # 362853 # 362854 # 362855 # 362856 # 362857 # 362858 # 362859 # 362860 # 362861 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=800;1=800" to resctrl FS
+# Write schema "L3:0=7ff;1=7ff" to resctrl FS
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 32 , number of bits: 11, miss: 7723975, ref: 63074911, miss rate: 12.2%, allocated cache (bytes): 40370176, span: 33030144
+ok 33 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=800;1=800" to resctrl FS
+# Write schema "L3:0=7ff;1=7ff" to resctrl FS
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 13, n_bombs: 0 , number of bits: 11, miss: 14804867, ref: 62095729, miss rate: 23.8%, allocated cache (bytes): 40370176, span: 33030144
+ok 34 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362872 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=800;1=800" to resctrl FS
+# Write schema "L3:0=7ff;1=7ff" to resctrl FS
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 13, n_bombs: 1 , number of bits: 11, miss: 14862434, ref: 62057799, miss rate: 23.9%, allocated cache (bytes): 40370176, span: 33030144
+ok 35 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362881 # 362882 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=800;1=800" to resctrl FS
+# Write schema "L3:0=7ff;1=7ff" to resctrl FS
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 13, n_bombs: 2 , number of bits: 11, miss: 19479102, ref: 62244672, miss rate: 31.3%, allocated cache (bytes): 40370176, span: 33030144
+ok 36 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362890 # 362891 # 362892 # 362893 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=800;1=800" to resctrl FS
+# Write schema "L3:0=7ff;1=7ff" to resctrl FS
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 13, n_bombs: 4 , number of bits: 11, miss: 15452883, ref: 62072141, miss rate: 24.9%, allocated cache (bytes): 40370176, span: 33030144
+ok 37 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362901 # 362902 # 362903 # 362904 # 362905 # 362906 # 362907 # 362908 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=800;1=800" to resctrl FS
+# Write schema "L3:0=7ff;1=7ff" to resctrl FS
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 13, n_bombs: 8 , number of bits: 11, miss: 20946908, ref: 62289492, miss rate: 33.6%, allocated cache (bytes): 40370176, span: 33030144
+ok 38 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362941 # 362942 # 362943 # 362944 # 362945 # 362946 # 362947 # 362948 # 362949 # 362950 # 362951 # 362952 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=800;1=800" to resctrl FS
+# Write schema "L3:0=7ff;1=7ff" to resctrl FS
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 13, n_bombs: 12 , number of bits: 11, miss: 33470450, ref: 62715746, miss rate: 53.4%, allocated cache (bytes): 40370176, span: 33030144
+ok 39 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362964 # 362965 # 362966 # 362967 # 362968 # 362969 # 362970 # 362971 # 362972 # 362973 # 362974 # 362975 # 362976 # 362977 # 362978 # 362979 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=800;1=800" to resctrl FS
+# Write schema "L3:0=7ff;1=7ff" to resctrl FS
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 13, n_bombs: 16 , number of bits: 11, miss: 39671844, ref: 62864996, miss rate: 63.1%, allocated cache (bytes): 40370176, span: 33030144
+ok 40 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 362989 # 362990 # 362991 # 362992 # 362993 # 362994 # 362995 # 362996 # 362997 # 362998 # 362999 # 363000 # 363001 # 363002 # 363003 # 363004 # 363005 # 363006 # 363007 # 363008 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=800;1=800" to resctrl FS
+# Write schema "L3:0=7ff;1=7ff" to resctrl FS
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 13, n_bombs: 20 , number of bits: 11, miss: 42788943, ref: 62905876, miss rate: 68.0%, allocated cache (bytes): 40370176, span: 33030144
+ok 41 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 363018 # 363019 # 363020 # 363021 # 363022 # 363023 # 363024 # 363025 # 363026 # 363027 # 363028 # 363029 # 363030 # 363031 # 363032 # 363033 # 363034 # 363035 # 363036 # 363037 # 363038 # 363039 # 363040 # 363041 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=800;1=800" to resctrl FS
+# Write schema "L3:0=7ff;1=7ff" to resctrl FS
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 13, n_bombs: 24 , number of bits: 11, miss: 44497081, ref: 62930194, miss rate: 70.7%, allocated cache (bytes): 40370176, span: 33030144
+ok 42 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 363051 # 363052 # 363053 # 363054 # 363055 # 363056 # 363057 # 363058 # 363059 # 363060 # 363061 # 363062 # 363063 # 363064 # 363065 # 363066 # 363067 # 363068 # 363069 # 363070 # 363071 # 363072 # 363073 # 363074 # 363075 # 363076 # 363077 # 363078 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=800;1=800" to resctrl FS
+# Write schema "L3:0=7ff;1=7ff" to resctrl FS
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 13, n_bombs: 28 , number of bits: 11, miss: 45682386, ref: 62945667, miss rate: 72.6%, allocated cache (bytes): 40370176, span: 33030144
+ok 43 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 7ff, Full cache mask: fff, Span: 40370176
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # 363086 # 363087 # 363088 # 363089 # 363090 # 363091 # 363092 # 363093 # 363094 # 363095 # 363096 # 363097 # 363098 # 363099 # 363100 # 363101 # 363102 # 363103 # 363104 # 363105 # 363106 # 363107 # 363108 # 363109 # 363110 # 363111 # 363112 # 363113 # 363114 # 363115 # 363116 # 363117 # are ready
+# Writing: bm_pid=362095 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=800;1=800" to resctrl FS
+# Write schema "L3:0=7ff;1=7ff" to resctrl FS
+# Mask: 7ff, Cache size: 40370176, Buf size: 40370176
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 13, n_bombs: 32 , number of bits: 11, miss: 46565992, ref: 62957835, miss rate: 74.0%, allocated cache (bytes): 40370176, span: 33030144
+ok 44 L3_CAT: test
+# Planned tests != run tests (1 != 44)
+# Totals: pass:44 fail:0 xfail:0 xpass:0 skip:0 error:0

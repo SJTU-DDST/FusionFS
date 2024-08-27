@@ -1,0 +1,963 @@
+TAP version 13
+# Pass: Check kernel supports resctrl filesystem
+# Pass: Check resctrl mountpoint "/sys/fs/resctrl" exists
+# resctrl filesystem not mounted
+# dmesg: [    2.300532] resctrl: L3 allocation detected
+# dmesg: [    2.300534] resctrl: MB allocation detected
+# dmesg: [    2.300534] resctrl: L3 monitoring detected
+1..1
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # are ready
+# Writing benchmark parameters to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 0 , number of bits: 6, miss: 853, ref: 344092, miss rate: 0.2%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-99.5
+# TEST cat_type: 0, n_bombs: 0 , number of bits: 5, miss: 4, ref: 286741, miss rate: 0.0%, allocated cache (bytes): 18350080, span: 33030144
+# Pass: Check cache miss rate changed more than 3.0%
+# Percent diff=150.0
+# TEST cat_type: 0, n_bombs: 0 , number of bits: 4, miss: 10, ref: 229396, miss rate: 0.0%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-40.0
+# TEST cat_type: 0, n_bombs: 0 , number of bits: 3, miss: 6, ref: 172051, miss rate: 0.0%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-66.7
+# TEST cat_type: 0, n_bombs: 0 , number of bits: 2, miss: 2, ref: 114702, miss rate: 0.0%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-100.0
+# TEST cat_type: 0, n_bombs: 0 , number of bits: 1, miss: 0, ref: 57358, miss rate: 0.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 1 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62158 # 62159 # 62160 # 62161 # are ready
+# Writing benchmark parameters to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 4 , number of bits: 6, miss: 182318, ref: 342184, miss rate: 53.3%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-25.5
+# TEST cat_type: 0, n_bombs: 4 , number of bits: 5, miss: 135860, ref: 284405, miss rate: 47.8%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-34.0
+# TEST cat_type: 0, n_bombs: 4 , number of bits: 4, miss: 89672, ref: 226529, miss rate: 39.6%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-50.4
+# TEST cat_type: 0, n_bombs: 4 , number of bits: 3, miss: 44475, ref: 167831, miss rate: 26.5%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-85.3
+# TEST cat_type: 0, n_bombs: 4 , number of bits: 2, miss: 6522, ref: 114309, miss rate: 5.7%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-97.6
+# TEST cat_type: 0, n_bombs: 4 , number of bits: 1, miss: 156, ref: 57354, miss rate: 0.3%, allocated cache (bytes): 3670016, span: 33030144
+not ok 2 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62163 # 62164 # 62165 # 62166 # 62167 # 62168 # 62169 # 62170 # are ready
+# Writing benchmark parameters to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 8 , number of bits: 6, miss: 180934, ref: 341609, miss rate: 53.0%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-21.9
+# TEST cat_type: 0, n_bombs: 8 , number of bits: 5, miss: 141311, ref: 284389, miss rate: 49.7%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-29.5
+# TEST cat_type: 0, n_bombs: 8 , number of bits: 4, miss: 99634, ref: 226906, miss rate: 43.9%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-52.4
+# TEST cat_type: 0, n_bombs: 8 , number of bits: 3, miss: 47390, ref: 167741, miss rate: 28.3%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-84.7
+# TEST cat_type: 0, n_bombs: 8 , number of bits: 2, miss: 7263, ref: 114331, miss rate: 6.4%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-97.6
+# TEST cat_type: 0, n_bombs: 8 , number of bits: 1, miss: 173, ref: 57360, miss rate: 0.3%, allocated cache (bytes): 3670016, span: 33030144
+not ok 3 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62173 # 62174 # 62175 # 62176 # 62177 # 62178 # 62179 # 62180 # 62181 # 62182 # 62183 # 62184 # are ready
+# Writing benchmark parameters to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 12 , number of bits: 6, miss: 191001, ref: 341721, miss rate: 55.9%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-20.6
+# TEST cat_type: 0, n_bombs: 12 , number of bits: 5, miss: 151635, ref: 284531, miss rate: 53.3%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-25.0
+# TEST cat_type: 0, n_bombs: 12 , number of bits: 4, miss: 113793, ref: 227294, miss rate: 50.1%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-53.3
+# TEST cat_type: 0, n_bombs: 12 , number of bits: 3, miss: 53099, ref: 168644, miss rate: 31.5%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-84.1
+# TEST cat_type: 0, n_bombs: 12 , number of bits: 2, miss: 8426, ref: 114475, miss rate: 7.4%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-96.9
+# TEST cat_type: 0, n_bombs: 12 , number of bits: 1, miss: 259, ref: 57356, miss rate: 0.5%, allocated cache (bytes): 3670016, span: 33030144
+not ok 4 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62411 # 62412 # 62413 # 62414 # 62415 # 62416 # 62417 # 62418 # 62419 # 62420 # 62421 # 62422 # 62423 # 62424 # 62425 # 62426 # are ready
+# Writing benchmark parameters to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 16 , number of bits: 6, miss: 202946, ref: 341985, miss rate: 59.3%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-19.6
+# TEST cat_type: 0, n_bombs: 16 , number of bits: 5, miss: 163143, ref: 284818, miss rate: 57.3%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-26.7
+# TEST cat_type: 0, n_bombs: 16 , number of bits: 4, miss: 119503, ref: 227334, miss rate: 52.6%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-56.3
+# TEST cat_type: 0, n_bombs: 16 , number of bits: 3, miss: 52199, ref: 169453, miss rate: 30.8%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-80.6
+# TEST cat_type: 0, n_bombs: 16 , number of bits: 2, miss: 10148, ref: 114502, miss rate: 8.9%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-96.1
+# TEST cat_type: 0, n_bombs: 16 , number of bits: 1, miss: 395, ref: 57355, miss rate: 0.7%, allocated cache (bytes): 3670016, span: 33030144
+not ok 5 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62428 # 62429 # 62430 # 62431 # 62432 # 62433 # 62434 # 62435 # 62436 # 62437 # 62438 # 62439 # 62440 # 62441 # 62442 # 62443 # 62444 # 62445 # 62446 # 62447 # are ready
+# Writing benchmark parameters to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 20 , number of bits: 6, miss: 204589, ref: 342068, miss rate: 59.8%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-19.4
+# TEST cat_type: 0, n_bombs: 20 , number of bits: 5, miss: 164969, ref: 284867, miss rate: 57.9%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-27.5
+# TEST cat_type: 0, n_bombs: 20 , number of bits: 4, miss: 119599, ref: 227321, miss rate: 52.6%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-57.1
+# TEST cat_type: 0, n_bombs: 20 , number of bits: 3, miss: 51301, ref: 169971, miss rate: 30.2%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-78.7
+# TEST cat_type: 0, n_bombs: 20 , number of bits: 2, miss: 10909, ref: 114539, miss rate: 9.5%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-95.6
+# TEST cat_type: 0, n_bombs: 20 , number of bits: 1, miss: 483, ref: 57349, miss rate: 0.8%, allocated cache (bytes): 3670016, span: 33030144
+not ok 6 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62449 # 62450 # 62451 # 62452 # 62453 # 62454 # 62455 # 62456 # 62457 # 62458 # 62459 # 62460 # 62461 # 62462 # 62463 # 62464 # 62465 # 62466 # 62467 # 62468 # 62469 # 62470 # 62471 # 62472 # are ready
+# Writing benchmark parameters to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 24 , number of bits: 6, miss: 221426, ref: 342483, miss rate: 64.7%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-19.8
+# TEST cat_type: 0, n_bombs: 24 , number of bits: 5, miss: 177514, ref: 285152, miss rate: 62.3%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-30.9
+# TEST cat_type: 0, n_bombs: 24 , number of bits: 4, miss: 122677, ref: 227364, miss rate: 54.0%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-61.2
+# TEST cat_type: 0, n_bombs: 24 , number of bits: 3, miss: 47609, ref: 171047, miss rate: 27.8%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-72.7
+# TEST cat_type: 0, n_bombs: 24 , number of bits: 2, miss: 12995, ref: 114572, miss rate: 11.3%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-95.4
+# TEST cat_type: 0, n_bombs: 24 , number of bits: 1, miss: 602, ref: 57344, miss rate: 1.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 7 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62474 # 62475 # 62476 # 62477 # 62478 # 62479 # 62480 # 62481 # 62482 # 62483 # 62484 # 62485 # 62486 # 62487 # 62488 # 62489 # 62490 # 62491 # 62492 # 62493 # 62494 # 62495 # 62496 # 62497 # 62498 # 62499 # 62500 # 62501 # are ready
+# Writing benchmark parameters to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 28 , number of bits: 6, miss: 215809, ref: 342324, miss rate: 63.0%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-19.3
+# TEST cat_type: 0, n_bombs: 28 , number of bits: 5, miss: 174102, ref: 285076, miss rate: 61.1%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-30.4
+# TEST cat_type: 0, n_bombs: 28 , number of bits: 4, miss: 121129, ref: 227308, miss rate: 53.3%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-57.5
+# TEST cat_type: 0, n_bombs: 28 , number of bits: 3, miss: 51458, ref: 170129, miss rate: 30.2%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-75.8
+# TEST cat_type: 0, n_bombs: 28 , number of bits: 2, miss: 12464, ref: 114574, miss rate: 10.9%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-95.7
+# TEST cat_type: 0, n_bombs: 28 , number of bits: 1, miss: 540, ref: 57343, miss rate: 0.9%, allocated cache (bytes): 3670016, span: 33030144
+not ok 8 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62505 # 62506 # 62507 # 62508 # 62509 # 62510 # 62511 # 62512 # 62513 # 62514 # 62515 # 62516 # 62517 # 62518 # 62519 # 62520 # 62521 # 62522 # 62523 # 62524 # 62525 # 62526 # 62527 # 62528 # 62529 # 62530 # 62531 # 62532 # 62533 # 62534 # 62535 # 62536 # are ready
+# Writing benchmark parameters to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 0, n_bombs: 32 , number of bits: 6, miss: 218508, ref: 342380, miss rate: 63.8%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-19.4
+# TEST cat_type: 0, n_bombs: 32 , number of bits: 5, miss: 176035, ref: 285123, miss rate: 61.7%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-30.4
+# TEST cat_type: 0, n_bombs: 32 , number of bits: 4, miss: 122535, ref: 227359, miss rate: 53.9%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-57.4
+# TEST cat_type: 0, n_bombs: 32 , number of bits: 3, miss: 52155, ref: 170166, miss rate: 30.6%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-73.6
+# TEST cat_type: 0, n_bombs: 32 , number of bits: 2, miss: 13746, ref: 114575, miss rate: 12.0%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-95.5
+# TEST cat_type: 0, n_bombs: 32 , number of bits: 1, miss: 618, ref: 57342, miss rate: 1.1%, allocated cache (bytes): 3670016, span: 33030144
+not ok 9 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # are ready
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 0 , number of bits: 6, miss: 24013, ref: 344004, miss rate: 7.0%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-84.1
+# TEST cat_type: 5, n_bombs: 0 , number of bits: 5, miss: 3825, ref: 286746, miss rate: 1.3%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-96.1
+# TEST cat_type: 5, n_bombs: 0 , number of bits: 4, miss: 151, ref: 229395, miss rate: 0.1%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-95.4
+# TEST cat_type: 5, n_bombs: 0 , number of bits: 3, miss: 7, ref: 172051, miss rate: 0.0%, allocated cache (bytes): 11010048, span: 33030144
+# Pass: Check cache miss rate changed more than 1.0%
+# Percent diff=428.6
+# TEST cat_type: 5, n_bombs: 0 , number of bits: 2, miss: 37, ref: 114707, miss rate: 0.0%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-100.0
+# TEST cat_type: 5, n_bombs: 0 , number of bits: 1, miss: 0, ref: 57363, miss rate: 0.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 10 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62542 # 62543 # 62544 # 62545 # are ready
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 4 , number of bits: 6, miss: 181936, ref: 342200, miss rate: 53.2%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-20.4
+# TEST cat_type: 5, n_bombs: 4 , number of bits: 5, miss: 144798, ref: 284852, miss rate: 50.8%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-27.4
+# TEST cat_type: 5, n_bombs: 4 , number of bits: 4, miss: 105067, ref: 227363, miss rate: 46.2%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-32.8
+# TEST cat_type: 5, n_bombs: 4 , number of bits: 3, miss: 70603, ref: 170137, miss rate: 41.5%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-39.4
+# TEST cat_type: 5, n_bombs: 4 , number of bits: 2, miss: 42762, ref: 113193, miss rate: 37.8%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-96.3
+# TEST cat_type: 5, n_bombs: 4 , number of bits: 1, miss: 1570, ref: 57285, miss rate: 2.7%, allocated cache (bytes): 3670016, span: 33030144
+not ok 11 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62547 # 62548 # 62549 # 62550 # 62551 # 62552 # 62553 # 62554 # are ready
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 8 , number of bits: 6, miss: 192811, ref: 342028, miss rate: 56.4%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-17.6
+# TEST cat_type: 5, n_bombs: 8 , number of bits: 5, miss: 158933, ref: 284923, miss rate: 55.8%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-24.3
+# TEST cat_type: 5, n_bombs: 8 , number of bits: 4, miss: 120268, ref: 227686, miss rate: 52.8%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-28.8
+# TEST cat_type: 5, n_bombs: 8 , number of bits: 3, miss: 85617, ref: 170584, miss rate: 50.2%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-38.4
+# TEST cat_type: 5, n_bombs: 8 , number of bits: 2, miss: 52778, ref: 113536, miss rate: 46.5%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-95.8
+# TEST cat_type: 5, n_bombs: 8 , number of bits: 1, miss: 2209, ref: 57283, miss rate: 3.9%, allocated cache (bytes): 3670016, span: 33030144
+not ok 12 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62556 # 62557 # 62558 # 62559 # 62560 # 62561 # 62562 # 62563 # 62564 # 62565 # 62566 # 62567 # are ready
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 12 , number of bits: 6, miss: 209398, ref: 342330, miss rate: 61.2%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-19.3
+# TEST cat_type: 5, n_bombs: 12 , number of bits: 5, miss: 168958, ref: 285113, miss rate: 59.3%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-22.8
+# TEST cat_type: 5, n_bombs: 12 , number of bits: 4, miss: 130446, ref: 227923, miss rate: 57.2%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-27.5
+# TEST cat_type: 5, n_bombs: 12 , number of bits: 3, miss: 94574, ref: 170840, miss rate: 55.4%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-36.9
+# TEST cat_type: 5, n_bombs: 12 , number of bits: 2, miss: 59656, ref: 113754, miss rate: 52.4%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-96.3
+# TEST cat_type: 5, n_bombs: 12 , number of bits: 1, miss: 2214, ref: 57285, miss rate: 3.9%, allocated cache (bytes): 3670016, span: 33030144
+not ok 13 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62569 # 62570 # 62571 # 62572 # 62573 # 62574 # 62575 # 62576 # 62577 # 62578 # 62579 # 62580 # 62581 # 62582 # 62583 # 62584 # are ready
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 16 , number of bits: 6, miss: 212375, ref: 342384, miss rate: 62.0%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-19.1
+# TEST cat_type: 5, n_bombs: 16 , number of bits: 5, miss: 171760, ref: 285149, miss rate: 60.2%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-22.5
+# TEST cat_type: 5, n_bombs: 16 , number of bits: 4, miss: 133124, ref: 227983, miss rate: 58.4%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-26.7
+# TEST cat_type: 5, n_bombs: 16 , number of bits: 3, miss: 97642, ref: 170924, miss rate: 57.1%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-37.7
+# TEST cat_type: 5, n_bombs: 16 , number of bits: 2, miss: 60811, ref: 113780, miss rate: 53.4%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-96.1
+# TEST cat_type: 5, n_bombs: 16 , number of bits: 1, miss: 2391, ref: 57298, miss rate: 4.2%, allocated cache (bytes): 3670016, span: 33030144
+not ok 14 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62586 # 62587 # 62588 # 62589 # 62590 # 62591 # 62592 # 62593 # 62594 # 62595 # 62596 # 62597 # 62598 # 62599 # 62600 # 62601 # 62602 # 62603 # 62604 # 62605 # are ready
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 20 , number of bits: 6, miss: 221209, ref: 342528, miss rate: 64.6%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-18.8
+# TEST cat_type: 5, n_bombs: 20 , number of bits: 5, miss: 179589, ref: 285304, miss rate: 62.9%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-21.7
+# TEST cat_type: 5, n_bombs: 20 , number of bits: 4, miss: 140600, ref: 228154, miss rate: 61.6%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-27.1
+# TEST cat_type: 5, n_bombs: 20 , number of bits: 3, miss: 102463, ref: 171042, miss rate: 59.9%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-36.9
+# TEST cat_type: 5, n_bombs: 20 , number of bits: 2, miss: 64630, ref: 113867, miss rate: 56.8%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-95.7
+# TEST cat_type: 5, n_bombs: 20 , number of bits: 1, miss: 2756, ref: 57303, miss rate: 4.8%, allocated cache (bytes): 3670016, span: 33030144
+not ok 15 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62607 # 62608 # 62609 # 62610 # 62611 # 62612 # 62613 # 62614 # 62615 # 62616 # 62617 # 62618 # 62619 # 62620 # 62621 # 62622 # 62623 # 62624 # 62625 # 62626 # 62627 # 62628 # 62629 # 62630 # are ready
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 24 , number of bits: 6, miss: 220838, ref: 342526, miss rate: 64.5%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-17.0
+# TEST cat_type: 5, n_bombs: 24 , number of bits: 5, miss: 183264, ref: 285395, miss rate: 64.2%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-23.3
+# TEST cat_type: 5, n_bombs: 24 , number of bits: 4, miss: 140546, ref: 228167, miss rate: 61.6%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-27.1
+# TEST cat_type: 5, n_bombs: 24 , number of bits: 3, miss: 102411, ref: 171055, miss rate: 59.9%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-37.4
+# TEST cat_type: 5, n_bombs: 24 , number of bits: 2, miss: 64062, ref: 113844, miss rate: 56.3%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-95.8
+# TEST cat_type: 5, n_bombs: 24 , number of bits: 1, miss: 2664, ref: 57300, miss rate: 4.6%, allocated cache (bytes): 3670016, span: 33030144
+not ok 16 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62636 # 62637 # 62638 # 62639 # 62640 # 62641 # 62642 # 62643 # 62644 # 62645 # 62646 # 62647 # 62648 # 62649 # 62650 # 62651 # 62652 # 62653 # 62654 # 62655 # 62656 # 62657 # 62658 # 62659 # 62660 # 62661 # 62662 # 62663 # are ready
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 28 , number of bits: 6, miss: 231657, ref: 342737, miss rate: 67.6%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-18.7
+# TEST cat_type: 5, n_bombs: 28 , number of bits: 5, miss: 188399, ref: 285514, miss rate: 66.0%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-21.4
+# TEST cat_type: 5, n_bombs: 28 , number of bits: 4, miss: 148007, ref: 228348, miss rate: 64.8%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-26.6
+# TEST cat_type: 5, n_bombs: 28 , number of bits: 3, miss: 108690, ref: 171214, miss rate: 63.5%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-38.0
+# TEST cat_type: 5, n_bombs: 28 , number of bits: 2, miss: 67399, ref: 113940, miss rate: 59.2%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-95.8
+# TEST cat_type: 5, n_bombs: 28 , number of bits: 1, miss: 2850, ref: 57317, miss rate: 5.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 17 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62666 # 62667 # 62668 # 62669 # 62670 # 62671 # 62672 # 62673 # 62674 # 62675 # 62676 # 62677 # 62678 # 62679 # 62680 # 62681 # 62682 # 62683 # 62684 # 62685 # 62686 # 62687 # 62688 # 62689 # 62690 # 62691 # 62692 # 62693 # 62694 # 62695 # 62696 # 62697 # are ready
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 5, n_bombs: 32 , number of bits: 6, miss: 236563, ref: 342836, miss rate: 69.0%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-18.2
+# TEST cat_type: 5, n_bombs: 32 , number of bits: 5, miss: 193620, ref: 285620, miss rate: 67.8%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-21.3
+# TEST cat_type: 5, n_bombs: 32 , number of bits: 4, miss: 152426, ref: 228435, miss rate: 66.7%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-26.3
+# TEST cat_type: 5, n_bombs: 32 , number of bits: 3, miss: 112328, ref: 171284, miss rate: 65.6%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-39.1
+# TEST cat_type: 5, n_bombs: 32 , number of bits: 2, miss: 68447, ref: 113937, miss rate: 60.1%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-95.5
+# TEST cat_type: 5, n_bombs: 32 , number of bits: 1, miss: 3112, ref: 57307, miss rate: 5.4%, allocated cache (bytes): 3670016, span: 33030144
+not ok 18 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # are ready
+# Writing benchmark parameters to resctrl FS
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 0 , number of bits: 6, miss: 20554, ref: 344035, miss rate: 6.0%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-85.9
+# TEST cat_type: 1, n_bombs: 0 , number of bits: 5, miss: 2888, ref: 286742, miss rate: 1.0%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-95.4
+# TEST cat_type: 1, n_bombs: 0 , number of bits: 4, miss: 134, ref: 229401, miss rate: 0.1%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-98.5
+# TEST cat_type: 1, n_bombs: 0 , number of bits: 3, miss: 2, ref: 172056, miss rate: 0.0%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-100.0
+# TEST cat_type: 1, n_bombs: 0 , number of bits: 2, miss: 0, ref: 114709, miss rate: 0.0%, allocated cache (bytes): 7340032, span: 33030144
+# TEST cat_type: 1, n_bombs: 0 , number of bits: 1, miss: 0, ref: 57363, miss rate: 0.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 19 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62700 # 62701 # 62702 # 62703 # are ready
+# Writing benchmark parameters to resctrl FS
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 4 , number of bits: 6, miss: 20958, ref: 344003, miss rate: 6.1%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-79.4
+# TEST cat_type: 1, n_bombs: 4 , number of bits: 5, miss: 4309, ref: 286744, miss rate: 1.5%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-96.1
+# TEST cat_type: 1, n_bombs: 4 , number of bits: 4, miss: 169, ref: 229399, miss rate: 0.1%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-97.6
+# TEST cat_type: 1, n_bombs: 4 , number of bits: 3, miss: 4, ref: 172054, miss rate: 0.0%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-100.0
+# TEST cat_type: 1, n_bombs: 4 , number of bits: 2, miss: 0, ref: 114710, miss rate: 0.0%, allocated cache (bytes): 7340032, span: 33030144
+# TEST cat_type: 1, n_bombs: 4 , number of bits: 1, miss: 0, ref: 57365, miss rate: 0.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 20 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62705 # 62706 # 62707 # 62708 # 62709 # 62710 # 62711 # 62712 # are ready
+# Writing benchmark parameters to resctrl FS
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 8 , number of bits: 6, miss: 42175, ref: 339940, miss rate: 12.4%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-57.7
+# TEST cat_type: 1, n_bombs: 8 , number of bits: 5, miss: 17849, ref: 283479, miss rate: 6.3%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-93.0
+# TEST cat_type: 1, n_bombs: 8 , number of bits: 4, miss: 1255, ref: 227512, miss rate: 0.6%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-96.5
+# TEST cat_type: 1, n_bombs: 8 , number of bits: 3, miss: 44, ref: 170734, miss rate: 0.0%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-97.7
+# TEST cat_type: 1, n_bombs: 8 , number of bits: 2, miss: 1, ref: 113835, miss rate: 0.0%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-100.0
+# TEST cat_type: 1, n_bombs: 8 , number of bits: 1, miss: 0, ref: 56924, miss rate: 0.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 21 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62714 # 62715 # 62716 # 62717 # 62718 # 62719 # 62720 # 62721 # 62722 # 62723 # 62724 # 62725 # are ready
+# Writing benchmark parameters to resctrl FS
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 12 , number of bits: 6, miss: 21026, ref: 344055, miss rate: 6.1%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-85.0
+# TEST cat_type: 1, n_bombs: 12 , number of bits: 5, miss: 3145, ref: 286753, miss rate: 1.1%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-98.0
+# TEST cat_type: 1, n_bombs: 12 , number of bits: 4, miss: 63, ref: 229418, miss rate: 0.0%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-95.2
+# TEST cat_type: 1, n_bombs: 12 , number of bits: 3, miss: 3, ref: 172070, miss rate: 0.0%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-66.7
+# TEST cat_type: 1, n_bombs: 12 , number of bits: 2, miss: 1, ref: 114714, miss rate: 0.0%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-100.0
+# TEST cat_type: 1, n_bombs: 12 , number of bits: 1, miss: 0, ref: 57370, miss rate: 0.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 22 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62728 # 62729 # 62730 # 62731 # 62732 # 62733 # 62734 # 62735 # 62736 # 62737 # 62738 # 62739 # 62740 # 62741 # 62742 # 62743 # are ready
+# Writing benchmark parameters to resctrl FS
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 16 , number of bits: 6, miss: 22025, ref: 344078, miss rate: 6.4%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-81.1
+# TEST cat_type: 1, n_bombs: 16 , number of bits: 5, miss: 4167, ref: 286769, miss rate: 1.5%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-95.2
+# TEST cat_type: 1, n_bombs: 16 , number of bits: 4, miss: 201, ref: 229415, miss rate: 0.1%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-97.5
+# TEST cat_type: 1, n_bombs: 16 , number of bits: 3, miss: 5, ref: 172057, miss rate: 0.0%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-100.0
+# TEST cat_type: 1, n_bombs: 16 , number of bits: 2, miss: 0, ref: 114712, miss rate: 0.0%, allocated cache (bytes): 7340032, span: 33030144
+# TEST cat_type: 1, n_bombs: 16 , number of bits: 1, miss: 0, ref: 57368, miss rate: 0.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 23 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62746 # 62747 # 62748 # 62749 # 62750 # 62751 # 62752 # 62753 # 62754 # 62755 # 62756 # 62757 # 62758 # 62759 # 62760 # 62761 # 62762 # 62763 # 62764 # 62765 # are ready
+# Writing benchmark parameters to resctrl FS
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 20 , number of bits: 6, miss: 21753, ref: 344079, miss rate: 6.3%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-84.9
+# TEST cat_type: 1, n_bombs: 20 , number of bits: 5, miss: 3282, ref: 286776, miss rate: 1.1%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-95.2
+# TEST cat_type: 1, n_bombs: 20 , number of bits: 4, miss: 157, ref: 229418, miss rate: 0.1%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-97.5
+# TEST cat_type: 1, n_bombs: 20 , number of bits: 3, miss: 4, ref: 172068, miss rate: 0.0%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-100.0
+# TEST cat_type: 1, n_bombs: 20 , number of bits: 2, miss: 0, ref: 114728, miss rate: 0.0%, allocated cache (bytes): 7340032, span: 33030144
+# TEST cat_type: 1, n_bombs: 20 , number of bits: 1, miss: 0, ref: 57376, miss rate: 0.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 24 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62767 # 62768 # 62769 # 62770 # 62771 # 62772 # 62773 # 62774 # 62775 # 62776 # 62777 # 62778 # 62779 # 62780 # 62781 # 62782 # 62783 # 62784 # 62785 # 62786 # 62787 # 62788 # 62789 # 62790 # are ready
+# Writing benchmark parameters to resctrl FS
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 24 , number of bits: 6, miss: 22313, ref: 342263, miss rate: 6.5%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-81.9
+# TEST cat_type: 1, n_bombs: 24 , number of bits: 5, miss: 4049, ref: 285603, miss rate: 1.4%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-94.6
+# TEST cat_type: 1, n_bombs: 24 , number of bits: 4, miss: 218, ref: 228670, miss rate: 0.1%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-97.7
+# TEST cat_type: 1, n_bombs: 24 , number of bits: 3, miss: 5, ref: 171518, miss rate: 0.0%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-80.0
+# TEST cat_type: 1, n_bombs: 24 , number of bits: 2, miss: 1, ref: 114354, miss rate: 0.0%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-100.0
+# TEST cat_type: 1, n_bombs: 24 , number of bits: 1, miss: 0, ref: 57188, miss rate: 0.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 25 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62793 # 62794 # 62795 # 62796 # 62797 # 62798 # 62799 # 62800 # 62801 # 62802 # 62803 # 62804 # 62805 # 62806 # 62807 # 62808 # 62809 # 62810 # 62811 # 62812 # 62813 # 62814 # 62815 # 62816 # 62817 # 62818 # 62819 # 62820 # are ready
+# Writing benchmark parameters to resctrl FS
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 28 , number of bits: 6, miss: 28134, ref: 344108, miss rate: 8.2%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-76.8
+# TEST cat_type: 1, n_bombs: 28 , number of bits: 5, miss: 6522, ref: 286779, miss rate: 2.3%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-96.2
+# TEST cat_type: 1, n_bombs: 28 , number of bits: 4, miss: 247, ref: 229403, miss rate: 0.1%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-98.4
+# TEST cat_type: 1, n_bombs: 28 , number of bits: 3, miss: 4, ref: 172055, miss rate: 0.0%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-100.0
+# TEST cat_type: 1, n_bombs: 28 , number of bits: 2, miss: 0, ref: 114710, miss rate: 0.0%, allocated cache (bytes): 7340032, span: 33030144
+# TEST cat_type: 1, n_bombs: 28 , number of bits: 1, miss: 0, ref: 57366, miss rate: 0.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 26 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: 3ff, Start: 0, Count of bits: 10
+# All bombs: # 62822 # 62823 # 62824 # 62825 # 62826 # 62827 # 62828 # 62829 # 62830 # 62831 # 62832 # 62833 # 62834 # 62835 # 62836 # 62837 # 62838 # 62839 # 62840 # 62841 # 62842 # 62843 # 62844 # 62845 # 62846 # 62847 # 62848 # 62849 # 62850 # 62851 # 62852 # 62853 # are ready
+# Writing benchmark parameters to resctrl FS
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Write schema "L3:0=3c0;1=3c0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 32 , number of bits: 6, miss: 22571, ref: 344093, miss rate: 6.6%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-81.2
+# TEST cat_type: 1, n_bombs: 32 , number of bits: 5, miss: 4246, ref: 286769, miss rate: 1.5%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-94.3
+# TEST cat_type: 1, n_bombs: 32 , number of bits: 4, miss: 243, ref: 229401, miss rate: 0.1%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-96.3
+# TEST cat_type: 1, n_bombs: 32 , number of bits: 3, miss: 9, ref: 172055, miss rate: 0.0%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-77.8
+# TEST cat_type: 1, n_bombs: 32 , number of bits: 2, miss: 2, ref: 114708, miss rate: 0.0%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-100.0
+# TEST cat_type: 1, n_bombs: 32 , number of bits: 1, miss: 0, ref: 57361, miss rate: 0.0%, allocated cache (bytes): 3670016, span: 33030144
+not ok 27 L3_CAT: test
+# Planned tests != run tests (1 != 27)
+# Totals: pass:0 fail:27 xfail:0 xpass:0 skip:0 error:0

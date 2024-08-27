@@ -1,0 +1,61 @@
+// #include <sys/mman.h>
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <fcntl.h>
+// #include <unistd.h>
+
+// #define PAGE_SIZE     (64 * 1024 * 1024)  // 2MB
+
+// int main() {
+//     // Open the /dev/zero device
+//     int fd = open("/dev/zero", O_RDWR);
+//     if (fd < 0) {
+//         perror("Open failed");
+//         exit(1);
+//     }
+
+//     // Use mmap to allocate a huge page
+//     void *addr = mmap(0, PAGE_SIZE, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_HUGETLB, fd, 0);
+//     if (addr == MAP_FAILED) {
+//         perror("mmap failed");
+//         exit(1);
+//     }
+
+//     // Initialize the memory region
+//     for (int i = 0; i < PAGE_SIZE; i++) {
+//         ((char *)addr)[i] = 0;
+//     }
+
+//     // check the memory region
+//     for (int i = 0; i < PAGE_SIZE; i++) {
+//         if (((char *)addr)[i] != 0) {
+//             printf("Memory region is not zero\n");
+//             break;
+//         }
+//     }
+
+//     // randomly modify the memory region
+//     for (int i = 0; i < PAGE_SIZE; i++) {
+//         ((char *)addr)[i] = rand() % 256;
+//     }
+
+//     // check the memory region
+//     for (int i = 0; i < PAGE_SIZE; i++) {
+//         if (((char *)addr)[i] != 0) {
+//             printf("Memory region is not zero\n");
+//             break;
+//         }
+//     }
+
+//     // Now addr points to a huge page memory region
+
+//     // Don't forget to unmap the memory region when it's no longer needed
+//     if (munmap(addr, PAGE_SIZE) == -1) {
+//         perror("munmap failed");
+//         exit(1);
+//     }
+
+//     close(fd);
+
+//     return 0;
+// }

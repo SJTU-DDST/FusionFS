@@ -1,0 +1,109 @@
+# c: s
+TAP version 13
+# Pass: Check kernel supports resctrl filesystem
+# Pass: Check resctrl mountpoint "/sys/fs/resctrl" exists
+# resctrl filesystem not mounted
+# dmesg: [    1.845022] resctrl: L3 allocation detected
+# dmesg: [    1.845024] resctrl: MB allocation detected
+# dmesg: [    1.845025] resctrl: L3 monitoring detected
+1..1
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # are ready
+# Writing: bm_pid=329710 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=fc0;1=fc0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Write schema "L3:0=fc0;1=fc0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Write schema "L3:0=fc0;1=fc0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Write schema "L3:0=fc0;1=fc0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Write schema "L3:0=fc0;1=fc0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Write schema "L3:0=fc0;1=fc0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# Write schema "L3:0=fc0;1=fc0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 0
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 0 , number of bits: 6, miss: 23766019, ref: 66707305, miss rate: 35.6%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-20.2
+# TEST cat_type: 1, n_bombs: 0 , number of bits: 5, miss: 18954543, ref: 60886624, miss rate: 31.1%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-25.0
+# TEST cat_type: 1, n_bombs: 0 , number of bits: 4, miss: 14220227, ref: 54995466, miss rate: 25.9%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-33.0
+# TEST cat_type: 1, n_bombs: 0 , number of bits: 3, miss: 9528867, ref: 48951321, miss rate: 19.5%, allocated cache (bytes): 11010048, span: 33030144
+# Pass: Check cache miss rate changed more than 1.0%
+# Percent diff=30.1
+# TEST cat_type: 1, n_bombs: 0 , number of bits: 2, miss: 12393275, ref: 45867489, miss rate: 27.0%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-38.8
+# TEST cat_type: 1, n_bombs: 0 , number of bits: 1, miss: 7586253, ref: 40170616, miss rate: 18.9%, allocated cache (bytes): 3670016, span: 33030144
+# Unexpected empty cache mask, no CAT?
+# TEST cat_type: 1, n_bombs: 0 , number of bits: 0, miss: 1869730, ref: 34410618, miss rate: 5.4%, allocated cache (bytes): 0, span: 33030144
+not ok 1 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3f, Full cache mask: fff, Span: 22020096
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # are ready
+# Writing: bm_pid=329710 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=fc0;1=fc0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 22020096
+# Write schema "L3:0=fc0;1=fc0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 18350080
+# Write schema "L3:0=fc0;1=fc0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 14680064
+# Write schema "L3:0=fc0;1=fc0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 11010048
+# Write schema "L3:0=fc0;1=fc0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 7340032
+# Write schema "L3:0=fc0;1=fc0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 3670016
+# Write schema "L3:0=fc0;1=fc0" to resctrl FS
+# Write schema "L3:0=3f;1=3f" to resctrl FS
+# Mask: 3f, Cache size: 22020096, Buf size: 0
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 13, n_bombs: 0 , number of bits: 6, miss: 15601551, ref: 67818787, miss rate: 23.0%, allocated cache (bytes): 22020096, span: 33030144
+# Fail: Check cache miss rate changed more than 4.0%
+# Percent diff=-20.8
+# TEST cat_type: 13, n_bombs: 0 , number of bits: 5, miss: 12363811, ref: 62194102, miss rate: 19.9%, allocated cache (bytes): 18350080, span: 33030144
+# Fail: Check cache miss rate changed more than 3.0%
+# Percent diff=-19.9
+# TEST cat_type: 13, n_bombs: 0 , number of bits: 4, miss: 9897903, ref: 56453459, miss rate: 17.5%, allocated cache (bytes): 14680064, span: 33030144
+# Fail: Check cache miss rate changed more than 2.0%
+# Percent diff=-13.2
+# TEST cat_type: 13, n_bombs: 0 , number of bits: 3, miss: 8591169, ref: 50699923, miss rate: 16.9%, allocated cache (bytes): 11010048, span: 33030144
+# Fail: Check cache miss rate changed more than 1.0%
+# Percent diff=-4.8
+# TEST cat_type: 13, n_bombs: 0 , number of bits: 2, miss: 8181261, ref: 44946851, miss rate: 18.2%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-0.7
+# TEST cat_type: 13, n_bombs: 0 , number of bits: 1, miss: 8125055, ref: 39201873, miss rate: 20.7%, allocated cache (bytes): 3670016, span: 33030144
+# Unexpected empty cache mask, no CAT?
+# TEST cat_type: 13, n_bombs: 0 , number of bits: 0, miss: 8061279, ref: 33421851, miss rate: 24.1%, allocated cache (bytes): 0, span: 33030144
+not ok 2 L3_CAT: test
+# Planned tests != run tests (1 != 2)
+# Totals: pass:0 fail:2 xfail:0 xpass:0 skip:0 error:0

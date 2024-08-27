@@ -1,0 +1,71 @@
+# c: s
+TAP version 13
+# Pass: Check kernel supports resctrl filesystem
+# Pass: Check resctrl mountpoint "/sys/fs/resctrl" exists
+# resctrl filesystem not mounted
+# dmesg: [    1.845022] resctrl: L3 allocation detected
+# dmesg: [    1.845024] resctrl: MB allocation detected
+# dmesg: [    1.845025] resctrl: L3 monitoring detected
+1..1
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3, Full cache mask: fff, Span: 7340032
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # are ready
+# Writing: bm_pid=370519 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=ffc;1=ffc" to resctrl FS
+# Write schema "L3:0=3;1=3" to resctrl FS
+# Mask: 3, Cache size: 7340032, Buf size: 7340032
+# Write schema "L3:0=ffc;1=ffc" to resctrl FS
+# Write schema "L3:0=3;1=3" to resctrl FS
+# Mask: 3, Cache size: 7340032, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 1, n_bombs: 0 , number of bits: 2, miss: 1275002, ref: 11470775, miss rate: 11.1%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-98.6
+# TEST cat_type: 1, n_bombs: 0 , number of bits: 1, miss: 18063, ref: 5735273, miss rate: 0.3%, allocated cache (bytes): 3670016, span: 33030144
+not ok 1 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3, Full cache mask: fff, Span: 7340032
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # are ready
+# Writing: bm_pid=370519 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=3ff;1=3ff" to resctrl FS
+# Write schema "L3:0=c00;1=c00" to resctrl FS
+# Mask: c00, Cache size: 7340032, Buf size: 7340032
+# Write schema "L3:0=3ff;1=3ff" to resctrl FS
+# Write schema "L3:0=c00;1=c00" to resctrl FS
+# Mask: c00, Cache size: 7340032, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 12, n_bombs: 0 , number of bits: 2, miss: 1279818, ref: 11471088, miss rate: 11.2%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-98.6
+# TEST cat_type: 12, n_bombs: 0 , number of bits: 1, miss: 18423, ref: 5735370, miss rate: 0.3%, allocated cache (bytes): 3670016, span: 33030144
+not ok 2 L3_CAT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :44040192
+# Cache total size: 44040192, Start mask: 3, Full cache mask: fff, Span: 7340032
+# Long mask: fff, Start: 0, Count of bits: 12
+# All bombs: # are ready
+# Writing: bm_pid=370519 to ctrlgrp=c1 mongrp= resctrl_val=cat
+# Write schema "L3:0=ffc;1=ffc" to resctrl FS
+# Write schema "L3:0=3;1=3" to resctrl FS
+# Mask: 3, Cache size: 7340032, Buf size: 7340032
+# Write schema "L3:0=ffc;1=ffc" to resctrl FS
+# Write schema "L3:0=3;1=3" to resctrl FS
+# Mask: 3, Cache size: 7340032, Buf size: 3670016
+# All bombs are killed
+# Checking for pass/fail
+# TEST cat_type: 13, n_bombs: 0 , number of bits: 2, miss: 2693479, ref: 11451632, miss rate: 23.5%, allocated cache (bytes): 7340032, span: 33030144
+# Fail: Check cache miss rate changed more than 0.0%
+# Percent diff=-50.0
+# TEST cat_type: 13, n_bombs: 0 , number of bits: 1, miss: 1346553, ref: 5725934, miss rate: 23.5%, allocated cache (bytes): 3670016, span: 33030144
+not ok 3 L3_CAT: test
+# Planned tests != run tests (1 != 3)
+# Totals: pass:0 fail:3 xfail:0 xpass:0 skip:0 error:0
