@@ -8,12 +8,12 @@ old_fontsize = plt.rcParams['font.size']
 plt.rcParams['font.size'] = old_fontsize * 1.1
 
 # 定义颜色和柱子宽度
-hat = ['|//','-\\\\','|\\\\','-//',"--","\\\\",'//',"xx"]
+# hat = ['|//','-\\\\','|\\\\','-//',"--","\\\\",'//',"xx"]
 c = np.array([[102, 194, 165], [252, 141, 98], [141, 160, 203], 
               [231, 138, 195], [166, 216, 84], [255, 217, 47],
               [229, 196, 148], [179, 179, 179]])
 c = c / 255
-width = 0.15
+width = 0.225
 
 # 文件系统和zipf分布
 filesystems = ["ext4", "pmfs", "nova", "winefs", "odinfs", "FusionFS"]
@@ -25,7 +25,8 @@ labels = {
     "odinfs": "ODINFS",
     "FusionFS": "FusionFS"
 }
-zipf_distributions = ["", "60-40", "70-30", "80-20", "90-10"]
+# zipf_distributions = ["", "60-40", "70-30", "80-20", "90-10"]
+zipf_distributions = ["", "70-30", "90-10"]
 zipf_labels = {
     "": "50/50 (θ=0)",
     "60-40": "60/40 (θ=0.44)",
@@ -83,9 +84,10 @@ for i, (iosize, row, col) in enumerate([("4K", rows[0], cols[0]), ("2M", rows[0]
                                         ("4K", rows[0], cols[1]), ("2M", rows[0], cols[1]), ("4K", rows[1], cols[1]), ("2M", rows[1], cols[1]),
                                         ("4K", rows[0], cols[2]), ("2M", rows[0], cols[2]), ("4K", rows[1], cols[2]), ("2M", rows[1], cols[2])]):
     ax = axs[i // 4, i % 4]
+    ax.set_axisbelow(True)
     for j, zipf in enumerate(zipf_distributions):
         y = [throughput_data[fs][zipf].get((iosize, row, col), 0) for fs in filesystems]
-        ax.bar(x + j * width, y, width, label=zipf_labels[zipf], color=c[j], edgecolor='black', lw=1.2, hatch=hat[j])
+        ax.bar(x + j * width, y, width, label=zipf_labels[zipf], color=c[j], edgecolor='black', lw=1.2)
     
     maxes = []
     avgs = []
@@ -107,7 +109,7 @@ for i, (iosize, row, col) in enumerate([("4K", rows[0], cols[0]), ("2M", rows[0]
         ax.set_title(f'{iosize} write, {"1 thread" if row == 0 else "8 threads"}')
     if i // 4 == 2:
         ax.set_xticks(x + width * (len(zipf_distributions) - 1) / 2)
-        ax.set_xticklabels(labels.values(), rotation=45)
+        ax.set_xticklabels(labels.values(), rotation=45, ha='right')
     else: # no x-axis labels
         ax.set_xticks([])
     if i % 4 == 0:

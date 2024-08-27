@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-hat = ['|//','-\\\\','|\\\\','-//',"--","\\\\",'//',"xx"]
+# hat = ['|//','-\\\\','|\\\\','-//',"--","\\\\",'//',"xx"]
 markers = ['H', '^', '>', 'D', 'o', 's', 'p', 'x']
 c = np.array([[102, 194, 165], [252, 141, 98], [141, 160, 203], 
         [231, 138, 195], [166,216,84], [255, 217, 47],
@@ -56,7 +56,8 @@ fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 3), layout="constrained")
 # Plot the first subplot
 width = 0.35  # width of the bars
 x = range(len(x_values))
-ax1.bar(x, y_values_1_uniform, width, label="uniform", color=c[0], edgecolor='black', lw=1.2, hatch=hat[0])
+ax1.set_axisbelow(True)
+ax1.bar(x, y_values_1_uniform, width, label="uniform", color=c[0], edgecolor='black', lw=1.2)
 # ax1.bar([i + width for i in x], [val/1000000 for val in y_values_1_zipf], width, label="zipf", alpha=0.5)
 ax1.set_ylabel("Throughput (GiB/s)")
 # ax1.set_xticks([i + width/2 for i in x])
@@ -66,7 +67,8 @@ ax1.set_xticklabels(x_values, rotation=45, ha="right")
 ax1.grid(axis='y', linestyle='-.')
 
 # Plot the second subplot
-ax2.bar(x, y_values_2_uniform, width, label="uniform", color=c[0], edgecolor='black', lw=1.2, hatch=hat[0])
+ax2.set_axisbelow(True)
+ax2.bar(x, y_values_2_uniform, width, label="uniform", color=c[0], edgecolor='black', lw=1.2)
 # ax2.bar([i + width for i in x], [val/1024 for val in y_values_2_zipf], width, label="zipf", alpha=0.5)
 ax2.set_ylabel("I/O amplification")
 # ax2.set_xticks([i + width/2 for i in x])

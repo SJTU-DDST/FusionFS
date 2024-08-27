@@ -367,7 +367,7 @@ class Plotter(object):
                     elif data.shape[1] == 4:
                         x, y, media_read, media_write = data[:, 0], data[:, 1], data[:, 2], data[:, 3]
                     y = y / divider
-                    ax.plot(x, y, label=label_fs(fs), color=c[0], marker=markers[0], lw=3, mec='black', markersize=8, alpha=1)
+                    ax.plot(x, y, label=label_fs(fs), color=c[0], marker=markers[0], lw=3, mec='black', alpha=1)
 
                 for j, fs in enumerate(fs_list[1:]):
                     # if np.any(dat[0] % 1 != 0): # skewed, bar plot
@@ -385,7 +385,7 @@ class Plotter(object):
                         elif data.shape[1] == 4:
                             x, y, media_read, media_write = data[:, 0], data[:, 1], data[:, 2], data[:, 3]
                         y = y / divider
-                        ax.plot(x, y, label=label_fs(fs), color=c[j+1], marker=markers[j+1], lw=3, mec='black', markersize=8, alpha=1)
+                        ax.plot(x, y, label=label_fs(fs), color=c[j+1], marker=markers[j+1], lw=3, mec='black', alpha=1)
                 
                 title = bench.replace("_", " ")
                 if title == "fio zipf sync":
