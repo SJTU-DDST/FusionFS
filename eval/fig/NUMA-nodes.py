@@ -62,7 +62,7 @@ def plot_data(data):
         plt.plot(x, y, label=label, marker='o')
     
     plt.xlabel('File Size (MB)')
-    plt.ylabel('PM Writes (GB)')
+    plt.ylabel('BAS Writes (GB)')
     # plt.title('File Size vs PM Write Bandwidth for Different Sockets')
     plt.legend()
     plt.grid(True)

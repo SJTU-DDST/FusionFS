@@ -179,7 +179,7 @@ def plot_numa(ax, data):
         label = '1 socket' if sockets == 1 else f'{sockets} sockets'
         ax.plot(x, y, label=label, marker=threshold_markers[sorted_sockets.index(sockets)], color=c[sorted_sockets.index(sockets)], lw=3, mec='black', markersize=8, alpha=1)
     ax.set_xlabel('File size (MB)')
-    ax.set_ylabel('PM writes (GB)')
+    ax.set_ylabel('BAS writes (GB)')
     # ax.legend()
     ax.legend(loc='upper center', bbox_to_anchor=(0.5, 1.35), ncol=2)
     ax.grid(axis='y', linestyle='-.')

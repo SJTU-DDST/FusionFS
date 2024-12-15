@@ -51,6 +51,11 @@
 // #pragma message "随机选择委托线程"
 // #endif
 
+#define SIMULATE_BAS_WRITE_VOLUME 0 // 定义宏来控制模拟 BAS 写入粒度
+#if SIMULATE_BAS_WRITE_VOLUME
+#define PMFS_BAS_GRANULARITY 64
+#endif
+
 // breakdown
 #define PMFS_NO_FLUSH 0
 #define PMFS_HOT_NO_FLUSH 0

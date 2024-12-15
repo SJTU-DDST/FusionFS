@@ -287,8 +287,20 @@ static inline void pmfs_flush_buffer(void *buf, uint32_t len, bool fence)
 {
 #if !PMFS_NO_FLUSH
 	uint32_t i;
+#if PMFS_FUSIONFS
 	if (len <= CACHELINE_SIZE) return;
+#endif
 	len = len + ((unsigned long)(buf) & (CACHELINE_SIZE - 1));
+
+#if SIMULATE_BAS_WRITE_VOLUME
+	uint32_t aligned_len = ((len + PMFS_BAS_GRANULARITY - 1) / PMFS_BAS_GRANULARITY) * PMFS_BAS_GRANULARITY;
+
+	for (i = len; i < aligned_len; i += CACHELINE_SIZE)
+	{
+		((char *)buf)[i] ^= 1; // 修改 1 字节
+	}
+#endif
+
 	if (support_clwb_pmfs) {
 		for (i = 0; i < len; i += CACHELINE_SIZE)
 			_mm_clwb(buf + i);
@@ -296,6 +308,13 @@ static inline void pmfs_flush_buffer(void *buf, uint32_t len, bool fence)
 		for (i = 0; i < len; i += CACHELINE_SIZE)
 			_mm_clflush(buf + i);
 	}
+
+#if SIMULATE_BAS_WRITE_VOLUME
+	for (i = len; i < aligned_len; i += CACHELINE_SIZE)
+	{
+		((char *)buf)[i] ^= 1; // 再改回去
+	}
+#endif
 #endif
 	/* Do a fence only if asked. We often don't need to do a fence
    * immediately after clflush because even if we get context switched
