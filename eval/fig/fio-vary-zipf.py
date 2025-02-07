@@ -8,7 +8,7 @@ old_fontsize = plt.rcParams['font.size']
 plt.rcParams['font.size'] = old_fontsize * 1.1
 
 # 定义颜色和柱子宽度
-# hat = ['|//','-\\\\','|\\\\','-//',"--","\\\\",'//',"xx"]
+hat = ['//', '\\\\', 'xx', '||', '--', '++']
 c = np.array([[102, 194, 165], [252, 141, 98], [141, 160, 203], 
               [231, 138, 195], [166, 216, 84], [255, 217, 47],
               [229, 196, 148], [179, 179, 179]])
@@ -87,7 +87,7 @@ for i, (iosize, row, col) in enumerate([("4K", rows[0], cols[0]), ("2M", rows[0]
     ax.set_axisbelow(True)
     for j, zipf in enumerate(zipf_distributions):
         y = [throughput_data[fs][zipf].get((iosize, row, col), 0) for fs in filesystems]
-        ax.bar(x + j * width, y, width, label=zipf_labels[zipf], color=c[j], edgecolor='black', lw=1.2)
+        ax.bar(x + j * width, y, width, label=zipf_labels[zipf], color=c[j], edgecolor='black', lw=1.2, hatch=hat[j])
     
     maxes = []
     avgs = []

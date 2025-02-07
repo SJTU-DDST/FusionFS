@@ -9,7 +9,7 @@ import numpy as np
 
 # plt.style.use(['science','ieee'])#,'no-latex']) # apt install cm-super dvipng
 
-hat = ['|//','-\\\\','|\\\\','-//',"--","\\\\",'//',"xx"]
+hat = ['//', '\\\\', 'xx', '||', '--', '++']
 markers = ['H', '^', '>', 'D', 'o', 's', 'p', 'x']
 c = np.array([[102, 194, 165], [252, 141, 98], [141, 160, 203], 
         [231, 138, 195], [166,216,84], [255, 217, 47],
@@ -528,12 +528,12 @@ def plot_IOContention(cat_types = [1, 12, 13]):
     ax_miss.set_axisbelow(True)
     ax_bw.set_axisbelow(True)
         
-    ax_miss.bar(0, miss_rate_CAT[0], label=cat_titles[1], color=c[0], edgecolor='black', lw=1.2)
-    ax_miss.bar(1, miss_rate_Shareable_CAT[0], label=cat_titles[12], color=c[1], edgecolor='black', lw=1.2)
-    ax_miss.bar(2, miss_rate_CAT_FLUSH[0], label=cat_titles[13], color=c[2], edgecolor='black', lw=1.2)
-    ax_bw.bar(0, MediaWrites_CAT[0] / MediaWrites_CAT_FLUSH[0], label=cat_titles[1], color=c[0], edgecolor='black', lw=1.2)
-    ax_bw.bar(1, MediaWrites_Shareable_CAT[0] / MediaWrites_CAT_FLUSH[0], label=cat_titles[12], color=c[1], edgecolor='black', lw=1.2)
-    ax_bw.bar(2, MediaWrites_CAT_FLUSH[0] / MediaWrites_CAT_FLUSH[0], label=cat_titles[13], color=c[2], edgecolor='black', lw=1.2)
+    ax_miss.bar(0, miss_rate_CAT[0], label=cat_titles[1], color=c[0], edgecolor='black', lw=1.2, hatch=hat[0])
+    ax_miss.bar(1, miss_rate_Shareable_CAT[0], label=cat_titles[12], color=c[1], edgecolor='black', lw=1.2, hatch=hat[1])
+    ax_miss.bar(2, miss_rate_CAT_FLUSH[0], label=cat_titles[13], color=c[2], edgecolor='black', lw=1.2, hatch=hat[2])
+    ax_bw.bar(0, MediaWrites_CAT[0] / MediaWrites_CAT_FLUSH[0], label=cat_titles[1], color=c[0], edgecolor='black', lw=1.2, hatch=hat[0])
+    ax_bw.bar(1, MediaWrites_Shareable_CAT[0] / MediaWrites_CAT_FLUSH[0], label=cat_titles[12], color=c[1], edgecolor='black', lw=1.2, hatch=hat[1])
+    ax_bw.bar(2, MediaWrites_CAT_FLUSH[0] / MediaWrites_CAT_FLUSH[0], label=cat_titles[13], color=c[2], edgecolor='black', lw=1.2, hatch=hat[2])
 
     # ax_miss.set_xticks([0, 1, 2])
     # ax_miss.set_xticklabels(["", "", ""])

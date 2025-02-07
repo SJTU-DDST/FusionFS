@@ -4,7 +4,7 @@ import numpy as np
 old_fontsize = plt.rcParams['font.size']
 plt.rcParams['font.size'] = old_fontsize * 1.1
 
-# hat = ['|//','-\\\\','|\\\\','-//',"--","\\\\",'//',"xx"]
+hat = ['//', '\\\\', 'xx', '||', '--', '++']
 markers = ['H', '^', '>', 'D', 'o', 's', 'p', 'x']
 c = np.array([[102, 194, 165], [252, 141, 98], [141, 160, 203], 
         [231, 138, 195], [166,216,84], [255, 217, 47],
@@ -76,8 +76,8 @@ fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(10, 3)) #, layout="constraine
 width = 0.35  # width of the bars
 x = np.arange(len(x_values))
 ax1.set_axisbelow(True)
-ax1.bar(x - width/2, y_values_1_odinfs, width, label="ODINFS", color=c[0], edgecolor='black', lw=1.2)
-ax1.bar(x + width/2, y_values_1_FusionFS, width, label="FusionFS", color=c[1], edgecolor='black', lw=1.2)
+ax1.bar(x - width/2, y_values_1_odinfs, width, label="ODINFS", color=c[0], edgecolor='black', lw=1.2, hatch=hat[0])
+ax1.bar(x + width/2, y_values_1_FusionFS, width, label="FusionFS", color=c[1], edgecolor='black', lw=1.2, hatch=hat[1])
 ax1.set_ylabel("Throughput (GiB/s)")
 ax1.set_xlabel("Access granularity (B)")
 ax1.set_xticks(x)
@@ -86,8 +86,8 @@ ax1.grid(axis='y', linestyle='-.')
 
 # Plot the second subplot
 ax2.set_axisbelow(True)
-ax2.bar(x - width/2, y_values_3_odinfs, width, label="ODINFS", color=c[0], edgecolor='black', lw=1.2)
-ax2.bar(x + width/2, y_values_3_FusionFS, width, label="FusionFS", color=c[1], edgecolor='black', lw=1.2)
+ax2.bar(x - width/2, y_values_3_odinfs, width, label="ODINFS", color=c[0], edgecolor='black', lw=1.2, hatch=hat[0])
+ax2.bar(x + width/2, y_values_3_FusionFS, width, label="FusionFS", color=c[1], edgecolor='black', lw=1.2, hatch=hat[1])
 ax2.set_ylabel("Latency (μs)")
 ax2.set_xlabel("Access granularity (B)")
 ax2.set_xticks(x)
@@ -96,8 +96,8 @@ ax2.grid(axis='y', linestyle='-.')
 
 # Plot the third subplot
 ax3.set_axisbelow(True)
-ax3.bar(x - width/2, y_values_2_odinfs, width, label="ODINFS", color=c[0], edgecolor='black', lw=1.2)
-ax3.bar(x + width/2, y_values_2_FusionFS, width, label="FusionFS", color=c[1], edgecolor='black', lw=1.2)
+ax3.bar(x - width/2, y_values_2_odinfs, width, label="ODINFS", color=c[0], edgecolor='black', lw=1.2, hatch=hat[0])
+ax3.bar(x + width/2, y_values_2_FusionFS, width, label="FusionFS", color=c[1], edgecolor='black', lw=1.2, hatch=hat[1])
 ax3.set_ylabel("I/O amplification")
 ax3.set_xlabel("Access granularity (B)")
 ax3.set_xticks(x)
